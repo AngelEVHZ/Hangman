@@ -4,6 +4,9 @@ import './index.css';
 import Navigation from './container/Navigation';
 import reportWebVitals from './reportWebVitals';
 
+
+import  'bootstrap/dist/css/bootstrap.min.css';
+
 ReactDOM.render(
   <React.StrictMode>
     <Navigation />
