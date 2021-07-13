@@ -1,5 +1,6 @@
 import React from "react";
 import LoginForm from "./loginComponents/loginForm";
+import LoginHowToPlay from "./loginComponents/loginHowToPlay";
 
 const Login: React.FC<any> = () => {
 
@@ -7,10 +8,10 @@ const Login: React.FC<any> = () => {
       <div>
           <div className="row">
              <div className="col-md-6">
-                <LoginForm></LoginForm>
+                <LoginHowToPlay></LoginHowToPlay>
              </div>
              <div className="col-md-6">
-                
+                <LoginForm></LoginForm>
              </div> 
           </div>
       </div>

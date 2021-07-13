@@ -11,7 +11,7 @@ const LoginForm: React.FC<any> = () => {
     
         <div>
         <input type="text" id="login" className="fadeIn second" name="login" placeholder="Nickname"/>
-        <input type="submit" className="fadeIn fourth" value="Empezar"/> 
+        <input type="submit" className="fadeIn fourth" value="Start"/> 
         </div>
 
     </div>
