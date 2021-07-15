@@ -3,13 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import Navigation from './container/Navigation';
 import reportWebVitals from './reportWebVitals';
-
-
-import  'bootstrap/dist/css/bootstrap.min.css';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { SocketProvider } from "./Context/SocketProvider";
 ReactDOM.render(
   <React.StrictMode>
-    <Navigation />
+    <SocketProvider>
+      <Navigation />
+    </SocketProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
