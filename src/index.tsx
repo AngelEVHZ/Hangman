@@ -4,7 +4,7 @@ import './index.css';
 import Navigation from './container/Navigation';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { SocketProvider } from "./Context/SocketProvider";
+import { SocketProvider } from "./context/SocketProvider";
 ReactDOM.render(
   <React.StrictMode>
     <SocketProvider>

@@ -1,29 +1,27 @@
 
 import React, { useContext } from "react";
+import {SocketContextInterface, UseSocketState} from "./State/UseSocketState";
 
-interface SocketContextInterface {
-    socket: string;
-    setSocketId: (id: string)=> void;
-}
 
 const INITIAL_STATE: SocketContextInterface = {
-    socket: "",
-    setSocketId: () => {},
+    information:{},
+    actions: {
+        connect: () => {},
+        joinGame: (nickName: string, gameId?: string) => {}
+    }
 }
 
-
 const SocketContext = React.createContext<SocketContextInterface>(INITIAL_STATE);
+
 export const useSocket = () => {
     return useContext(SocketContext)
 }
-export const SocketProvider: React.FC<any> = ({children}) => {
-    const [socket, setSocket] = React.useState("");
 
-    const setSocketId = (id: string) => {
-        setSocket(id);
-    }
+export const SocketProvider: React.FC<any> = ({children}) => {
+    const socketProps = UseSocketState();
+
     return (
-        <SocketContext.Provider value={{socket, setSocketId }}>
+        <SocketContext.Provider value={{...socketProps}}>
             {children}
         </SocketContext.Provider>
     );
