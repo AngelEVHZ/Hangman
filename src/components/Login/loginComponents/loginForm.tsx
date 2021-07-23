@@ -1,24 +1,24 @@
 import React from "react";
 import "./loginStyle.css";
-import { useHistory } from 'react-router-dom';
+interface LoginFormProps {
+    changeNickName: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    joinGame: () => void;
+}
 
-const LoginForm: React.FC<any> = () => {
-    const history = useHistory();
+const LoginForm: React.FC<LoginFormProps> = (props: LoginFormProps) => {
+
     return (
- 
         <div>
             <div className="wrapper fadeInDown">
                 <div id="formContent">
-
                     <div>
-                        <input type="text" id="login" className="fadeIn second" name="login" placeholder="Nickname" />
-                        <input type="submit" className="fadeIn fourth" value="Start"/> 
+                        <input type="text" id="login" className="fadeIn second" name="login" placeholder="Nickname" onChange={props.changeNickName} />
+                        <button type="button" className="fadeIn btn btn-primary btn-big" onClick={props.joinGame}>Start</button>
                     </div>
-
                 </div>
             </div>
         </div>
-    
+
     );
 };
 export default LoginForm;

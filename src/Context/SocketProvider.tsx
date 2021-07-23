@@ -1,13 +1,15 @@
 
 import React, { useContext } from "react";
-import {SocketContextInterface, UseSocketState} from "./State/UseSocketState";
+import {INITIAL_SOCKET_STATE, SocketContextInterface, UseSocketState} from "./State/UseSocketState";
 
 
 const INITIAL_STATE: SocketContextInterface = {
-    information:{},
+    state: INITIAL_SOCKET_STATE,
+    conected: false,
     actions: {
         connect: () => {},
-        joinGame: (nickName: string, gameId?: string) => {}
+        joinGame: (nickName: string, gameId?: string) => {},
+        closeSocket: () => {},
     }
 }
 

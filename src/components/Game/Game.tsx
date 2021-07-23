@@ -7,6 +7,7 @@ import { SocketContextInterface } from "../../context/State/UseSocketState";
 const Game: React.FC<any> = () => {
 
     const socket: SocketContextInterface = useSocket();
+    console.log(socket);
     const props = UseGameState(socket);
   
     return (

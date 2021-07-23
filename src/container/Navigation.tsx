@@ -11,7 +11,7 @@ const Navigation: React.FC<any> = () => {
             <Switch>
                 <Route path={Routes.DASHBOARD} exact component={Dashboard} />
                 <Route path={Routes.GAME} exact component={Game} />
-                <Route path={Routes.LOGIN} exact render={Login} />
+                <Route path={Routes.LOGIN} exact component={Login} />
             </Switch>
         </BrowserRouter>
     );

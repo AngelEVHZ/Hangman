@@ -1,30 +1,46 @@
 import { useState } from "react";
 import { SocketActionEnum } from "../../constant/SocketActionEnum";
+import { NotifyResponse } from "../../types/NotifyResponse";
 import { CreateSessionRequest, SocketAction } from "../../types/SocketAction";
 
-
 export interface SocketContextInterface {
-    information:{};
+    state: SocketState,
+    conected: boolean,
     actions: {
         connect: () => void;
         joinGame: (nickName: string, gameId?: string) => void;
+        closeSocket: () => void;
     };
 }
+interface SocketState {
+   message: NotifyResponse<any> | null;
+}
+export const INITIAL_SOCKET_STATE: SocketState = {
+    message: null,
+};
 
 export const UseSocketState = (): SocketContextInterface => {
     const [webSocket, setWebSocket] = useState<WebSocket | null>(null);
-    
+    const [state, setState] = useState<SocketState>(INITIAL_SOCKET_STATE);
+    const [conected, setConected] = useState<boolean>(false);
+
+
     const connect = () => {
-        const webSocket = new WebSocket("URL");
-        webSocket.onopen = () => onOpen(webSocket);
-        webSocket.onerror = (event: Event) => onError(event);
-        webSocket.onmessage = (event: MessageEvent) => onMessage(event);
+        try {
+            const webSocket = new WebSocket("");
+            webSocket.onopen = () => onOpen(webSocket);
+            webSocket.onerror = (event: Event) => onError(event);
+            webSocket.onmessage = (event: MessageEvent) => onMessage(event);   
+        } catch (error) {
+            console.log(error);
+        }
     };
 
 
     const onOpen = (webSocket: WebSocket) => {
         console.log("ON OPEN");
         setWebSocket(webSocket);
+        setConected(true);
     };
     const onError = (event: Event) => {
         console.log("ON ERROR", event);
@@ -32,11 +48,16 @@ export const UseSocketState = (): SocketContextInterface => {
     };
     const onMessage = (event: MessageEvent) => {
         console.log("ON Message",event);
+        const local = {...state};
+        console.log("LOCAL", local);
+        setState({...state, message: JSON.parse(event.data) as NotifyResponse<any>});
     };
     const closeSocket = () => {
+        console.log("ON CLOSE SOCKET");
         if (webSocket) {
             webSocket.close();
             setWebSocket(null);
+            setConected(false);
         }
         
     };
@@ -59,10 +80,12 @@ export const UseSocketState = (): SocketContextInterface => {
     }
 
     return {
-        information:{},
+        state,
+        conected,
         actions: {
             connect,
             joinGame,
+            closeSocket,
         }
     };
 }
