@@ -1,0 +1,101 @@
+#pipe-vertical {
+    position: absolute;
+    width: 20px;
+    height: 80%;
+    left: 90px;
+    top: 70px;
+}
+#pipe-horizontal {
+    position: absolute;
+    width: 200px;
+    height: 20px;
+    left: 90px;
+    top: 70px;
+}
+
+#rope {
+    border-radius: 10px;
+    position: absolute;
+    width: 10px;
+    height: 44px;
+    left: 267px;
+    top: 84px;
+}
+#head {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    left: 247px;
+    top: 117px;
+    border-radius: 50%;
+}
+
+#body {
+    position: absolute;
+    width: 15px;
+    height: 110px;
+    left: 261px;
+    top: 160px;
+    border-radius: 10px;
+}
+
+#hand-left {
+    position: absolute;
+    width: 93px;
+    height: 15px;
+    left: 204px;
+    top: 203px;
+    border-radius: 10px;
+    transform: rotate(103deg);
+}
+
+#hand-right {
+    position: absolute;
+    width: 93px;
+    height: 15px;
+    left: 238px;
+    top: 205px;
+    border-radius: 10px;
+    transform: rotate(76deg);
+}
+
+#foot-left {
+    position: absolute;
+    width: 111px;
+    height: 15px;
+    left: 202px;
+    top: 302px;
+    border-radius: 10px;
+    transform: rotate(103deg);
+}
+
+#foot-right {
+    position: absolute;
+    width: 111px;
+    height: 15px;
+    left: 218px;
+    top: 308px;
+    border-radius: 10px;
+    transform: rotate(86deg);
+}
+
+.pipe-color{
+    background: black;
+}
+
+.fade-in {
+	opacity: 1;
+	animation-name: fadeInOpacity;
+	animation-iteration-count: 1;
+	animation-timing-function: ease;
+	animation-duration: 1s;
+}
+
+@keyframes fadeInOpacity {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}

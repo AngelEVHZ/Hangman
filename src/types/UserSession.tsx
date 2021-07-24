@@ -5,5 +5,6 @@ export interface UserSession {
     nickName: string;
     host: boolean;
     conected: number;
+    playerId: string;
 }
   
