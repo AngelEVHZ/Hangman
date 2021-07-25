@@ -49,8 +49,9 @@ export const UseSocketState = (): SocketContextInterface => {
     const onMessage = (event: MessageEvent) => {
         console.log("ON Message",event);
         const local = {...state};
-        console.log("LOCAL", local);
-        setState({...state, message: JSON.parse(event.data) as NotifyResponse<any>});
+        console.log("SOCKET LOCAL STATE", local);
+        const message = JSON.parse(event.data) as NotifyResponse<any>;
+        setState({...state, message: message});
     };
     const closeSocket = () => {
         console.log("ON CLOSE SOCKET");
@@ -58,6 +59,7 @@ export const UseSocketState = (): SocketContextInterface => {
             webSocket.close();
             setWebSocket(null);
             setConected(false);
+            setState({message: null});
         }
         
     };

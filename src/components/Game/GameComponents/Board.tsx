@@ -11,12 +11,12 @@ const Board: React.FC<any> = (props: BoardProps) => {
     const { errors } = props;
 
     const human = [
-        <div id="head" className="pipe-color fade-in"></div>,
-        <div id="body" className="pipe-color fade-in"></div>,
-        <div id="hand-left" className="pipe-color fade-in"></div>,
-        <div id="hand-right" className="pipe-color fade-in"></div>,
-        <div id="foot-left" className="pipe-color fade-in"></div>,
-        <div id="foot-right" className="pipe-color fade-in"></div>
+        <div id="head" className="pipe-color fade-in" key="head"></div>,
+        <div id="body" className="pipe-color fade-in" key="body"></div>,
+        <div id="hand-left" className="pipe-color fade-in" key="hand-left"></div>,
+        <div id="hand-right" className="pipe-color fade-in" key="hand-right"></div>,
+        <div id="foot-left" className="pipe-color fade-in" key="foot-left"></div>,
+        <div id="foot-right" className="pipe-color fade-in" key="foot-right"></div>
     ];
 
 

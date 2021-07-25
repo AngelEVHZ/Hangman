@@ -15,4 +15,21 @@
     height: 100%;
 }
 
+.space{
+    width: 15px;
+}
+.answer-space{
+    padding: 2px;
+}
 
+.btn-full-size {
+    width: 100%;
+}
+
+.completed{
+    background: chartreuse !important;
+}
+.game-over{
+    background-color: red !important;
+    color: white !important;
+}

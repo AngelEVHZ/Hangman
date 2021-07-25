@@ -6,7 +6,12 @@ import { SettingsContextInterface, UseSettingsState } from "./State/UseSettingsS
 
 const INITIAL_STATE: SettingsContextInterface = {
     handle: {
-        setShowLoader: (value: boolean) => { },
+        setShowLoader: () => { },
+        saveUsers: () => { },
+        savePlayerSettings: () => { },
+        getUsers: () => { return [] },
+        deleteStorage: () => { },
+        existSession: () => {return false },
     },
     state: {
         showLoader: false,

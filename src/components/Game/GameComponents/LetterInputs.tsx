@@ -5,19 +5,24 @@ import "./GameStyle.css";
 interface LetterInputsProps {
     userLetter: string[];
     wordLetters: string[];
+    completed: boolean;
+    gameOver: boolean;
 }
 
 const LetterInputs: React.FC<any> = (props: LetterInputsProps) => {
     const { userLetter, wordLetters } = props;
+    const onFinishClas = props.completed ? "completed" : props.gameOver ? "game-over" : "";
+    const printLetters = props.gameOver ? wordLetters : userLetter;
+
     const renderLetter = ( letter:string, index:number) => {
-        if (letter === "")
+        if (letter == " ")
         return (
-            <Col key={index} xs={1} />
+            <div key={index} className="space"> </div>
         );
         return (
-            <Col key={index} xs={1}>
-               <Button variant="outline-dark" className="button letter-button">{userLetter[index]}</Button>
-            </Col>
+            <div key={index} className="answer-space" >
+               <Button variant="outline-dark" className={`button letter-button ${onFinishClas}`}>{printLetters[index]}</Button>
+            </div>
         );
     } 
 

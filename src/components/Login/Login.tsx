@@ -4,7 +4,7 @@ import LoginHowToPlay from "./loginComponents/loginHowToPlay";
 import { UseLoginState } from "./State/UseLoginState";
 
 const Login: React.FC<any> = () => {
-   const {handle} = UseLoginState();
+   const {handle, state} = UseLoginState();
    return (
       <div>
          <div className="row">
