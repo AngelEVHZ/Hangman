@@ -10,3 +10,10 @@
     margin: 20px;
     text-align: center;
 }
+
+
+.cardPlayer{
+    width: 50%;
+    margin: 50px;
+    border-radius: 20px !important;
+}

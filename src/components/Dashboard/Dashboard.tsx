@@ -7,11 +7,7 @@ const Dashboard: React.FC<any> = () => {
     
     return (
         <div>
-            <div className="row">
-                <div className="col-md-6">
-                    <Players></Players>
-                </div>
-            </div>
+                    <Players></Players>     
         </div>
     );
 };

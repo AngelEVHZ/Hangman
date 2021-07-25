@@ -10,8 +10,8 @@ const Players: React.FC<any> = () => {
             <div className="container">
             <div className="row">
                 <div className="col-md-6">
-                <Card>
-                    <Card.Body>
+                <Card className="cardPlayer">
+               {/*     <Card.Body>
                 <Dropdown>
                      <Dropdown.Toggle variant="success" id="dropdown-basic">
                          4 Jugadores
@@ -22,8 +22,8 @@ const Players: React.FC<any> = () => {
                         <Dropdown.Item href="#/action-2">6 Jugadores</Dropdown.Item>
                         <Dropdown.Item href="#/action-3">8 Jugadores</Dropdown.Item>
                     </Dropdown.Menu>
-                </Dropdown>
-                    </Card.Body>
+               </Dropdown> 
+                    </Card.Body>*/}
                     <Card className="player">
                         <Card.Body>Facherito</Card.Body>
                     </Card>
