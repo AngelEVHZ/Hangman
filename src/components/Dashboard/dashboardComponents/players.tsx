@@ -15,7 +15,7 @@ const Players: React.FC<PlayerProps> = (props: PlayerProps) => {
         <div>
             <div className="container">
                 <div className="row">
-                    <div className="col-md-6">
+                    <div className="col">
                         <Card className="cardPlayer">
                             {/*     <Card.Body>
                 <Dropdown>

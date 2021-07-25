@@ -1,5 +1,6 @@
 
 import React, { useContext } from "react";
+import { RandomWords } from "../types/GameTypes";
 import { SettingsContextInterface, UseSettingsState } from "./State/UseSettingsState";
 
 
@@ -15,7 +16,10 @@ const INITIAL_STATE: SettingsContextInterface = {
         initMatch: (rounds: number) => { },
         setPlayerWord: (roundIndex: number, word: string, playerId?: string) => { },
         isPlayerReady: (roundIndex: number, playerId?: string) =>  {return false},
-        allPlayerReady: (roundIndex: number) => {},
+        allPlayerReady: (roundIndex: number) => {return false},
+        randomizeWords: (roundIndex: number) => { return {} as RandomWords},
+        setRandomWords: (roundIndex: number, words: RandomWords) => {},
+        getPlayerTargetWord: (roundIndex: number, playerId?: string) => {return ""}
     },
     state: {
         showLoader: false,
@@ -24,6 +28,10 @@ const INITIAL_STATE: SettingsContextInterface = {
             gameId: "",
             nickName: "",
             host: false,
+        },
+        match:{
+            score:[],
+            rounds:0,
         },
         players: [],
     }

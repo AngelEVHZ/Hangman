@@ -7,7 +7,6 @@ export interface UserSession {
     playerId: string;
     owner: boolean;
 }
-  
 
 export interface PlayerSettings {
     playerId: string;

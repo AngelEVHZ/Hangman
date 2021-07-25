@@ -16,6 +16,7 @@ export type NotifyActionType =
     NotifyActionEnum.USER_JOIN;
 
 export enum NotifyGameActionEnum {
-    PLAYER_WORD = "PLAYER_WORD"
+    PLAYER_WORD = "PLAYER_WORD",
+    SET_ROUND_WORDS = "SET_ROUND_WORDS"
 }
     

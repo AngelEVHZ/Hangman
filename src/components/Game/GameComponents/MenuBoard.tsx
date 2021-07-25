@@ -11,7 +11,6 @@ interface MenuBoardProps {
 }
 
 const MenuBoard: React.FC<any> = (props: MenuBoardProps) => {
-    console.log(props.isReady);
     return (
         <Container>
             <Card body>

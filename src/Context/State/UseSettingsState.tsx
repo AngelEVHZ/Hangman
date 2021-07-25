@@ -1,7 +1,9 @@
 
 import { useEffect, useState } from "react";
 import { PlayerSettings, UserSession, GameMatch, GameScore, PlayerScore } from "../../types/UserSession";
-import { defaultTo } from "lodash";
+import { defaultTo, get, words } from "lodash";
+import { RandomWords, TargetWord } from "../../types/GameTypes";
+import { stringify } from "querystring";
 
 export interface SettingsContextInterface {
     handle: {
@@ -14,12 +16,16 @@ export interface SettingsContextInterface {
         initMatch: (rounds: number) => void;
         setPlayerWord: (roundIndex: number, word: string, playerId?: string,) => void;
         isPlayerReady: (roundIndex: number, playerId?: string) =>  boolean;
-        allPlayerReady: (roundIndex: number) => void;
+        allPlayerReady: (roundIndex: number) => boolean;
+        randomizeWords: (roundIndex: number) => RandomWords;
+        setRandomWords: (roundIndex: number, words: RandomWords) => void;
+        getPlayerTargetWord: (roundIndex: number, playerId?: string) => string;
     },
     state: {
         showLoader: boolean;
         playerSettings: PlayerSettings;
         players: UserSession[];
+        match: GameMatch;
     }
 }
 
@@ -33,7 +39,6 @@ export const UseSettingsState = (): SettingsContextInterface => {
         nickName: "",
         host: false,
     });
-
     const [currentMatch, setMatch] = useState<GameMatch>({ score: [], rounds: 0 });
 
     const initMatch = (rounds: number) => {
@@ -75,20 +80,24 @@ export const UseSettingsState = (): SettingsContextInterface => {
     const isPlayerReady = (roundIndex: number, playerId?: string) => {
         if (roundIndex >= currentMatch.rounds) return false;
         const id = playerId? playerId : playerSettings.playerId;
-        const match = { ...currentMatch };
-        const score = match.score[roundIndex]
+        const score = getCurrentScore(roundIndex);
         if (!score[id]) return false;
         return  score[id].ready;
     }
 
-    const allPlayerReady = (roundIndex: number) => {
+    const allPlayerReady = (roundIndex: number): boolean => {
         if (roundIndex >= currentMatch.rounds) return false;
-        const match = { ...currentMatch };
-        const score = match.score[roundIndex]
-        players.forEach((player: UserSession) => {
+        const score = getCurrentScore(roundIndex);
+        const size = players.length;
+        for (let i = 0; i < size; i++) {
+            const player = players[i];
             if(!score[player.playerId].ready) return false;
-        });
+        }
         return true;
+    }
+
+    const getCurrentScore =(roundIndex: number): GameScore => {
+        return currentMatch.score[roundIndex]
     }
 
     const saveItem = (key: string, item: string) => {
@@ -119,6 +128,54 @@ export const UseSettingsState = (): SettingsContextInterface => {
         return JSON.parse(defaultTo(localStorage.getItem(prefix + "player-settings"), "{}")) as PlayerSettings;
     }
 
+    const setRandomWords = (roundIndex: number, words: RandomWords) => {
+        const match = { ...currentMatch };
+        const score = match.score[roundIndex]
+        players.forEach((player: UserSession) => {
+            score[player.playerId].targetWord = words[player.playerId].word;
+        });
+        saveItem("game-match", JSON.stringify(match));
+        setMatch(match);
+    }
+
+    const getPlayerTargetWord = (roundIndex: number, playerId?: string): string => {
+        if (roundIndex >= currentMatch.rounds) return "";
+        const id = playerId? playerId : playerSettings.playerId;
+        const score = getCurrentScore(roundIndex);
+        if (!score[id]) return "";
+        return  score[id].targetWord;
+    }
+
+    const randomizeWords = (roundIndex: number): RandomWords => {
+        const score = getCurrentScore(roundIndex);
+        let randomWords: RandomWords = {};
+        let orderer:{playerId:string, word:string}[] = [];
+        let randomized:{playerId:string, word:string}[] = [];
+
+        players.forEach((player: UserSession) => {
+            orderer.push({playerId:player.playerId, word:score[player.playerId].originalWord});
+            if ((Math.floor(Math.random() * 2) + 1) > 1) {
+                randomized.push({playerId:player.playerId, word:""});
+            } else {
+                randomized.unshift({playerId:player.playerId, word:""});
+            }
+            randomWords[player.playerId]={word: score[player.playerId].originalWord} as TargetWord;
+        });
+    
+        if (players.length <= 1) return randomWords;
+        const size = players.length;
+        for (let i = 0; i < size; i++) {
+            const origin = orderer.pop();
+            const target = randomized.find( (item => item.playerId != get(origin,"playerId")));
+            randomized = randomized.filter(item => item.playerId != get(target,"playerId"));
+            randomWords[get(target,"playerId","")].word =  get(origin,"word", "");    
+        }
+        
+        console.log("randomWords",randomWords);
+        return randomWords;
+        
+    }
+
     useEffect(() => {
         //ONLY FOR TESTIN
         console.log("process.env.REACT_APP_DEV",process.env.REACT_APP_DEV);
@@ -141,8 +198,6 @@ export const UseSettingsState = (): SettingsContextInterface => {
         return getUsers().length > 0
     }
 
-
-  
     return {
         handle: {
             isPlayerReady,
@@ -154,9 +209,13 @@ export const UseSettingsState = (): SettingsContextInterface => {
             savePlayerSettings,
             initMatch,
             setPlayerWord,
-            allPlayerReady
+            allPlayerReady,
+            randomizeWords,
+            setRandomWords,
+            getPlayerTargetWord,
         },
         state: {
+            match: currentMatch,
             showLoader,
             players,
             playerSettings

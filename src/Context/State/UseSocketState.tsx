@@ -4,8 +4,9 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { NotifyActionEnum, NotifyGameActionEnum } from "../../constant/NotifyActionEnum";
 import { SocketActionEnum } from "../../constant/SocketActionEnum";
+import { RandomWords } from "../../types/GameTypes";
 import { NotifyResponse } from "../../types/NotifyResponse";
-import { CreateSessionRequest, NotifyAll, PlayerWord, SocketAction } from "../../types/SocketAction";
+import { CreateSessionRequest, NotifyAll, PlayerWord, SetRandomWords, SocketAction } from "../../types/SocketAction";
 import { UserSession } from "../../types/UserSession";
 import { useSettings } from "../SettingsProvider";
 import { SettingsContextInterface } from "./UseSettingsState";
@@ -18,6 +19,7 @@ export interface SocketContextInterface {
         joinGame: (nickName: string, gameId?: string) => void;
         closeSocket: () => void;
         sendWord: (word: string, round: number) => void;
+        sendRandomWord: (words: RandomWords, round: number) => void;
     };
 }
 interface SocketState {
@@ -128,6 +130,22 @@ export const UseSocketState = (): SocketContextInterface => {
         notify(data);
     }
 
+    const sendRandomWord = (words: RandomWords, round: number) => {
+        const data: SocketAction<NotifyAll> = {
+            action: SocketActionEnum.NOTIFY_ALL,
+            data:{
+                excludeOwner: true,
+                gameId: settings.state.playerSettings.gameId,
+                notification: {
+                    words,
+                    round,
+                    action: NotifyGameActionEnum.SET_ROUND_WORDS
+                } as SetRandomWords
+            }
+        }
+        notify(data);
+    }
+
     const notify = (data: SocketAction<any>) => {
         if (webSocket) {
             webSocket.send(JSON.stringify(data));
@@ -142,6 +160,7 @@ export const UseSocketState = (): SocketContextInterface => {
             joinGame,
             closeSocket,
             sendWord,
+            sendRandomWord,
         }
     };
 }

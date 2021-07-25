@@ -1,5 +1,6 @@
 
 import React, { useContext } from "react";
+import { RandomWords } from "../types/GameTypes";
 import {INITIAL_SOCKET_STATE, SocketContextInterface, UseSocketState} from "./State/UseSocketState";
 
 
@@ -11,6 +12,7 @@ const INITIAL_STATE: SocketContextInterface = {
         joinGame: (nickName: string, gameId?: string) => {},
         closeSocket: () => {},
         sendWord: (word: string, round: number) => {},
+        sendRandomWord: (words: RandomWords, round: number) => {},
     }
 }
 

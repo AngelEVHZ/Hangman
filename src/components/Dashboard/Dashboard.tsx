@@ -10,7 +10,7 @@ const Dashboard: React.FC<any> = () => {
     
     return (
         <div>
-            <Players></Players>     
+            <Players players={state.players}></Players>     
             <div className="row">
                 <div className="col-md-6">
                     <Button onClick={handle.initMatch}> PLAY</Button>
