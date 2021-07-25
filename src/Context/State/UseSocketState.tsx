@@ -1,7 +1,14 @@
+import { settings } from "cluster";
+import { get } from "lodash";
+import { useEffect } from "react";
 import { useState } from "react";
+import { NotifyActionEnum, NotifyGameActionEnum } from "../../constant/NotifyActionEnum";
 import { SocketActionEnum } from "../../constant/SocketActionEnum";
 import { NotifyResponse } from "../../types/NotifyResponse";
-import { CreateSessionRequest, SocketAction } from "../../types/SocketAction";
+import { CreateSessionRequest, NotifyAll, PlayerWord, SocketAction } from "../../types/SocketAction";
+import { UserSession } from "../../types/UserSession";
+import { useSettings } from "../SettingsProvider";
+import { SettingsContextInterface } from "./UseSettingsState";
 
 export interface SocketContextInterface {
     state: SocketState,
@@ -10,6 +17,7 @@ export interface SocketContextInterface {
         connect: () => void;
         joinGame: (nickName: string, gameId?: string) => void;
         closeSocket: () => void;
+        sendWord: (word: string, round: number) => void;
     };
 }
 interface SocketState {
@@ -23,14 +31,17 @@ export const UseSocketState = (): SocketContextInterface => {
     const [webSocket, setWebSocket] = useState<WebSocket | null>(null);
     const [state, setState] = useState<SocketState>(INITIAL_SOCKET_STATE);
     const [conected, setConected] = useState<boolean>(false);
+    const settings: SettingsContextInterface = useSettings();
 
 
     const connect = () => {
         try {
-            const webSocket = new WebSocket("");
+            const url =  process.env.REACT_APP_ENV == "DEV" ? "" : process.env.REACT_APP_SOCKET;
+            const webSocket = new WebSocket(url || "");
             webSocket.onopen = () => onOpen(webSocket);
             webSocket.onerror = (event: Event) => onError(event);
             webSocket.onmessage = (event: MessageEvent) => onMessage(event);   
+            webSocket.onclose = (event: CloseEvent) => onClose( event);
         } catch (error) {
             console.log(error);
         }
@@ -42,10 +53,15 @@ export const UseSocketState = (): SocketContextInterface => {
         setWebSocket(webSocket);
         setConected(true);
     };
+    const onClose = (event: CloseEvent) => {
+        console.log("ON CLOSE");
+        settings.handle.setShowLoader(false);
+    };
     const onError = (event: Event) => {
         console.log("ON ERROR", event);
         closeSocket();
     };
+    
     const onMessage = (event: MessageEvent) => {
         console.log("ON Message",event);
         const local = {...state};
@@ -53,6 +69,26 @@ export const UseSocketState = (): SocketContextInterface => {
         const message = JSON.parse(event.data) as NotifyResponse<any>;
         setState({...state, message: message});
     };
+
+    useEffect(() => {
+        if (!state.message) return;
+       
+        console.log("ACTION RECIVED", state.message);
+        const message = get(state,"message", {}) as NotifyResponse<any>;
+        switch(message.action) {
+            case NotifyActionEnum.USER_DISCONNECTED:
+            case NotifyActionEnum.USER_JOIN:
+                updateUser(message);
+                break;
+        } 
+
+    }, [state.message]);
+
+    const updateUser = (message: NotifyResponse<UserSession[]>) => {
+        console.log("USER SESSION", message.data);
+        settings.handle.saveUsers(message.data)
+    };
+
     const closeSocket = () => {
         console.log("ON CLOSE SOCKET");
         if (webSocket) {
@@ -75,6 +111,23 @@ export const UseSocketState = (): SocketContextInterface => {
         notify(data);
     }
 
+    const sendWord = (word: string, round: number) => {
+        const data: SocketAction<NotifyAll> = {
+            action: SocketActionEnum.NOTIFY_ALL,
+            data:{
+                excludeOwner: true,
+                gameId: settings.state.playerSettings.gameId,
+                notification: {
+                    word,
+                    round,
+                    playerId: settings.state.playerSettings.playerId,
+                    action: NotifyGameActionEnum.PLAYER_WORD
+                } as PlayerWord
+            }
+        }
+        notify(data);
+    }
+
     const notify = (data: SocketAction<any>) => {
         if (webSocket) {
             webSocket.send(JSON.stringify(data));
@@ -88,6 +141,7 @@ export const UseSocketState = (): SocketContextInterface => {
             connect,
             joinGame,
             closeSocket,
+            sendWord,
         }
     };
 }

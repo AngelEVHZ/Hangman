@@ -1,17 +1,23 @@
 import React from "react";
 import './playersStyle.css';
-import {Dropdown} from "react-bootstrap";
-import {Card} from "react-bootstrap";
+import { Dropdown } from "react-bootstrap";
+import { Card } from "react-bootstrap";
+import { UserSession } from "../../../types/UserSession";
 
-const Players: React.FC<any> = () => {
+
+interface PlayerProps {
+    players: UserSession[];
+}
+const Players: React.FC<PlayerProps> = (props: PlayerProps) => {
+    const { players } = props;
 
     return (
         <div>
             <div className="container">
-            <div className="row">
-                <div className="col-md-6">
-                <Card className="cardPlayer">
-               {/*     <Card.Body>
+                <div className="row">
+                    <div className="col-md-6">
+                        <Card className="cardPlayer">
+                            {/*     <Card.Body>
                 <Dropdown>
                      <Dropdown.Toggle variant="success" id="dropdown-basic">
                          4 Jugadores
@@ -24,21 +30,17 @@ const Players: React.FC<any> = () => {
                     </Dropdown.Menu>
                </Dropdown> 
                     </Card.Body>*/}
-                    <Card className="player">
-                        <Card.Body>Facherito</Card.Body>
-                    </Card>
-                    <Card className="player">
-                        <Card.Body>Facherito</Card.Body>
-                    </Card>
-                    <Card className="player">
-                        <Card.Body>Facherito</Card.Body>
-                    </Card>
-                    <Card className="player">
-                        <Card.Body>Facherito</Card.Body>
-                    </Card>
-                </Card>
+                            <Card>
+                                {players.map((player) => {
+                                    return (
+                                        <Card className="player" key={player.playerId}>
+                                            <Card.Body>{player.nickName}</Card.Body>
+                                        </Card>)
+                                })}
+                            </Card>
+                        </Card>
+                    </div>
                 </div>
-            </div>
             </div>
         </div>
     );

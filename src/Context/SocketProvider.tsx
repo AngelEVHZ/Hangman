@@ -10,6 +10,7 @@ const INITIAL_STATE: SocketContextInterface = {
         connect: () => {},
         joinGame: (nickName: string, gameId?: string) => {},
         closeSocket: () => {},
+        sendWord: (word: string, round: number) => {},
     }
 }
 

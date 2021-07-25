@@ -11,10 +11,21 @@ const INITIAL_STATE: SettingsContextInterface = {
         savePlayerSettings: () => { },
         getUsers: () => { return [] },
         deleteStorage: () => { },
-        existSession: () => {return false },
+        existSession: () => { return false },
+        initMatch: (rounds: number) => { },
+        setPlayerWord: (roundIndex: number, word: string, playerId?: string) => { },
+        isPlayerReady: (roundIndex: number, playerId?: string) =>  {return false},
+        allPlayerReady: (roundIndex: number) => {},
     },
     state: {
         showLoader: false,
+        playerSettings: {
+            playerId: "",
+            gameId: "",
+            nickName: "",
+            host: false,
+        },
+        players: [],
     }
 }
 

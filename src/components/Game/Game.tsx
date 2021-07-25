@@ -4,41 +4,43 @@ import { UseGameState } from "./State/UseGameState";
 import { Card, Col, Container, ListGroup, Row } from "react-bootstrap";
 import Board from "./GameComponents/Board";
 import MenuBoard from "./GameComponents/MenuBoard";
+import Players from "../Dashboard/dashboardComponents/players";
 
 const Game: React.FC<any> = () => {
-    const props = UseGameState();
+    const {handle, state} = UseGameState();
 
     return (
         <>
             <Container>
                 <Row >
-                    <Col> USERS</Col>
-                    <Col sm={8}>
-                        {props.roundStart &&
+                    <Col sm={4}>
+                        <Players players={state.players}>
+                        </Players>
+                    </Col>
+                    <Col sm={6}>
+                        {state.roundStart &&
                             <Card body>
                                 <ListGroup variant="flush">
                                     <ListGroup.Item>
                                         <Board
-                                            errors={props.errors}>
+                                            errors={state.errors}>
                                         </Board>
                                     </ListGroup.Item>
                                     <ListGroup.Item>  <LetterInputs
-                                        userLetter={props.userLetter}
-                                        wordLetters={props.wordLetters}
-                                        gameOver={props.gameOver}
-                                        completed={props.completed}
+                                        userLetter={state.userLetter}
+                                        wordLetters={state.wordLetters}
+                                        gameOver={state.gameOver}
+                                        completed={state.completed}
                                     ></LetterInputs></ListGroup.Item>
                                 </ListGroup>
                             </Card>
                         }
-                        {!props.roundStart &&
-                            <MenuBoard handle={props.handle}></MenuBoard>
+                        {!state.roundStart &&
+                            <MenuBoard handle={handle} isReady={state.isReady}></MenuBoard>
                         }
                     </Col>
                     <Col> PUBLICIDAD</Col>
                 </Row>
-
-
             </Container>
         </>
     );

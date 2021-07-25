@@ -7,10 +7,11 @@ interface MenuBoardProps {
         startGame: () => void;
         changeUserWord: (event: React.ChangeEvent<HTMLInputElement>) => void;
     }
+    isReady: boolean;
 }
 
 const MenuBoard: React.FC<any> = (props: MenuBoardProps) => {
-
+    console.log(props.isReady);
     return (
         <Container>
             <Card body>
@@ -30,7 +31,8 @@ const MenuBoard: React.FC<any> = (props: MenuBoardProps) => {
                 <Row>
                     <Col md={{ span: 0, offset: 8 }}>
                         <Button className="btn btn-primary btn-lg ml-auto btn-full-size"
-                        onClick={props.handle.startGame}>Enviar!</Button>
+                        onClick={props.handle.startGame}
+                        disabled={props.isReady}>Enviar!</Button>
                     </Col>
                 </Row>
             </Card>
