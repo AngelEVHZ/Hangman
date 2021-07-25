@@ -1,0 +1,12 @@
+.playersColumn{
+    border: 2px solid black;
+    border-radius: 20px;
+    margin: 20px;
+}
+
+.player{
+    border: 2px solid black;
+    border-radius: 360px !important;
+    margin: 20px;
+    text-align: center;
+}

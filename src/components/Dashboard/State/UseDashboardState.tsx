@@ -25,7 +25,7 @@ export const UseDashboardState = (): DashBoardProps => {
     useEffect(() => {
         console.log("DASHBOARD",socket);
         if (!socket.conected) {
-            history.push(Routes.LOGIN);
+           // history.push(Routes.LOGIN);
         }
     }, []);
 
