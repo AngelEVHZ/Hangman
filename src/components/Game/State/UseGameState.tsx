@@ -16,6 +16,14 @@ export interface GameProps {
         startGame: () => void;
         changeUserWord: (event: React.ChangeEvent<HTMLInputElement>) => void;
     },
+    timerMenu:{
+        time: number;
+        callBack: () => void;
+    },
+    timerGame:{
+        time: number;
+        callBack: () => void;
+    }
     state: {
         wordLetters: string[],
         userLetter: Array<string>;
@@ -45,6 +53,14 @@ export const UseGameState = (): GameProps => {
     const [roundStart, setRountStart] = useState(false);
     const [playersReady, setPlayersReady] = useState(false);
     const [userWord, setUserWord] = useState("");
+
+    // TIMER
+    const timerMenuCallback = () => {
+        console.log("termino el tiempo");
+    }
+    const timerGameCallback = () => {
+        console.log("termino el tiempo");
+    }
 
 
     const changeUserWord = (
@@ -197,6 +213,14 @@ export const UseGameState = (): GameProps => {
             gameOver,
             isReady: settings.handle.isPlayerReady(currentRound),
             players: settings.state.players,
+        },
+        timerMenu:{
+            time: 10,
+            callBack: timerMenuCallback
+        },
+        timerGame:{
+            time: 20,
+            callBack: timerGameCallback
         },
         handle: {
             changeUserWord,
