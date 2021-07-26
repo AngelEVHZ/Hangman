@@ -17,8 +17,12 @@ const Dashboard: React.FC<any> = () => {
                 </div>
                 <div className="col-md-6">
                     <GameMode></GameMode>     
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                <Button className="btn btn-success" onClick={handle.initMatch}> PLAY</Button>
+                <Button onClick={handle.initMatch}> INVITE</Button>
                 </div>
-                <Button onClick={handle.initMatch}> PLAY</Button>
             </div>
         </div>
     );
