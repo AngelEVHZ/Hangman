@@ -19,7 +19,9 @@ const INITIAL_STATE: SettingsContextInterface = {
         allPlayerReady: (roundIndex: number) => {return false},
         randomizeWords: (roundIndex: number) => { return {} as RandomWords},
         setRandomWords: (roundIndex: number, words: RandomWords) => {},
-        getPlayerTargetWord: (roundIndex: number, playerId?: string) => {return ""}
+        getPlayerTargetWord: (roundIndex: number, playerId?: string) => {return ""},
+        setFinishGame: (roundIndex: number, completed: boolean, playerId?: string) => {},
+        allPlayerFinish: (roundIndex: number) => {return false}
     },
     state: {
         showLoader: false,

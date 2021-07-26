@@ -1,5 +1,6 @@
 
 import React from "react";
+import { useState } from "react";
 import { Col, Container, Row, Button } from "react-bootstrap";
 import "./GameStyle.css";
 interface LetterInputsProps {
@@ -7,12 +8,20 @@ interface LetterInputsProps {
     wordLetters: string[];
     completed: boolean;
     gameOver: boolean;
+    callBack: () => void;
 }
 
 const LetterInputs: React.FC<any> = (props: LetterInputsProps) => {
+    const [finish, setFinish] = useState(false);
+
     const { userLetter, wordLetters } = props;
     const onFinishClas = props.completed ? "completed" : props.gameOver ? "game-over" : "";
     const printLetters = props.gameOver ? wordLetters : userLetter;
+
+    if (!finish && (props.completed || props.gameOver)) {
+        setFinish(true);
+        props.callBack();
+    }
 
     const renderLetter = ( letter:string, index:number) => {
         if (letter == " ")

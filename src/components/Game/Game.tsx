@@ -19,7 +19,10 @@ const Game: React.FC<any> = () => {
                         </Players>
                     </Col>
                     <Col sm={6}>
-                        {state.roundStart &&
+                        {state.playersFinish &&
+                            <div>MENU DE SCORE</div>
+                        }
+                        {!state.playersFinish && state.roundStart &&
                             <Card body>
                                 <ListGroup variant="flush">
                                     <ListGroup.Item>
@@ -32,6 +35,7 @@ const Game: React.FC<any> = () => {
                                     </ListGroup.Item>
                                     <ListGroup.Item>
                                         <LetterInputs
+                                            callBack={handle.finishGameCallback}
                                             userLetter={state.userLetter}
                                             wordLetters={state.wordLetters}
                                             gameOver={state.gameOver}
@@ -41,7 +45,7 @@ const Game: React.FC<any> = () => {
                                 </ListGroup>
                             </Card>
                         }
-                        {!state.roundStart &&
+                        {!state.playersFinish && !state.roundStart &&
                             <MenuBoard handle={handle} isReady={state.isReady} timer={timerMenu}></MenuBoard>
                         }
                     </Col>

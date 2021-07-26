@@ -19,7 +19,7 @@ const Dashboard: React.FC<any> = () => {
                     <GameMode></GameMode>     
                 </div>
             </div>
-            <Button onClick={handle.initMatch}> PLAY</Button>
+            <Button onClick={handle.startGame} disabled={!state.host || state.submited}> PLAY</Button>
         </div>
     );
 };

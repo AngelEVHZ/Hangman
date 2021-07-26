@@ -6,7 +6,7 @@ import { NotifyActionEnum, NotifyGameActionEnum } from "../../constant/NotifyAct
 import { SocketActionEnum } from "../../constant/SocketActionEnum";
 import { RandomWords } from "../../types/GameTypes";
 import { NotifyResponse } from "../../types/NotifyResponse";
-import { CreateSessionRequest, NotifyAll, PlayerWord, SetRandomWords, SocketAction } from "../../types/SocketAction";
+import { CreateSessionRequest, FinishRound, NotifyAll, PlayerWord, SetRandomWords, SocketAction, StartGame } from "../../types/SocketAction";
 import { UserSession } from "../../types/UserSession";
 import { useSettings } from "../SettingsProvider";
 import { SettingsContextInterface } from "./UseSettingsState";
@@ -20,6 +20,8 @@ export interface SocketContextInterface {
         closeSocket: () => void;
         sendWord: (word: string, round: number) => void;
         sendRandomWord: (words: RandomWords, round: number) => void;
+        startGame: (rounds: number) => void;
+        sendFinish: (completed: boolean, round: number) => void;
     };
 }
 interface SocketState {
@@ -130,6 +132,24 @@ export const UseSocketState = (): SocketContextInterface => {
         notify(data);
     }
 
+    const sendFinish = (completed: boolean, round: number) => {
+        const data: SocketAction<NotifyAll> = {
+            action: SocketActionEnum.NOTIFY_ALL,
+            data:{
+                excludeOwner: true,
+                gameId: settings.state.playerSettings.gameId,
+                notification: {
+                    round,
+                    completed,
+                    seconds: 0,
+                    playerId: settings.state.playerSettings.playerId,
+                    action: NotifyGameActionEnum.FINISH_ROUND
+                } as FinishRound,
+            }
+        }
+        notify(data);
+    }
+
     const sendRandomWord = (words: RandomWords, round: number) => {
         const data: SocketAction<NotifyAll> = {
             action: SocketActionEnum.NOTIFY_ALL,
@@ -141,6 +161,19 @@ export const UseSocketState = (): SocketContextInterface => {
                     round,
                     action: NotifyGameActionEnum.SET_ROUND_WORDS
                 } as SetRandomWords
+            }
+        }
+        notify(data);
+    }
+    const startGame = (rounds: number) => {
+        const data: SocketAction<NotifyAll> = {
+            action: SocketActionEnum.NOTIFY_ALL,
+            data:{
+                gameId: settings.state.playerSettings.gameId,
+                notification: {
+                    rounds,
+                    action: NotifyGameActionEnum.START_GAME
+                } as StartGame
             }
         }
         notify(data);
@@ -161,6 +194,8 @@ export const UseSocketState = (): SocketContextInterface => {
             closeSocket,
             sendWord,
             sendRandomWord,
+            startGame,
+            sendFinish
         }
     };
 }
