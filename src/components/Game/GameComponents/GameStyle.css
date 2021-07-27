@@ -24,6 +24,8 @@
 
 .btn-full-size {
     width: 100%;
+    background-color: #b06010 !important;
+    border: none !important;
 }
 
 .completed{

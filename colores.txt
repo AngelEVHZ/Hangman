@@ -1,0 +1,15 @@
+normal cada quien pone 1 palabra los demas tratan de adivinarla
+
+contra reloj
+
+palabras aleatorias
+ver el numero de palabras que resuelves en x cantidad de tiempo
+si aciertas sumas puntos
+si fallas restas puntos
+
+https://brandcolors.net
+
+azul cielo: 6caddf
+naranja: b06010
+azul marino: 004990
+rojo: b50938

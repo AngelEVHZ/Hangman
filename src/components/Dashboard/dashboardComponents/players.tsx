@@ -1,6 +1,5 @@
 import React from "react";
 import './playersStyle.css';
-import { Dropdown } from "react-bootstrap";
 import { Card } from "react-bootstrap";
 import { UserSession } from "../../../types/UserSession";
 
@@ -16,7 +15,7 @@ const Players: React.FC<PlayerProps> = (props: PlayerProps) => {
             <div className="container">
                 <div className="row">
                     <div className="col">
-                        <Card className="cardPlayer">
+                        <Card className="card-player shadow p-3 mb-5 rounded">
                             {/*     <Card.Body>
                 <Dropdown>
                      <Dropdown.Toggle variant="success" id="dropdown-basic">
@@ -30,14 +29,14 @@ const Players: React.FC<PlayerProps> = (props: PlayerProps) => {
                     </Dropdown.Menu>
                </Dropdown> 
                     </Card.Body>*/}
-                            <Card>
+                            
                                 {players.map((player) => {
                                     return (
-                                        <Card className="player" key={player.playerId}>
+                                        <Card  className="player" key={player.playerId}>
                                             <Card.Body>{player.nickName}</Card.Body>
                                         </Card>)
                                 })}
-                            </Card>
+
                         </Card>
                     </div>
                 </div>

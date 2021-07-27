@@ -4,10 +4,24 @@
     margin-top: 50px;
     text-align: center;
     padding: 5px;
-    border-radius: 20px !important;
-    box-shadow: 2px 2px 5px #ccc;
+    border-radius: 10px !important;
+    background-color: #6caddf !important;
 }
 
 .gameCard :hover{
     cursor: pointer;
+}
+
+.btn-dashboard{
+    width: 100%;
+    height: 60px;
+    border: none !important;
+}
+
+.btn-play{
+    background-color: #004990 !important;
+}
+
+.btn-invite{
+    background-color: #b06010 !important;
 }

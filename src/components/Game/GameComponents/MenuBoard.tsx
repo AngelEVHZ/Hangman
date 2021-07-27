@@ -37,7 +37,7 @@ const MenuBoard: React.FC<any> = (props: MenuBoardProps) => {
                         <Timer {...props.timer}></Timer>
                     </Col>
                     <Col md={{ span: 0, offset: 8 }}>
-                        <Button className="btn btn-primary btn-lg ml-auto btn-full-size"
+                        <Button className="btn btn-lg ml-auto btn-full-size"
                             onClick={props.handle.startGame}
                             disabled={props.isReady}>Enviar!</Button>
                     </Col>

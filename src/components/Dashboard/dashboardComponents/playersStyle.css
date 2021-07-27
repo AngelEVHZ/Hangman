@@ -1,19 +1,18 @@
 .playersColumn{
-    border: 2px solid black;
-    border-radius: 20px;
+    border-radius: 40px !important;
     margin: 20px;
 }
 
 .player{
-    border: 2px solid black;
-    border-radius: 360px !important;
+    border-radius: 20px !important;
     margin: 20px;
     text-align: center;
 }
 
 
-.cardPlayer{
+.card-player{
     margin: 50px;
-    border-radius: 20px !important;
-    box-shadow: 2px 2px 5px #ccc;
+    border: none !important;
+    background-color: rgba(0,0,0,0.3) !important;
+    
 }

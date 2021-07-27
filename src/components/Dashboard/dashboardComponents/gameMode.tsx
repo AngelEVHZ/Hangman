@@ -1,6 +1,20 @@
 import React from "react";
 import './gameStyle.css';
-import {Card} from "react-bootstrap";
+import GameCard, {GameCardProps} from "./gameCard";
+
+
+const gameCards: GameCardProps[]=[
+    {title: "Normal",
+     description: "Modo de juego basico"},
+    {title: "Contra Reloj",
+    description: "Modo de juego basico"},
+    {title: "Proximamente",
+    description: "Modo de juego basico"},
+    {title: "Proximamente",
+    description: "Modo de juego basico"},
+    {title: "Proximamente",
+    description: "Modo de juego basico"}
+]
 
 const GameMode: React.FC<any> = () => {
 
@@ -8,26 +22,12 @@ const GameMode: React.FC<any> = () => {
         <div>
            <div className="container">
                 <div className="row">
-                    <div className="col-md-3">
-                    <Card className="gameCard">
-                        <p>Normal</p>
-                    </Card>
-                    </div>
-                    <div className="col-md-3">
-                    <Card className="gameCard">
-                        <p>Contra Reloj</p>
-                    </Card>
-                    </div>
-                    <div className="col-md-3">
-                    <Card className="gameCard">
-                        <p>Proximamente</p>
-                    </Card>
-                    </div>
-                    <div className="col-md-3">
-                    <Card className="gameCard">
-                        <p>Proximamente</p>
-                    </Card>
-                    </div>
+                    {gameCards.map((card)=>{
+                        return (<div className="col-md-3">
+                        <GameCard {...card}></GameCard>
+                        </div>)
+                    }
+                    )}
                 </div>
            </div>
         </div>

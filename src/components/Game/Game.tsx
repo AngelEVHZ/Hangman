@@ -13,7 +13,7 @@ const Game: React.FC<any> = () => {
     return (
         <>
             <Container>
-                <Row >
+                <Row className="mt-5">
                     <Col sm={4}>
                         <Players players={state.players}>
                         </Players>
