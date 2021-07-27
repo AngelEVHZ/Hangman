@@ -12,7 +12,7 @@ const Dashboard: React.FC<any> = () => {
     return (
         <div>
             <div className="row">
-                <div className="col-md-6">
+                <div className="col-md-4">
                 <Players players={state.players}></Players>
                 </div>
                 <div className="col-md-6">
@@ -20,11 +20,10 @@ const Dashboard: React.FC<any> = () => {
                     <br></br>
                     <br></br>
                     <br></br>
-                <Button className="btn btn-success" onClick={handle.startGame}> PLAY</Button>
-                <Button> INVITE</Button>
+                <Button className="btn btn-success" onClick={handle.startGame} disabled={!state.host || state.submited}> PLAY</Button>
+                <Button className="m-5"> INVITE</Button>
                 </div>
             </div>
-            <Button onClick={handle.startGame} disabled={!state.host || state.submited}> PLAY</Button>
         </div>
     );
 };
