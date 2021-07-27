@@ -7,3 +7,7 @@
     border-radius: 20px !important;
     box-shadow: 2px 2px 5px #ccc;
 }
+
+.gameCard :hover{
+    cursor: pointer;
+}
