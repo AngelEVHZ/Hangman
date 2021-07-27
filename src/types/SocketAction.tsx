@@ -37,3 +37,15 @@ export interface SetRandomWords {
     action: NotifyGameActionEnum,
 }
 
+export interface StartGame {
+    rounds: number;
+    action: NotifyGameActionEnum,
+}
+
+export interface FinishRound {
+    playerId: string;
+    round: number;
+    completed: boolean;
+    seconds: number;
+    action: NotifyGameActionEnum,
+}

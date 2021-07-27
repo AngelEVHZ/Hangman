@@ -24,6 +24,7 @@ const Dashboard: React.FC<any> = () => {
                 <Button onClick={handle.initMatch}> INVITE</Button>
                 </div>
             </div>
+            <Button onClick={handle.startGame} disabled={!state.host || state.submited}> PLAY</Button>
         </div>
     );
 };

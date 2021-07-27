@@ -2,21 +2,31 @@ import { settings } from "cluster";
 import _, { get } from "lodash";
 import { useEffect, useState } from "react";
 import { NotifyActionEnum, NotifyGameActionEnum } from "../../../constant/NotifyActionEnum";
+import { TimesEnum } from "../../../constant/Times";
 import { useSettings } from "../../../context/SettingsProvider";
 import { useSocket } from "../../../context/SocketProvider";
 import { SettingsContextInterface } from "../../../context/State/UseSettingsState";
 import { SocketContextInterface } from "../../../context/State/UseSocketState";
 import { RandomWords } from "../../../types/GameTypes";
-import { NotifyResponse } from "../../../types/NotifyResponse";
-import { PlayerWord, SetRandomWords } from "../../../types/SocketAction";
+import { FinishRound, PlayerWord, SetRandomWords } from "../../../types/SocketAction";
 import { UserSession } from "../../../types/UserSession";
 
 export interface GameProps {
     handle: {
         startGame: () => void;
         changeUserWord: (event: React.ChangeEvent<HTMLInputElement>) => void;
+        finishGameCallback: () => void;
+    },
+    timerMenu:{
+        time: number;
+        callBack: () => void;
+    },
+    timerGame:{
+        time: number;
+        callBack: () => void;
     },
     state: {
+        playersFinish: boolean;
         wordLetters: string[],
         userLetter: Array<string>;
         errors: boolean[],
@@ -40,11 +50,37 @@ export const UseGameState = (): GameProps => {
     const [errors, setErrors] = useState(new Array(6).fill(false));
     const [gameOver, setGameover] = useState(false);
     const [completed, setCompleted] = useState(false);
+
     const [currentRound, setRound] = useState(0);
+
     //GENERAL VARS
     const [roundStart, setRountStart] = useState(false);
     const [playersReady, setPlayersReady] = useState(false);
+    const [playersFinish, setPlayersFinish] = useState(false);
     const [userWord, setUserWord] = useState("");
+    const [userWordSended, setUserWordSended] = useState(false);
+
+    // TIMER
+    const timerMenuCallback = () => {
+        if (userWordSended) return;
+        console.log("termino el tiempo");
+        sendWord("time");
+    }
+    const timerGameCallback = () => {
+        if (gameOver || !roundStart || completed) {
+            return;
+        }
+        setGameover(true);
+    }
+
+
+    //GAME CALLBACK
+    const finishGameCallback = () => {
+        settings.handle.setFinishGame(currentRound, completed);
+        socket.actions.sendFinish(completed, currentRound);
+        console.log("FINISH CALLBACK");
+    }
+
 
 
     const changeUserWord = (
@@ -60,14 +96,19 @@ export const UseGameState = (): GameProps => {
     }
 
     const startGame = () => {
+        if (userWordSended) return;
         const word = userWord.trim();
         if (!(word.length > 0)) return;
 
-        settings.handle.setPlayerWord(currentRound, word);
-        socket.actions.sendWord(word, currentRound);
+        sendWord(word);
     }
 
-
+    const sendWord = (word: string) => {
+        if (userWordSended) return;
+        settings.handle.setPlayerWord(currentRound, word);
+        socket.actions.sendWord(word, currentRound);
+        setUserWordSended(true);
+    }
 
     useEffect(() => {
         if (!socket.state.message) return;
@@ -84,6 +125,10 @@ export const UseGameState = (): GameProps => {
                     const randomWords: SetRandomWords = message.data as SetRandomWords;
                     setRandomWords(randomWords.words);
                     break;
+                case NotifyGameActionEnum.FINISH_ROUND:
+                    const data: FinishRound = message.data as FinishRound;
+                    settings.handle.setFinishGame(data.round, data.completed, data.playerId);
+                    break;
             }
         }
 
@@ -91,7 +136,9 @@ export const UseGameState = (): GameProps => {
 
 
     useEffect(() => {
-        if (settings.state.playerSettings.host && !playersReady) {
+        if (!settings.state.playerSettings.host) return;
+        
+        if (!playersReady) {
             const allPlayerReady = settings.handle.allPlayerReady(currentRound);
             if (allPlayerReady) {
                 const random = settings.handle.randomizeWords(currentRound);
@@ -99,8 +146,15 @@ export const UseGameState = (): GameProps => {
                 console.log("NOTIFY RANDOM WORDS");
                 socket.actions.sendRandomWord(random, currentRound);
             }
-
         }
+
+        if ( !playersFinish && (gameOver || completed) ) {
+            const allPlayerFinish = settings.handle.allPlayerFinish(currentRound);
+            console.log("all player finish",allPlayerFinish);
+            if ( allPlayerFinish ){
+                setPlayersFinish(true);
+            }
+        } 
     });
 
     useEffect(() => {
@@ -128,10 +182,12 @@ export const UseGameState = (): GameProps => {
     }
 
     const endRound = () => {
+        setUserWordSended(false);
         setRountStart(false);
         setGameover(false);
         setCompleted(false);
         setPlayersReady(false);
+        setPlayersFinish(false);
     }
 
     const validateError = () => {
@@ -195,10 +251,21 @@ export const UseGameState = (): GameProps => {
             roundStart,
             completed,
             gameOver,
+            playersFinish,
             isReady: settings.handle.isPlayerReady(currentRound),
             players: settings.state.players,
+            
+        },
+        timerMenu:{
+            time: TimesEnum.SEC30,
+            callBack: timerMenuCallback
+        },
+        timerGame:{
+            time: TimesEnum.SEC60,
+            callBack: timerGameCallback
         },
         handle: {
+            finishGameCallback,
             changeUserWord,
             startGame,
         }

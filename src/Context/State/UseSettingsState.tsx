@@ -20,6 +20,8 @@ export interface SettingsContextInterface {
         randomizeWords: (roundIndex: number) => RandomWords;
         setRandomWords: (roundIndex: number, words: RandomWords) => void;
         getPlayerTargetWord: (roundIndex: number, playerId?: string) => string;
+        setFinishGame: (roundIndex: number, completed: boolean, playerId?: string) => void;
+        allPlayerFinish: (roundIndex: number) => boolean;
     },
     state: {
         showLoader: boolean;
@@ -64,6 +66,30 @@ export const UseSettingsState = (): SettingsContextInterface => {
         saveItem("game-match", JSON.stringify(match));
         setMatch(match);
     }
+
+    const setFinishGame = (roundIndex: number, completed: boolean, playerId?: string) => {
+        if (roundIndex >= currentMatch.rounds) return;
+        const id = playerId? playerId : playerSettings.playerId;
+        const match = { ...currentMatch };
+        const score = match.score[roundIndex]
+        if (!score[id]) return;
+        score[id].finish = true;
+        score[id].completed = completed;
+        saveItem("game-match", JSON.stringify(match));
+        setMatch(match);
+    }
+
+    const allPlayerFinish = (roundIndex: number): boolean => {
+        if (roundIndex >= currentMatch.rounds) return false;
+        const score = getCurrentScore(roundIndex);
+        const size = players.length;
+        for (let i = 0; i < size; i++) {
+            const player = players[i];
+            if(!score[player.playerId].finish) return false;
+        }
+        return true;
+    }
+
 
     const setPlayerWord = (roundIndex: number, word: string, playerId?: string) => {
         if (roundIndex >= currentMatch.rounds) return;
@@ -117,7 +143,7 @@ export const UseSettingsState = (): SettingsContextInterface => {
         const player: PlayerSettings = {
             playerId: user.playerId,
             gameId: user.gameId,
-            nickName: user.gameId,
+            nickName: user.nickName,
             host: user.host
         }
         setPlayerSettings(player);
@@ -213,6 +239,8 @@ export const UseSettingsState = (): SettingsContextInterface => {
             randomizeWords,
             setRandomWords,
             getPlayerTargetWord,
+            setFinishGame,
+            allPlayerFinish,
         },
         state: {
             match: currentMatch,
