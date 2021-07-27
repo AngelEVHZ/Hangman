@@ -20,8 +20,8 @@ const Dashboard: React.FC<any> = () => {
                     <br></br>
                     <br></br>
                     <br></br>
-                <Button className="btn btn-success" onClick={handle.initMatch}> PLAY</Button>
-                <Button onClick={handle.initMatch}> INVITE</Button>
+                <Button className="btn btn-success" onClick={handle.startGame}> PLAY</Button>
+                <Button> INVITE</Button>
                 </div>
             </div>
             <Button onClick={handle.startGame} disabled={!state.host || state.submited}> PLAY</Button>
