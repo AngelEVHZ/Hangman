@@ -1,6 +1,7 @@
 
 import React, { useContext } from "react";
 import { RandomWords } from "../types/GameTypes";
+import { ScoreResume } from "../types/UserSession";
 import { SettingsContextInterface, UseSettingsState } from "./State/UseSettingsState";
 
 
@@ -20,8 +21,10 @@ const INITIAL_STATE: SettingsContextInterface = {
         randomizeWords: (roundIndex: number) => { return {} as RandomWords},
         setRandomWords: (roundIndex: number, words: RandomWords) => {},
         getPlayerTargetWord: (roundIndex: number, playerId?: string) => {return ""},
-        setFinishGame: (roundIndex: number, completed: boolean, playerId?: string) => {},
-        allPlayerFinish: (roundIndex: number) => {return false}
+        setFinishGame: (roundIndex: number, completed: boolean, time: number, playerId?: string) => {},
+        allPlayerFinish: (roundIndex: number) => {return false},
+        generateScore: () => {return {players: []} as ScoreResume},
+        getPlayerName: (playerId: string) => {return ""},
     },
     state: {
         showLoader: false,
@@ -35,6 +38,7 @@ const INITIAL_STATE: SettingsContextInterface = {
             score:[],
             rounds:0,
         },
+        scoreResume: {players:[]},
         players: [],
     }
 }

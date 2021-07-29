@@ -47,5 +47,10 @@ export interface FinishRound {
     round: number;
     completed: boolean;
     seconds: number;
+    time: number;
+    action: NotifyGameActionEnum,
+}
+
+export interface ShowSores {
     action: NotifyGameActionEnum,
 }

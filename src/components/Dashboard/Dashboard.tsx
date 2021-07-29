@@ -25,7 +25,7 @@ const Dashboard: React.FC<any> = () => {
                             <Button className="btn btn-dashboard btn-play" onClick={handle.startGame} disabled={!state.host || state.submited}> PLAY</Button>
                         </div>
                         <div className="col-md-3">
-                            <Button className="btn-dashboard btn-invite"> INVITE</Button>
+                            <Button className="btn-dashboard btn-invite" onClick={handle.copyInvitation}> INVITE</Button>
                         </div>
                     </div>
                 </div>

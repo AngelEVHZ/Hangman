@@ -21,11 +21,12 @@ export interface SocketContextInterface {
         sendWord: (word: string, round: number) => void;
         sendRandomWord: (words: RandomWords, round: number) => void;
         startGame: (rounds: number) => void;
-        sendFinish: (completed: boolean, round: number) => void;
+        sendFinish: (completed: boolean, round: number, time: number) => void;
+        sendShowScores: () => void;
     };
 }
 interface SocketState {
-   message: NotifyResponse<any> | null;
+    message: NotifyResponse<any> | null;
 }
 export const INITIAL_SOCKET_STATE: SocketState = {
     message: null,
@@ -40,12 +41,12 @@ export const UseSocketState = (): SocketContextInterface => {
 
     const connect = () => {
         try {
-            const url =  process.env.REACT_APP_ENV == "DEV" ? "" : process.env.REACT_APP_SOCKET;
+            const url = process.env.REACT_APP_ENV == "DEV" ? "" : process.env.REACT_APP_SOCKET;
             const webSocket = new WebSocket(url || "");
             webSocket.onopen = () => onOpen(webSocket);
             webSocket.onerror = (event: Event) => onError(event);
-            webSocket.onmessage = (event: MessageEvent) => onMessage(event);   
-            webSocket.onclose = (event: CloseEvent) => onClose( event);
+            webSocket.onmessage = (event: MessageEvent) => onMessage(event);
+            webSocket.onclose = (event: CloseEvent) => onClose(event);
         } catch (error) {
             console.log(error);
         }
@@ -65,26 +66,26 @@ export const UseSocketState = (): SocketContextInterface => {
         console.log("ON ERROR", event);
         closeSocket();
     };
-    
+
     const onMessage = (event: MessageEvent) => {
-        console.log("ON Message",event);
-        const local = {...state};
+        console.log("ON Message", event);
+        const local = { ...state };
         console.log("SOCKET LOCAL STATE", local);
         const message = JSON.parse(event.data) as NotifyResponse<any>;
-        setState({...state, message: message});
+        setState({ ...state, message: message });
     };
 
     useEffect(() => {
         if (!state.message) return;
-       
+
         console.log("ACTION RECIVED", state.message);
-        const message = get(state,"message", {}) as NotifyResponse<any>;
-        switch(message.action) {
+        const message = get(state, "message", {}) as NotifyResponse<any>;
+        switch (message.action) {
             case NotifyActionEnum.USER_DISCONNECTED:
             case NotifyActionEnum.USER_JOIN:
                 updateUser(message);
                 break;
-        } 
+        }
 
     }, [state.message]);
 
@@ -99,15 +100,15 @@ export const UseSocketState = (): SocketContextInterface => {
             webSocket.close();
             setWebSocket(null);
             setConected(false);
-            setState({message: null});
+            setState({ message: null });
         }
-        
+
     };
 
     const joinGame = (nickName: string, gameId?: string) => {
         const data: SocketAction<CreateSessionRequest> = {
             action: SocketActionEnum.CONNECT_SESSION,
-            data:{
+            data: {
                 nickName,
                 gameId,
             }
@@ -118,7 +119,7 @@ export const UseSocketState = (): SocketContextInterface => {
     const sendWord = (word: string, round: number) => {
         const data: SocketAction<NotifyAll> = {
             action: SocketActionEnum.NOTIFY_ALL,
-            data:{
+            data: {
                 excludeOwner: true,
                 gameId: settings.state.playerSettings.gameId,
                 notification: {
@@ -132,13 +133,14 @@ export const UseSocketState = (): SocketContextInterface => {
         notify(data);
     }
 
-    const sendFinish = (completed: boolean, round: number) => {
+    const sendFinish = (completed: boolean, round: number, time: number) => {
         const data: SocketAction<NotifyAll> = {
             action: SocketActionEnum.NOTIFY_ALL,
-            data:{
+            data: {
                 excludeOwner: true,
                 gameId: settings.state.playerSettings.gameId,
                 notification: {
+                    time,
                     round,
                     completed,
                     seconds: 0,
@@ -150,10 +152,24 @@ export const UseSocketState = (): SocketContextInterface => {
         notify(data);
     }
 
+    const sendShowScores = () => {
+        const data: SocketAction<NotifyAll> = {
+            action: SocketActionEnum.NOTIFY_ALL,
+            data: {
+                excludeOwner: true,
+                gameId: settings.state.playerSettings.gameId,
+                notification: {
+                    action: NotifyGameActionEnum.SHOW_SCORES
+                } as FinishRound,
+            }
+        }
+        notify(data);
+    }
+
     const sendRandomWord = (words: RandomWords, round: number) => {
         const data: SocketAction<NotifyAll> = {
             action: SocketActionEnum.NOTIFY_ALL,
-            data:{
+            data: {
                 excludeOwner: true,
                 gameId: settings.state.playerSettings.gameId,
                 notification: {
@@ -168,7 +184,7 @@ export const UseSocketState = (): SocketContextInterface => {
     const startGame = (rounds: number) => {
         const data: SocketAction<NotifyAll> = {
             action: SocketActionEnum.NOTIFY_ALL,
-            data:{
+            data: {
                 gameId: settings.state.playerSettings.gameId,
                 notification: {
                     rounds,
@@ -195,7 +211,8 @@ export const UseSocketState = (): SocketContextInterface => {
             sendWord,
             sendRandomWord,
             startGame,
-            sendFinish
+            sendFinish,
+            sendShowScores
         }
     };
 }

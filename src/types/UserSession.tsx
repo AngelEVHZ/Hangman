@@ -32,3 +32,11 @@ export interface PlayerScore {
     targetWord: string;
     ready: boolean;
 }
+
+export interface ScoreResume {
+    players: PlayerScoreResume[]
+}
+
+export interface PlayerScoreResume {
+    [key: string]: number[]
+}

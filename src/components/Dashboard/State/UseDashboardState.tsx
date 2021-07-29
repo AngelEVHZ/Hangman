@@ -20,6 +20,7 @@ export interface DashBoardProps {
     },
     handle:{
         startGame: () => void;
+        copyInvitation: () => void;
     }
 }
 
@@ -65,6 +66,11 @@ export const UseDashboardState = (): DashBoardProps => {
         setGameStart(true);
         socket.actions.startGame(1);
     }
+    const copyInvitation = () => {
+        const url = window.location.origin + "/?game-id="+ settings.state.playerSettings.gameId;
+        navigator.clipboard.writeText(url)
+        console.log("COPIADO",url);
+    }
 
     return {
         state: {
@@ -74,6 +80,7 @@ export const UseDashboardState = (): DashBoardProps => {
         },
         handle:{
             startGame,
+            copyInvitation
         }
     };
 }

@@ -4,6 +4,7 @@ import { useEffect } from "react";
 
 interface TimerProps {
     time: number;
+    stop?: boolean;
     callBack: () => void;
 }
 
@@ -13,6 +14,7 @@ const Timer: React.FC<any> = (props: TimerProps) => {
 
 
     useEffect(() => {
+        if (props.stop) return;
         const remaining = props.time - seconds;
         if (remaining < 0 && isActive) {
             setIsActive(false);

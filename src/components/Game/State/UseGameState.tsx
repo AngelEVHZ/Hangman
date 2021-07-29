@@ -1,21 +1,25 @@
-import { settings } from "cluster";
-import _, { get } from "lodash";
+
+import { get } from "lodash";
 import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { NotifyActionEnum, NotifyGameActionEnum } from "../../../constant/NotifyActionEnum";
 import { TimesEnum } from "../../../constant/Times";
 import { useSettings } from "../../../context/SettingsProvider";
 import { useSocket } from "../../../context/SocketProvider";
 import { SettingsContextInterface } from "../../../context/State/UseSettingsState";
 import { SocketContextInterface } from "../../../context/State/UseSocketState";
+import { Routes } from "../../../shared/RoutesEnum";
 import { RandomWords } from "../../../types/GameTypes";
 import { FinishRound, PlayerWord, SetRandomWords } from "../../../types/SocketAction";
-import { UserSession } from "../../../types/UserSession";
+import { GameMatch, ScoreResume, UserSession } from "../../../types/UserSession";
 
 export interface GameProps {
     handle: {
         startGame: () => void;
         changeUserWord: (event: React.ChangeEvent<HTMLInputElement>) => void;
         finishGameCallback: () => void;
+        nextRound: () => void;
+        getPlayerName: (playerId: string) => string;
     },
     timerMenu:{
         time: number;
@@ -35,11 +39,14 @@ export interface GameProps {
         gameOver: boolean;
         isReady: boolean;
         players: UserSession[],
+        match: GameMatch;
+        scoreResume: ScoreResume;
     }
 }
 
 
 export const UseGameState = (): GameProps => {
+    const history = useHistory();
     const socket: SocketContextInterface = useSocket();
     const settings: SettingsContextInterface = useSettings();
 
@@ -51,7 +58,7 @@ export const UseGameState = (): GameProps => {
     const [gameOver, setGameover] = useState(false);
     const [completed, setCompleted] = useState(false);
 
-    const [currentRound, setRound] = useState(0);
+    
 
     //GENERAL VARS
     const [roundStart, setRountStart] = useState(false);
@@ -59,6 +66,8 @@ export const UseGameState = (): GameProps => {
     const [playersFinish, setPlayersFinish] = useState(false);
     const [userWord, setUserWord] = useState("");
     const [userWordSended, setUserWordSended] = useState(false);
+    const [currentRound, setRound] = useState(0);
+    const [startDate, setStartDate] = useState<Date| null>(null);
 
     // TIMER
     const timerMenuCallback = () => {
@@ -76,12 +85,18 @@ export const UseGameState = (): GameProps => {
 
     //GAME CALLBACK
     const finishGameCallback = () => {
-        settings.handle.setFinishGame(currentRound, completed);
-        socket.actions.sendFinish(completed, currentRound);
+        const seconds = getPlayedTime();
+        settings.handle.setFinishGame( currentRound, completed, seconds);
+        socket.actions.sendFinish(completed, currentRound, seconds);
         console.log("FINISH CALLBACK");
     }
 
-
+    const getPlayedTime = (): number => {
+        const finishDate = new Date();
+        const _startDate = startDate as Date;
+        const dif = finishDate.getTime() - _startDate.getTime();
+        return dif / 1000;
+    }
 
     const changeUserWord = (
         event: React.ChangeEvent<HTMLInputElement>,
@@ -127,7 +142,11 @@ export const UseGameState = (): GameProps => {
                     break;
                 case NotifyGameActionEnum.FINISH_ROUND:
                     const data: FinishRound = message.data as FinishRound;
-                    settings.handle.setFinishGame(data.round, data.completed, data.playerId);
+                    settings.handle.setFinishGame(data.round, data.completed, data.time, data.playerId);
+                    break;
+                case NotifyGameActionEnum.SHOW_SCORES:
+                    settings.handle.generateScore();
+                    setPlayersFinish(true); 
                     break;
             }
         }
@@ -150,9 +169,13 @@ export const UseGameState = (): GameProps => {
 
         if ( !playersFinish && (gameOver || completed) ) {
             const allPlayerFinish = settings.handle.allPlayerFinish(currentRound);
-            console.log("all player finish",allPlayerFinish);
             if ( allPlayerFinish ){
-                setPlayersFinish(true);
+                setTimeout(function(){ 
+                    socket.actions.sendShowScores();
+                    setPlayersFinish(true); 
+                    settings.handle.generateScore();
+
+                }, 2500);
             }
         } 
     });
@@ -179,15 +202,29 @@ export const UseGameState = (): GameProps => {
         setGameover(false);
         setCompleted(false);
         setErrors(new Array(6).fill(false))
+        setStartDate(new Date());
     }
 
     const endRound = () => {
-        setUserWordSended(false);
+        setPlayersReady(false);
         setRountStart(false);
+        setUserWordSended(false);
         setGameover(false);
         setCompleted(false);
-        setPlayersReady(false);
         setPlayersFinish(false);
+        setUserLetter([""]);
+        setWordLetters([""]);
+        setUserWord("");
+    }
+
+    const nextRound = () => {
+        const nextRountNumber = currentRound + 1;
+        if ( nextRountNumber< settings.state.match.rounds) {
+            setRound(nextRountNumber);
+            endRound();
+        } else {
+            history.push(Routes.DASHBOARD);
+        }
     }
 
     const validateError = () => {
@@ -254,7 +291,8 @@ export const UseGameState = (): GameProps => {
             playersFinish,
             isReady: settings.handle.isPlayerReady(currentRound),
             players: settings.state.players,
-            
+            match: settings.state.match,
+            scoreResume: settings.state.scoreResume,
         },
         timerMenu:{
             time: TimesEnum.SEC30,
@@ -265,9 +303,11 @@ export const UseGameState = (): GameProps => {
             callBack: timerGameCallback
         },
         handle: {
+            getPlayerName: settings.handle.getPlayerName,
             finishGameCallback,
             changeUserWord,
             startGame,
+            nextRound,
         }
     };
 }

@@ -14,7 +14,8 @@ const INITIAL_STATE: SocketContextInterface = {
         sendWord: (word: string, round: number) => { },
         sendRandomWord: (words: RandomWords, round: number) => { },
         startGame: (rounds: number) => { },
-        sendFinish: (completed: boolean, round: number) => { },
+        sendFinish: (completed: boolean, round: number, time: number) => { },
+        sendShowScores: () => {},
     }
 }
 
