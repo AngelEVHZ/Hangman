@@ -1,5 +1,6 @@
 
 import React, { useContext } from "react";
+import { AlertMsgProps } from "../types/CommondTypes";
 import { RandomWords } from "../types/GameTypes";
 import { ScoreResume } from "../types/UserSession";
 import { SettingsContextInterface, UseSettingsState } from "./State/UseSettingsState";
@@ -25,6 +26,7 @@ const INITIAL_STATE: SettingsContextInterface = {
         allPlayerFinish: (roundIndex: number) => {return false},
         generateScore: () => {return {players: []} as ScoreResume},
         getPlayerName: (playerId: string) => {return ""},
+        showAlert: (alert: AlertMsgProps) => {},
     },
     state: {
         showLoader: false,
@@ -34,6 +36,7 @@ const INITIAL_STATE: SettingsContextInterface = {
             nickName: "",
             host: false,
         },
+        alert: {show: false, msg:"", type:""},
         match:{
             score:[],
             rounds:0,

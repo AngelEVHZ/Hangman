@@ -32,9 +32,8 @@ export const UseDashboardState = (): DashBoardProps => {
     const [gameStart, setGameStart] = useState<boolean>(false);
     
     useEffect(() => {
-        console.log("DASHBOARD", socket);
         if (!socket.conected) {
-            // history.push(Routes.LOGIN);
+            history.push(Routes.LOGIN);
         }
     }, []);
 
@@ -65,6 +64,7 @@ export const UseDashboardState = (): DashBoardProps => {
     const copyInvitation = () => {
         const url = window.location.origin + "/?game-id="+ settings.state.playerSettings.gameId;
         navigator.clipboard.writeText(url)
+        settings.handle.showAlert({show:true, type:"info",msg:"Invitacion copiada!"});
     }
 
     return {

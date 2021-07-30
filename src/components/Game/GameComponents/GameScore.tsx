@@ -18,8 +18,6 @@ interface CameScoreProps {
 }
 
 const GameScore: React.FC<any> = (props: CameScoreProps) => {
-    console.log("RESUME ", props.scoreResume);
-
     const renderTableRow = (player: PlayerScoreResume) => {
         const key = Object.keys(player)[0];
         const name = props.getPlayerName(key);

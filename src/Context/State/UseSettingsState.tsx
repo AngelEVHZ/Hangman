@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { PlayerSettings, UserSession, GameMatch, GameScore, PlayerScore, ScoreResume, PlayerScoreResume } from "../../types/UserSession";
 import { defaultTo, get } from "lodash";
 import { RandomWords, TargetWord } from "../../types/GameTypes";
+import { AlertMsgProps } from "../../types/CommondTypes";
+
 
 
 export interface SettingsContextInterface {
@@ -24,6 +26,7 @@ export interface SettingsContextInterface {
         allPlayerFinish: (roundIndex: number) => boolean;
         generateScore: () => ScoreResume;
         getPlayerName: (playerId: string) => string;
+        showAlert: (alert: AlertMsgProps) => void;
     },
     state: {
         showLoader: boolean;
@@ -31,6 +34,7 @@ export interface SettingsContextInterface {
         players: UserSession[];
         match: GameMatch;
         scoreResume: ScoreResume;
+        alert: AlertMsgProps;
     }
 }
 
@@ -44,8 +48,19 @@ export const UseSettingsState = (): SettingsContextInterface => {
         nickName: "",
         host: false,
     });
-    const [scoreResume, setScoreResume] = useState<ScoreResume>({players: []});
+    const [scoreResume, setScoreResume] = useState<ScoreResume>({ players: [] });
     const [currentMatch, setMatch] = useState<GameMatch>({ score: [], rounds: 0 });
+    const [alert, setAlert] = useState<AlertMsgProps>({ type: "", msg: "", show: false })
+    const [alertTimeOut, setAlertTimeOut] = useState<any>(null)
+
+    const showAlert = (alert: AlertMsgProps) => {
+        if (alertTimeOut) clearTimeout(alertTimeOut);
+        setAlert(alert);
+        const time = setTimeout(() => {
+            setAlert({ show: false, msg: "", type: "" });
+        }, 1500);
+        setAlertTimeOut(time);
+    }
 
     const initMatch = (rounds: number) => {
         const match: GameMatch = {
@@ -233,7 +248,7 @@ export const UseSettingsState = (): SettingsContextInterface => {
     }
 
     const getPlayerName = (playerId: string): string => {
-        const player = players.find( (player) => player.playerId == playerId);
+        const player = players.find((player) => player.playerId == playerId);
         return get(player, "nickName", "");
     }
 
@@ -266,13 +281,15 @@ export const UseSettingsState = (): SettingsContextInterface => {
             allPlayerFinish,
             generateScore,
             getPlayerName,
+            showAlert,
         },
         state: {
             match: currentMatch,
             showLoader,
             players,
             playerSettings,
-            scoreResume
+            scoreResume,
+            alert
         }
     };
 }

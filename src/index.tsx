@@ -6,19 +6,22 @@ import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { SocketProvider } from "./context/SocketProvider";
 import { SettingsProvider } from './context/SettingsProvider';
-import Loader from './components/Loader/Loader';
+import Loader from './components/Commonds/Loader/Loader';
+import AlertMsg from './components/Commonds/Alert/AlertMsg';
 import "./index.css";
+
 
 ReactDOM.render(
   <React.StrictMode>
-        <div className="background">
-    <SettingsProvider>
-      <SocketProvider>
-        <Navigation />
-        <Loader></Loader>
-      </SocketProvider>
-    </SettingsProvider>
-        </div>
+    <div className="background">
+      <SettingsProvider>
+        <SocketProvider>
+          <AlertMsg />
+          <Navigation />
+          <Loader />
+        </SocketProvider>
+      </SettingsProvider>
+    </div>
   </React.StrictMode>,
   document.getElementById('root')
 );

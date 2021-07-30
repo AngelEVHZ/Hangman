@@ -291,6 +291,9 @@ export const UseGameState = (): GameProps => {
 
 
     useEffect(() => {
+        if (!socket.conected) {
+            history.push(Routes.LOGIN);
+        }
         window.addEventListener("keydown", (event) => { downHandler(event) });
         return () => {
             window.removeEventListener("keydown", downHandler);

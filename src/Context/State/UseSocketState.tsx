@@ -67,6 +67,9 @@ export const UseSocketState = (): SocketContextInterface => {
     const onClose = (event: CloseEvent) => {
         console.log("ON CLOSE");
         settings.handle.setShowLoader(false);
+        setWebSocket(null);
+        setConected(false);
+        setState({ message: null });
     };
     const onError = (event: Event) => {
         console.log("ON ERROR", event);
@@ -88,7 +91,11 @@ export const UseSocketState = (): SocketContextInterface => {
         const message = get(state, "message", {}) as NotifyResponse<any>;
         switch (message.action) {
             case NotifyActionEnum.USER_DISCONNECTED:
+                settings.handle.showAlert({show:true, type:"warning", msg:"User Disconected"});
+                updateUser(message);
+                break;
             case NotifyActionEnum.USER_JOIN:
+                settings.handle.showAlert({show:true, type:"primary", msg:"User Conected"});
                 updateUser(message);
                 break;
         }

@@ -1,6 +1,6 @@
 import React from "react";
 import { Spinner, Modal } from "react-bootstrap";
-import { useSettings } from "../../context/SettingsProvider";
+import { useSettings } from "../../../context/SettingsProvider";
 
 const Loader: React.FC<any> = () => {
     const settings = useSettings();
