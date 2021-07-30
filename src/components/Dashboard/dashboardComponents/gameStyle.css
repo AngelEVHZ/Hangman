@@ -8,8 +8,11 @@
     cursor: pointer;
 }
 
-.gameCardHover{
+.game-card-hover{
     background-color: #b06010 !important;
+}
+.game-card-selected{
+    background-color: #004990 !important;
 }
 
 .btn-dashboard{

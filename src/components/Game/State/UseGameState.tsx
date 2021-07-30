@@ -8,7 +8,7 @@ import { useSettings } from "../../../context/SettingsProvider";
 import { useSocket } from "../../../context/SocketProvider";
 import { SettingsContextInterface } from "../../../context/State/UseSettingsState";
 import { SocketContextInterface } from "../../../context/State/UseSocketState";
-import { Routes } from "../../../shared/RoutesEnum";
+import { Routes } from "../../../constant/RoutesEnum";
 import { RandomWords } from "../../../types/GameTypes";
 import { FinishRound, NextRound, PlayerWord, SetRandomWords } from "../../../types/SocketAction";
 import { GameMatch, ScoreResume, UserSession } from "../../../types/UserSession";

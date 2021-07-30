@@ -4,7 +4,7 @@ import { SocketContextInterface } from "../../../context/State/UseSocketState";
 import { defaultTo, get } from "lodash";
 import { NotifyActionEnum } from "../../../constant/NotifyActionEnum";
 import { useHistory, useLocation } from "react-router-dom";
-import { Routes } from "../../../shared/RoutesEnum";
+import { Routes } from "../../../constant/RoutesEnum";
 import { useSocket } from "../../../context/SocketProvider";
 import { SettingsContextInterface } from "../../../context/State/UseSettingsState";
 import { useSettings } from "../../../context/SettingsProvider";

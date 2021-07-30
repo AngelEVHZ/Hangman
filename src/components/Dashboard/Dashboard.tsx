@@ -7,22 +7,25 @@ import './dashboardComponents/gameStyle.css';
 import GameMode from "./dashboardComponents/gameMode";
 
 const Dashboard: React.FC<any> = () => {
-    const {handle, state} = UseDashboardState();
-    
+    const { handle, state } = UseDashboardState();
+
     return (
         <div>
             <div className="row mt-5">
                 <div className="col-md-3">
-                <Players players={state.players}></Players>
+                    <Players players={state.players}></Players>
                 </div>
                 <div className="col-md-7">
-                    <GameMode></GameMode>     
+                    <GameMode catalog={state.gameCatalog} selectGame={handle.selectGame}></GameMode>
                     <br></br>
                     <br></br>
                     <br></br>
                     <div className="row d-flex justify-content-center">
                         <div className="col-md-3">
-                            <Button className="btn btn-dashboard btn-play" onClick={handle.startGame} disabled={!state.host || state.submited}> PLAY</Button>
+                            <Button className="btn btn-dashboard btn-play"
+                                onClick={handle.startGame}
+                                disabled={!state.gameSelected || !state.host || state.submited}
+                            > PLAY</Button>
                         </div>
                         <div className="col-md-3">
                             <Button className="btn-dashboard btn-invite" onClick={handle.copyInvitation}> INVITE</Button>

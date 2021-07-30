@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { SocketContextInterface } from "../../../context/State/UseSocketState";
 import { useHistory } from "react-router-dom";
-import { Routes } from "../../../shared/RoutesEnum";
+import { Routes } from "../../../constant/RoutesEnum";
 import { useSocket } from "../../../context/SocketProvider";
 import { SettingsContextInterface } from "../../../context/State/UseSettingsState";
 import { useSettings } from "../../../context/SettingsProvider";
@@ -10,6 +10,8 @@ import { UserSession } from "../../../types/UserSession";
 import { get } from "lodash";
 import { NotifyActionEnum, NotifyGameActionEnum } from "../../../constant/NotifyActionEnum";
 import { StartGame } from "../../../types/SocketAction";
+import { GAME_CATALOG } from "../../../constant/GameModesCatalog";
+import { GameCardProps } from "../dashboardComponents/gameCard";
 
 
 export interface DashBoardProps {
@@ -17,10 +19,13 @@ export interface DashBoardProps {
         players: UserSession[];
         host: boolean;
         submited: boolean;
+        gameCatalog: GameCardProps[];
+        gameSelected: string;
     },
     handle:{
         startGame: () => void;
         copyInvitation: () => void;
+        selectGame: (item: GameCardProps) => void;
     }
 }
 
@@ -30,6 +35,9 @@ export const UseDashboardState = (): DashBoardProps => {
     const socket: SocketContextInterface = useSocket();
     const settings: SettingsContextInterface = useSettings();
     const [gameStart, setGameStart] = useState<boolean>(false);
+    const [gameCatalog, UpdateCatalog] = useState<GameCardProps[]>(GAME_CATALOG);
+    const [gameSelected, setGameSelected] = useState<string>("");
+
     
     useEffect(() => {
         if (!socket.conected) {
@@ -67,15 +75,27 @@ export const UseDashboardState = (): DashBoardProps => {
         settings.handle.showAlert({show:true, type:"info",msg:"Invitacion copiada!"});
     }
 
+    const selectGame = (item: GameCardProps) => {
+        const catalog = [...gameCatalog];
+        catalog.forEach( (game) => {
+            game.selected = game.id === item.id;
+        })
+        setGameSelected(item.id);
+        UpdateCatalog(catalog);
+    }
+
     return {
         state: {
             players: settings.state.players,
             host: settings.state.playerSettings.host,
             submited: gameStart,
+            gameCatalog,
+            gameSelected
         },
         handle:{
             startGame,
-            copyInvitation
+            copyInvitation,
+            selectGame
         }
     };
 }

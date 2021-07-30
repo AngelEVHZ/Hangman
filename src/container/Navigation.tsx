@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { Routes } from "../shared/RoutesEnum";
+import { Routes } from "../constant/RoutesEnum";
 import Dashboard from "../components/Dashboard/Dashboard";
 import Login from "../components/Login/Login";
 import Game from "../components/Game/Game";
