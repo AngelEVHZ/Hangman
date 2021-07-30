@@ -15,7 +15,7 @@ const Dashboard: React.FC<any> = () => {
                 <div className="col-md-3">
                     <Players players={state.players}></Players>
                 </div>
-                <div className="col-md-7">
+                <div className="col-md-7 pl-3">
                     <GameMode catalog={state.gameCatalog} selectGame={handle.selectGame}></GameMode>
                     <br></br>
                     <br></br>
@@ -31,6 +31,9 @@ const Dashboard: React.FC<any> = () => {
                             <Button className="btn-dashboard btn-invite" onClick={handle.copyInvitation}> INVITE</Button>
                         </div>
                     </div>
+                </div>
+                <div className="col-md-2">
+                    publicidad
                 </div>
             </div>
         </div>
