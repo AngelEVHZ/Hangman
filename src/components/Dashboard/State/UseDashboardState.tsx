@@ -59,10 +59,6 @@ export const UseDashboardState = (): DashBoardProps => {
     }
 
     const startGame = () => {
-        if (process.env.REACT_APP_DEV == "DEV"){ 
-            initMatch(3);
-            history.push(Routes.GAME);
-        }
         setGameStart(true);
         socket.actions.startGame(3);
     }

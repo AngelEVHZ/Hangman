@@ -237,18 +237,6 @@ export const UseSettingsState = (): SettingsContextInterface => {
         return get(player, "nickName", "");
     }
 
-    useEffect(() => {
-        //ONLY FOR TESTIN
-        console.log("process.env.REACT_APP_DEV", process.env.REACT_APP_DEV);
-        if (process.env.REACT_APP_DEV == "DEV") {
-            const users = getUsers()
-            saveUsers(users);
-            savePlayerSettings(users[0]);
-        }
-
-    }, []);
-
-
     const deleteStorage = (): void => {
         localStorage.removeItem(prefix + "users");
         localStorage.removeItem(prefix + "player-settings");

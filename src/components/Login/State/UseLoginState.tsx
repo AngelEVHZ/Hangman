@@ -52,6 +52,7 @@ export const UseLoginState = (): UserProps => {
     }
 
     const joinGame = () => {
+        if (!validateNickeName()) return;
         settings.handle.setShowLoader(true);
         console.log("is conecting");
         socket.actions.connect();

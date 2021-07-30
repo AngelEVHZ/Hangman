@@ -39,11 +39,12 @@ export const UseSocketState = (): SocketContextInterface => {
     const [state, setState] = useState<SocketState>(INITIAL_SOCKET_STATE);
     const [conected, setConected] = useState<boolean>(false);
     const settings: SettingsContextInterface = useSettings();
+    const isDev = process.env.REACT_APP_DEV === "DEV";
 
 
     const connect = () => {
         try {
-            const url = process.env.REACT_APP_ENV == "DEV" ? "" : process.env.REACT_APP_SOCKET;
+            const url = isDev ? "" : process.env.REACT_APP_SOCKET;
             const webSocket = new WebSocket(url || "");
             webSocket.onopen = () => onOpen(webSocket);
             webSocket.onerror = (event: Event) => onError(event);
@@ -51,6 +52,9 @@ export const UseSocketState = (): SocketContextInterface => {
             webSocket.onclose = (event: CloseEvent) => onClose(event);
         } catch (error) {
             console.log(error);
+            if (isDev){
+                setConected(true);
+            }
         }
     };
 
@@ -229,7 +233,38 @@ export const UseSocketState = (): SocketContextInterface => {
     const notify = (data: SocketAction<any>) => {
         if (webSocket) {
             webSocket.send(JSON.stringify(data));
+        } else if (isDev){
+            DEV_MOCK(data);
         }
+    }
+
+    const DEV_MOCK = (data: SocketAction<any>) => {
+       let message: any;
+        switch(data.action) {
+            case SocketActionEnum.CONNECT_SESSION:
+                message = {
+                    action: NotifyActionEnum.SESSION_CREATED,
+                    data: [{
+                        gameId: "123",
+                        nickName: "DEVELOP",
+                        host: true,
+                        conected: 0,
+                        playerId: "DEVELOP",
+                        owner: true
+                    }] as UserSession[]
+                }
+                break;
+            case SocketActionEnum.NOTIFY_ALL:
+                const parse = data.data as NotifyAll;
+                if (!parse.excludeOwner) {
+                    message = {
+                        action: NotifyActionEnum.NOTIFY_ALL,
+                        data: parse.notification,
+                    };
+                }
+                break;
+        }
+        if (message) setState({ ...state, message });
     }
 
     return {
