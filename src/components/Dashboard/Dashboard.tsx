@@ -11,11 +11,11 @@ const Dashboard: React.FC<any> = () => {
     
     return (
         <div>
-            <div className="row">
-                <div className="col-md-4">
+            <div className="row mt-5">
+                <div className="col-md-3">
                 <Players players={state.players}></Players>
                 </div>
-                <div className="col-md-6">
+                <div className="col-md-7">
                     <GameMode></GameMode>     
                     <br></br>
                     <br></br>
