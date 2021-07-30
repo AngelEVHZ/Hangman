@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
-import Timer from "../../Timer/Timer";
+import Timer from "../../Commonds/Timer/Timer";
 import "./GameStyle.css";
 interface MenuBoardProps {
     handle: {

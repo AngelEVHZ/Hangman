@@ -1,5 +1,5 @@
 import React from "react";
-import { Alert, Row, Col } from "react-bootstrap";
+import { Alert } from "react-bootstrap";
 import { useSettings } from "../../../context/SettingsProvider";
 import "./AlertStyle.css"
 const AlertMsg: React.FC<any> = () => {

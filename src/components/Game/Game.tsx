@@ -5,7 +5,7 @@ import { Card, Col, Container, ListGroup, Row, Button } from "react-bootstrap";
 import Board from "./GameComponents/Board";
 import MenuBoard from "./GameComponents/MenuBoard";
 import Players from "../Dashboard/dashboardComponents/players";
-import Timer from "../Timer/Timer";
+import Timer from "../Commonds/Timer/Timer";
 import GameScore from "./GameComponents/GameScore";
 
 const Game: React.FC<any> = () => {

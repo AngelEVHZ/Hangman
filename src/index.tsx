@@ -9,6 +9,7 @@ import { SettingsProvider } from './context/SettingsProvider';
 import Loader from './components/Commonds/Loader/Loader';
 import AlertMsg from './components/Commonds/Alert/AlertMsg';
 import "./index.css";
+import Header from './components/Commonds/Header/Header';
 
 
 ReactDOM.render(
@@ -16,6 +17,7 @@ ReactDOM.render(
     <div className="background">
       <SettingsProvider>
         <SocketProvider>
+          <Header />
           <AlertMsg />
           <Navigation />
           <Loader />

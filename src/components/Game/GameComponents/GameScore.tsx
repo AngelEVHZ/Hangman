@@ -2,7 +2,7 @@
 import React from "react";
 import { Button, Card, Col, Container, Row, Table } from "react-bootstrap";
 import { GameMatch, PlayerScoreResume, ScoreResume } from "../../../types/UserSession";
-import Timer from "../../Timer/Timer";
+import Timer from "../../Commonds/Timer/Timer";
 import "./GameStyle.css";
 
 interface CameScoreProps {
