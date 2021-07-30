@@ -233,6 +233,8 @@ export const UseGameState = (): GameProps => {
     }
 
     const nextRound = () => {
+        if (!settings.state.playerSettings.host) return;
+        
         const nextRountNumber = currentRound + 1;
         if (nextRountNumber < settings.state.match.rounds) {
             socket.actions.sendNextRound(nextRountNumber);
