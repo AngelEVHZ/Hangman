@@ -27,6 +27,14 @@
     background-color: #b06010 !important;
     border: none !important;
 }
+.btn-medium {
+    width: 200px;
+    background-color: #b06010 !important;
+    border: none !important;
+}
+.content-end{
+    text-align: right;
+}
 
 .completed{
     background: chartreuse !important;

@@ -51,6 +51,10 @@ export interface FinishRound {
     action: NotifyGameActionEnum,
 }
 
-export interface ShowSores {
+export interface GenericNotify {
     action: NotifyGameActionEnum,
+}
+export interface NextRound {
+    action: NotifyGameActionEnum,
+    round: number,
 }

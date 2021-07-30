@@ -64,12 +64,11 @@ export const UseDashboardState = (): DashBoardProps => {
             history.push(Routes.GAME);
         }
         setGameStart(true);
-        socket.actions.startGame(1);
+        socket.actions.startGame(3);
     }
     const copyInvitation = () => {
         const url = window.location.origin + "/?game-id="+ settings.state.playerSettings.gameId;
         navigator.clipboard.writeText(url)
-        console.log("COPIADO",url);
     }
 
     return {

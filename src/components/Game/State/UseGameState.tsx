@@ -10,7 +10,7 @@ import { SettingsContextInterface } from "../../../context/State/UseSettingsStat
 import { SocketContextInterface } from "../../../context/State/UseSocketState";
 import { Routes } from "../../../shared/RoutesEnum";
 import { RandomWords } from "../../../types/GameTypes";
-import { FinishRound, PlayerWord, SetRandomWords } from "../../../types/SocketAction";
+import { FinishRound, NextRound, PlayerWord, SetRandomWords } from "../../../types/SocketAction";
 import { GameMatch, ScoreResume, UserSession } from "../../../types/UserSession";
 
 export interface GameProps {
@@ -21,11 +21,15 @@ export interface GameProps {
         nextRound: () => void;
         getPlayerName: (playerId: string) => string;
     },
-    timerMenu:{
+    timerMenu: {
         time: number;
         callBack: () => void;
     },
-    timerGame:{
+    timerGame: {
+        time: number;
+        callBack: () => void;
+    },
+    timerScores: {
         time: number;
         callBack: () => void;
     },
@@ -41,6 +45,7 @@ export interface GameProps {
         players: UserSession[],
         match: GameMatch;
         scoreResume: ScoreResume;
+        host: boolean;
     }
 }
 
@@ -58,7 +63,7 @@ export const UseGameState = (): GameProps => {
     const [gameOver, setGameover] = useState(false);
     const [completed, setCompleted] = useState(false);
 
-    
+
 
     //GENERAL VARS
     const [roundStart, setRountStart] = useState(false);
@@ -67,7 +72,7 @@ export const UseGameState = (): GameProps => {
     const [userWord, setUserWord] = useState("");
     const [userWordSended, setUserWordSended] = useState(false);
     const [currentRound, setRound] = useState(0);
-    const [startDate, setStartDate] = useState<Date| null>(null);
+    const [startDate, setStartDate] = useState<Date | null>(null);
 
     // TIMER
     const timerMenuCallback = () => {
@@ -86,7 +91,7 @@ export const UseGameState = (): GameProps => {
     //GAME CALLBACK
     const finishGameCallback = () => {
         const seconds = getPlayedTime();
-        settings.handle.setFinishGame( currentRound, completed, seconds);
+        settings.handle.setFinishGame(currentRound, completed, seconds);
         socket.actions.sendFinish(completed, currentRound, seconds);
         console.log("FINISH CALLBACK");
     }
@@ -145,8 +150,18 @@ export const UseGameState = (): GameProps => {
                     settings.handle.setFinishGame(data.round, data.completed, data.time, data.playerId);
                     break;
                 case NotifyGameActionEnum.SHOW_SCORES:
+                    if (settings.state.playerSettings.host) return;
                     settings.handle.generateScore();
-                    setPlayersFinish(true); 
+                    setPlayersFinish(true);
+                    break;
+                case NotifyGameActionEnum.NEXT_ROUND:
+                    if (settings.state.playerSettings.host) return;
+                    const nextRound: NextRound = message.data as NextRound;
+                    setRound(nextRound.round);
+                    endRound();
+                    break;
+                case NotifyGameActionEnum.END_MATCH:
+                    history.push(Routes.DASHBOARD);
                     break;
             }
         }
@@ -156,7 +171,7 @@ export const UseGameState = (): GameProps => {
 
     useEffect(() => {
         if (!settings.state.playerSettings.host) return;
-        
+
         if (!playersReady) {
             const allPlayerReady = settings.handle.allPlayerReady(currentRound);
             if (allPlayerReady) {
@@ -167,17 +182,17 @@ export const UseGameState = (): GameProps => {
             }
         }
 
-        if ( !playersFinish && (gameOver || completed) ) {
+        if (!playersFinish && (gameOver || completed)) {
             const allPlayerFinish = settings.handle.allPlayerFinish(currentRound);
-            if ( allPlayerFinish ){
-                setTimeout(function(){ 
+            if (allPlayerFinish) {
+                setTimeout(function () {
                     socket.actions.sendShowScores();
-                    setPlayersFinish(true); 
+                    setPlayersFinish(true);
                     settings.handle.generateScore();
 
                 }, 2500);
             }
-        } 
+        }
     });
 
     useEffect(() => {
@@ -219,11 +234,12 @@ export const UseGameState = (): GameProps => {
 
     const nextRound = () => {
         const nextRountNumber = currentRound + 1;
-        if ( nextRountNumber< settings.state.match.rounds) {
+        if (nextRountNumber < settings.state.match.rounds) {
+            socket.actions.sendNextRound(nextRountNumber);
             setRound(nextRountNumber);
             endRound();
         } else {
-            history.push(Routes.DASHBOARD);
+            socket.actions.sendEndMatch();
         }
     }
 
@@ -293,14 +309,19 @@ export const UseGameState = (): GameProps => {
             players: settings.state.players,
             match: settings.state.match,
             scoreResume: settings.state.scoreResume,
+            host: settings.state.playerSettings.host,
         },
-        timerMenu:{
+        timerMenu: {
             time: TimesEnum.SEC30,
             callBack: timerMenuCallback
         },
-        timerGame:{
+        timerGame: {
             time: TimesEnum.SEC60,
             callBack: timerGameCallback
+        },
+        timerScores: {
+            time: TimesEnum.SEC15,
+            callBack: nextRound,
         },
         handle: {
             getPlayerName: settings.handle.getPlayerName,

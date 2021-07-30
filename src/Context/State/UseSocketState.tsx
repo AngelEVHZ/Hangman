@@ -6,7 +6,7 @@ import { NotifyActionEnum, NotifyGameActionEnum } from "../../constant/NotifyAct
 import { SocketActionEnum } from "../../constant/SocketActionEnum";
 import { RandomWords } from "../../types/GameTypes";
 import { NotifyResponse } from "../../types/NotifyResponse";
-import { CreateSessionRequest, FinishRound, NotifyAll, PlayerWord, SetRandomWords, SocketAction, StartGame } from "../../types/SocketAction";
+import { CreateSessionRequest, FinishRound, GenericNotify, NextRound, NotifyAll, PlayerWord, SetRandomWords, SocketAction, StartGame } from "../../types/SocketAction";
 import { UserSession } from "../../types/UserSession";
 import { useSettings } from "../SettingsProvider";
 import { SettingsContextInterface } from "./UseSettingsState";
@@ -23,6 +23,8 @@ export interface SocketContextInterface {
         startGame: (rounds: number) => void;
         sendFinish: (completed: boolean, round: number, time: number) => void;
         sendShowScores: () => void;
+        sendNextRound: (round: number) => void;
+        sendEndMatch: () => void;
     };
 }
 interface SocketState {
@@ -160,7 +162,7 @@ export const UseSocketState = (): SocketContextInterface => {
                 gameId: settings.state.playerSettings.gameId,
                 notification: {
                     action: NotifyGameActionEnum.SHOW_SCORES
-                } as FinishRound,
+                } as GenericNotify,
             }
         }
         notify(data);
@@ -195,6 +197,35 @@ export const UseSocketState = (): SocketContextInterface => {
         notify(data);
     }
 
+    const sendNextRound = (round: number) => {
+        const data: SocketAction<NotifyAll> = {
+            action: SocketActionEnum.NOTIFY_ALL,
+            data: {
+                excludeOwner: true,
+                gameId: settings.state.playerSettings.gameId,
+                notification: {
+                    round,
+                    action: NotifyGameActionEnum.NEXT_ROUND
+                } as NextRound,
+            }
+        }
+        notify(data);
+    }
+
+    const sendEndMatch = () => {
+        const data: SocketAction<NotifyAll> = {
+            action: SocketActionEnum.NOTIFY_ALL,
+            data: {
+                excludeOwner: false,
+                gameId: settings.state.playerSettings.gameId,
+                notification: {
+                    action: NotifyGameActionEnum.END_MATCH
+                } as GenericNotify,
+            }
+        }
+        notify(data);
+    }
+
     const notify = (data: SocketAction<any>) => {
         if (webSocket) {
             webSocket.send(JSON.stringify(data));
@@ -212,7 +243,9 @@ export const UseSocketState = (): SocketContextInterface => {
             sendRandomWord,
             startGame,
             sendFinish,
-            sendShowScores
+            sendShowScores,
+            sendNextRound,
+            sendEndMatch
         }
     };
 }

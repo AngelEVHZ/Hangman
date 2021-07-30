@@ -1,12 +1,20 @@
 
 import React from "react";
-import { Card, Container, Table } from "react-bootstrap";
+import { Button, Card, Col, Container, Row, Table } from "react-bootstrap";
 import { GameMatch, PlayerScoreResume, ScoreResume } from "../../../types/UserSession";
+import Timer from "../../Timer/Timer";
 import "./GameStyle.css";
+
 interface CameScoreProps {
     match: GameMatch;
     scoreResume: ScoreResume;
+    host: boolean;
     getPlayerName: (playerId: string) => string;
+    nextRound: () => void;
+    timer:{
+        time: number;
+        callBack: () => void;
+    }
 }
 
 const GameScore: React.FC<any> = (props: CameScoreProps) => {
@@ -43,6 +51,20 @@ const GameScore: React.FC<any> = (props: CameScoreProps) => {
                         {props.scoreResume.players.map((player) => renderTableRow(player))}
                     </tbody>
                 </Table>
+
+                <Row className="pt-5">
+                    <Col>
+                        <Timer {...props.timer}></Timer>
+                    </Col>
+                    <Col className="content-end">
+                        <Button 
+                        onClick={props.nextRound} 
+                        className="btn btn-lg ml-auto btn-medium" 
+                        disabled={!props.host}>NEXT ROUND</Button>
+                    </Col>
+                </Row>
+
+
             </Card>
         </Container>
     );

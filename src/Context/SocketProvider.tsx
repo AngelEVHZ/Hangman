@@ -16,6 +16,8 @@ const INITIAL_STATE: SocketContextInterface = {
         startGame: (rounds: number) => { },
         sendFinish: (completed: boolean, round: number, time: number) => { },
         sendShowScores: () => {},
+        sendNextRound: (round: number) => {},
+        sendEndMatch: () => {},
     }
 }
 

@@ -9,7 +9,7 @@ import Timer from "../Timer/Timer";
 import GameScore from "./GameComponents/GameScore";
 
 const Game: React.FC<any> = () => {
-    const { handle, state, timerMenu, timerGame } = UseGameState();
+    const { handle, state, timerMenu, timerGame, timerScores } = UseGameState();
 
     return (
         <>
@@ -23,11 +23,13 @@ const Game: React.FC<any> = () => {
                         {state.playersFinish &&
                             <div>
                                 <GameScore
+                                    host={state.host}
                                     match={state.match}
                                     scoreResume={state.scoreResume}
                                     getPlayerName={handle.getPlayerName}
+                                    nextRound={handle.nextRound}
+                                    timer={timerScores}
                                 ></GameScore>
-                                <Button onClick={handle.nextRound}>NEXT ROUND</Button>
                             </div>
 
                         }
