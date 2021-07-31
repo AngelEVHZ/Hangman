@@ -43,3 +43,16 @@
     background-color: red !important;
     color: white !important;
 }
+.icon-trophy{
+    font-size: 20px;
+}
+
+.place-1{
+    color: rgb(169, 159, 48);
+}
+.place-2{
+    color: rgb(103, 103, 103);
+}
+.place-3{
+    color: rgb(101, 65, 38);
+}

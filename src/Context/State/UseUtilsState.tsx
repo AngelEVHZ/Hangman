@@ -21,6 +21,7 @@ export interface UtilsContextInterface {
 }
 
 export const UseUtilsState = (): UtilsContextInterface => {
+    const isDev = process.env.REACT_APP_DEV === "DEV";
     const [showLoader, setShowLoader] = useState<boolean>(false);
     const [alert, setAlert] = useState<AlertMsgProps>({ type: "", msg: "", show: false })
     const [alertTimeOut, setAlertTimeOut] = useState<any>(null)
@@ -46,7 +47,7 @@ export const UseUtilsState = (): UtilsContextInterface => {
 
     const onIdle = () => {
         console.log("user is idle", window.location.pathname);
-        setIddleAction({ activate: true, path:window.location.pathname });
+        if (!isDev) setIddleAction({ activate: true, path: window.location.pathname });
     };
 
     return {

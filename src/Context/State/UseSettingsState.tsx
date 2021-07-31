@@ -227,6 +227,15 @@ export const UseSettingsState = (): SettingsContextInterface => {
             resume[player.playerId].push(scoreAcumulated)
             scoreResume.players.push(resume);
         });
+
+        scoreResume.players = scoreResume.players = 
+            scoreResume.players.sort((a: PlayerScoreResume, b: PlayerScoreResume) => {
+                const keyA = Object.keys(a)[0];
+                const keyB = Object.keys(b)[0];
+                const size = a[keyA].length;
+                return a[keyA][size - 1] > b[keyB][size - 1] ? -1 : 1;
+        });
+
         setScoreResume(scoreResume);
         return scoreResume;
     }
