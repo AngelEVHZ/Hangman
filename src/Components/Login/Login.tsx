@@ -12,7 +12,9 @@ const Login: React.FC<any> = () => {
                <LoginHowToPlay></LoginHowToPlay>
             </div>
             <div className="col-md-6">
-               <LoginForm  changeNickName={handle.changeNickName} joinGame={handle.joinGame}></LoginForm>
+               <LoginForm  changeNickName={handle.changeNickName} 
+               joinGame={handle.joinGame} 
+               isJoining={state.isJoining}></LoginForm>
             </div>
          </div>
       </div>
