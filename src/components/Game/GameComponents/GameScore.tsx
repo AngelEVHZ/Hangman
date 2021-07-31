@@ -7,6 +7,7 @@ import "./GameStyle.css";
 
 interface CameScoreProps {
     match: GameMatch;
+    finishGame: boolean;
     scoreResume: ScoreResume;
     host: boolean;
     getPlayerName: (playerId: string) => string;
@@ -18,6 +19,8 @@ interface CameScoreProps {
 }
 
 const GameScore: React.FC<any> = (props: CameScoreProps) => {
+    const buttonText = props.finishGame ? "Salir" : "NEXT ROUND";
+    
     const renderTableRow = (player: PlayerScoreResume) => {
         const key = Object.keys(player)[0];
         const name = props.getPlayerName(key);
@@ -30,8 +33,9 @@ const GameScore: React.FC<any> = (props: CameScoreProps) => {
                 ))}
             </tr>
         )
-
     }
+
+
     return (
         <Container>
             <Card body>
@@ -58,11 +62,9 @@ const GameScore: React.FC<any> = (props: CameScoreProps) => {
                         <Button 
                         onClick={props.nextRound} 
                         className="btn btn-lg ml-auto btn-medium" 
-                        disabled={!props.host}>NEXT ROUND</Button>
+                        disabled={!props.host}>{buttonText}</Button>
                     </Col>
                 </Row>
-
-
             </Card>
         </Container>
     );

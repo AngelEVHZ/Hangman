@@ -29,6 +29,7 @@ const Game: React.FC<any> = () => {
                                     getPlayerName={handle.getPlayerName}
                                     nextRound={handle.nextRound}
                                     timer={timerScores}
+                                    finishGame={state.finishGame}
                                 ></GameScore>
                             </div>
 
