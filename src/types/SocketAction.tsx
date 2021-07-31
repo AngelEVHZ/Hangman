@@ -1,5 +1,5 @@
-import { NotifyGameActionEnum } from "../constant/NotifyActionEnum";
-import { SocketActionType } from "../constant/SocketActionEnum";
+import { NotifyGameActionEnum } from "../Constant/NotifyActionEnum";
+import { SocketActionType } from "../Constant/SocketActionEnum";
 import { RandomWords } from "./GameTypes";
 
 export interface SocketAction<T> {

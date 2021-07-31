@@ -1,15 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Navigation from './container/Navigation';
+import Navigation from './Containers/Navigation';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { SocketProvider } from "./context/SocketProvider";
-import { SettingsProvider } from './context/SettingsProvider';
-import Loader from './components/Commonds/Loader/Loader';
-import AlertMsg from './components/Commonds/Alert/AlertMsg';
+import { SocketProvider } from "./Context/SocketProvider";
+import { SettingsProvider } from './Context/SettingsProvider';
+import Loader from './Components/Commonds/Loader/Loader';
+import AlertMsg from './Components/Commonds/Alert/AlertMsg';
 import "./index.css";
-import Header from './components/Commonds/Header/Header';
+import Header from './Components/Commonds/Header/Header';
 
 
 ReactDOM.render(

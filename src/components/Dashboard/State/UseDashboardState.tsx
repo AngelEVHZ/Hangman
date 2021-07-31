@@ -1,16 +1,16 @@
 
 import { useState, useEffect } from "react";
-import { SocketContextInterface } from "../../../context/State/UseSocketState";
+import { SocketContextInterface } from "../../../Context/State/UseSocketState";
 import { useHistory } from "react-router-dom";
-import { Routes } from "../../../constant/RoutesEnum";
-import { useSocket } from "../../../context/SocketProvider";
-import { SettingsContextInterface } from "../../../context/State/UseSettingsState";
-import { useSettings } from "../../../context/SettingsProvider";
+import { Routes } from "../../../Constant/RoutesEnum";
+import { useSocket } from "../../../Context/SocketProvider";
+import { SettingsContextInterface } from "../../../Context/State/UseSettingsState";
+import { useSettings } from "../../../Context/SettingsProvider";
 import { UserSession } from "../../../types/UserSession";
 import { get } from "lodash";
-import { NotifyActionEnum, NotifyGameActionEnum } from "../../../constant/NotifyActionEnum";
+import { NotifyActionEnum, NotifyGameActionEnum } from "../../../Constant/NotifyActionEnum";
 import { StartGame } from "../../../types/SocketAction";
-import { GAME_CATALOG } from "../../../constant/GameModesCatalog";
+import { GAME_CATALOG } from "../../../Constant/GameModesCatalog";
 import { GameCardProps } from "../dashboardComponents/gameCard";
 
 

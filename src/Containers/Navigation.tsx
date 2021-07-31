@@ -1,9 +1,9 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { Routes } from "../constant/RoutesEnum";
-import Dashboard from "../components/Dashboard/Dashboard";
-import Login from "../components/Login/Login";
-import Game from "../components/Game/Game";
+import { Routes } from "../Constant/RoutesEnum";
+import Dashboard from "../Components/Dashboard/Dashboard";
+import Login from "../Components/Login/Login";
+import Game from "../Components/Game/Game";
 
 const Navigation: React.FC<any> = () => {
     return (

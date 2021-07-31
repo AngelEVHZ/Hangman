@@ -1,14 +1,14 @@
 
 import { useState, useEffect } from "react";
-import { SocketContextInterface } from "../../../context/State/UseSocketState";
+import { SocketContextInterface } from "../../../Context/State/UseSocketState";
 import { defaultTo, get } from "lodash";
-import { NotifyActionEnum } from "../../../constant/NotifyActionEnum";
+import { NotifyActionEnum } from "../../../Constant/NotifyActionEnum";
 import { useHistory, useLocation } from "react-router-dom";
-import { Routes } from "../../../constant/RoutesEnum";
-import { useSocket } from "../../../context/SocketProvider";
-import { SettingsContextInterface } from "../../../context/State/UseSettingsState";
-import { useSettings } from "../../../context/SettingsProvider";
+import { Routes } from "../../../Constant/RoutesEnum";
+import { useSocket } from "../../../Context/SocketProvider";
+import { useSettings } from "../../../Context/SettingsProvider";
 import { UserSession } from "../../../types/UserSession";
+import { SettingsContextInterface } from "../../../Context/State/UseSettingsState";
 
 export interface UserProps {
     handle: {

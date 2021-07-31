@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { PlayerSettings, UserSession, GameMatch, GameScore, PlayerScore, ScoreResume, PlayerScoreResume } from "../../types/UserSession";
 import { defaultTo, get } from "lodash";
 import { RandomWords, TargetWord } from "../../types/GameTypes";

@@ -1,6 +1,6 @@
 import React from "react";
 import { Alert } from "react-bootstrap";
-import { useSettings } from "../../../context/SettingsProvider";
+import { useSettings } from "../../../Context/SettingsProvider";
 import "./AlertStyle.css"
 const AlertMsg: React.FC<any> = () => {
     const settings = useSettings();

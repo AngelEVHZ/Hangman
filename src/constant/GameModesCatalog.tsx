@@ -1,7 +1,7 @@
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faQuestion, faStopwatch, faGift } from "@fortawesome/free-solid-svg-icons";
-import { GameCardProps } from "../components/Dashboard/dashboardComponents/gameCard";
+import { GameCardProps } from "../Components/Dashboard/dashboardComponents/gameCard";
 
 export const GAME_CATALOG: GameCardProps[] = [
     {
