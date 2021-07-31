@@ -9,11 +9,11 @@ const LoginHowToPlay: React.FC<any> = () => {
             <div className="row justify-content-center">
                 <div className="col">
                     <div className="howtoplay">
-                        <h1>How To Play</h1>
+                        <h1>¿Como Jugar?</h1>
                         <div>
-                                <h3>Invite 3 Friends</h3>
-                                <h3>Write A Word</h3>
-                                <h3>guess and add points</h3>
+                                <h3>Invita Amigos</h3>
+                                <h3>Escribe Palabras</h3>
+                                <h3>Comienza a Adivinar!!</h3>
                         </div>
                     </div>
                 </div>

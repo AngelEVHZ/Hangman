@@ -9,7 +9,7 @@ const Header: React.FC<any> = () => {
                 <Navbar.Brand href="/">
                     <Row className="pl-5 pt-2">
                         <Col>
-                            <p className="white-title">HANGAM.IO</p>
+                            <p className="white-title">HANGMAN</p>
                         </Col>
                     </Row>
                 </Navbar.Brand>
