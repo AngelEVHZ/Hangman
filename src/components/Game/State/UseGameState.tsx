@@ -46,6 +46,7 @@ export interface GameProps {
         match: GameMatch;
         scoreResume: ScoreResume;
         host: boolean;
+        finishGame: boolean;
     }
 }
 
@@ -58,7 +59,7 @@ export const UseGameState = (): GameProps => {
     //GAME LOGIC VARS
     const [wordLetters, setWordLetters] = useState([""]);
     const [userLetter, setUserLetter] = useState(new Array(wordLetters.length).fill(""));
-    const [currentKey, setKey] = useState("");
+    const [currentKey, setKey] = useState({key:""});
     const [errors, setErrors] = useState(new Array(6).fill(false));
     const [gameOver, setGameover] = useState(false);
     const [completed, setCompleted] = useState(false);
@@ -112,7 +113,7 @@ export const UseGameState = (): GameProps => {
 
     const downHandler = (event: KeyboardEvent) => {
         const key = event.key;
-        setKey(key);
+        setKey({key});
     }
 
     const startGame = () => {
@@ -209,7 +210,7 @@ export const UseGameState = (): GameProps => {
 
 
     const initRound = () => {
-        const word = settings.handle.getPlayerTargetWord(currentRound);
+        const word = settings.handle.getPlayerTargetWord(currentRound).toLocaleUpperCase();
         setUserLetter(new Array(word.length).fill(" "));
         const wordArray = Array.from(word);
         setWordLetters(wordArray);
@@ -275,9 +276,9 @@ export const UseGameState = (): GameProps => {
         const userLetterCopy: string[] = [...userLetter];
         let correct = false;
         for (let i = 0; i < wordLetters.length; i++) {
-            if (currentKey === wordLetters[i]) {
+            if (currentKey.key.toUpperCase() === wordLetters[i].toLocaleUpperCase()) {
                 correct = true;
-                userLetterCopy[i] = currentKey;
+                userLetterCopy[i] = currentKey.key.toLocaleUpperCase();
             }
         }
 
@@ -315,6 +316,7 @@ export const UseGameState = (): GameProps => {
             match: settings.state.match,
             scoreResume: settings.state.scoreResume,
             host: settings.state.playerSettings.host,
+            finishGame: (currentRound + 1) >= settings.state.match.rounds
         },
         timerMenu: {
             time: TimesEnum.SEC30,
