@@ -3,3 +3,8 @@ export interface AlertMsgProps {
     msg: string;
     show: boolean;
 }
+
+export interface IddleProps {
+    activate: boolean;
+    path: string;
+}

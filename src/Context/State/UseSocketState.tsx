@@ -114,10 +114,10 @@ export const UseSocketState = (): SocketContextInterface => {
         console.log("ON CLOSE SOCKET");
         if (webSocket) {
             webSocket.close();
-            setWebSocket(null);
-            setConected(false);
-            setState({ message: null });
         }
+        setWebSocket(null);
+        setConected(false);
+        setState({ message: null });
 
     };
 

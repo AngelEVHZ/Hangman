@@ -1,6 +1,8 @@
 
 import React, { useContext } from "react";
-import { AlertMsgProps } from "../types/CommondTypes";
+import IdleTimer from "react-idle-timer";
+import { TimesEnum } from "../Constant/Times";
+import { AlertMsgProps, IddleProps } from "../types/CommondTypes";
 import { UseUtilsState, UtilsContextInterface } from "./State/UseUtilsState";
 
 
@@ -8,11 +10,16 @@ import { UseUtilsState, UtilsContextInterface } from "./State/UseUtilsState";
 const INITIAL_STATE: UtilsContextInterface = {
     handle: {
         setShowLoader: () => { },
-        showAlert: (alert: AlertMsgProps) => {},
+        showAlert: (alert: AlertMsgProps) => { },
+        onAction: () => { },
+        onActive: () => { },
+        onIdle: () => { },
+        resetIddle: () => { },
     },
     state: {
         showLoader: false,
-        alert: {show: false, msg:"", type:""},
+        alert: { show: false, msg: "", type: "" },
+        iddleAction: { activate: false, path: "" },
     }
 }
 
@@ -28,6 +35,14 @@ export const UtilsProvider: React.FC<any> = ({ children }) => {
     return (
         <UtilsContext.Provider value={{ ...props }}>
             {children}
+            <IdleTimer
+                element={document}
+                onActive={props.handle.onActive}
+                onIdle={props.handle.onIdle}
+                onAction={props.handle.onAction}
+                debounce={250}
+                timeout={TimesEnum.IDDLE}
+            />
         </UtilsContext.Provider>
     );
 }

@@ -49,6 +49,15 @@ export const UseDashboardState = (): DashBoardProps => {
     }, []);
 
     useEffect(() => {
+        const iddleAction = utils.state.iddleAction;
+        if (iddleAction.activate && iddleAction.path != Routes.LOGIN) {
+            console.log("INACTIVO");
+            utils.handle.resetIddle();
+            history.push(Routes.LOGIN);
+        }
+      }, [utils.state.iddleAction]);
+
+    useEffect(() => {
         if (!socket.state.message) return;
         const message = socket.state.message;
         if (message.action == NotifyActionEnum.NOTIFY_ALL) {

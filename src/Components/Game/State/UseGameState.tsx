@@ -12,6 +12,8 @@ import { Routes } from "../../../Constant/RoutesEnum";
 import { RandomWords } from "../../../types/GameTypes";
 import { FinishRound, NextRound, PlayerWord, SetRandomWords } from "../../../types/SocketAction";
 import { GameMatch, ScoreResume, UserSession } from "../../../types/UserSession";
+import { UtilsContextInterface } from "../../../Context/State/UseUtilsState";
+import { useUtils } from "../../../Context/UtilsProvider";
 
 export interface GameProps {
     handle: {
@@ -55,6 +57,7 @@ export const UseGameState = (): GameProps => {
     const history = useHistory();
     const socket: SocketContextInterface = useSocket();
     const settings: SettingsContextInterface = useSettings();
+    const utils: UtilsContextInterface = useUtils();
 
     //GAME LOGIC VARS
     const [wordLetters, setWordLetters] = useState([""]);
@@ -301,6 +304,15 @@ export const UseGameState = (): GameProps => {
         };
     }, []);
 
+    useEffect(() => {
+        const iddleAction = utils.state.iddleAction;
+        if (iddleAction.activate && iddleAction.path != Routes.LOGIN) {
+            console.log("INACTIVO");
+            utils.handle.resetIddle();
+            history.push(Routes.LOGIN);
+        }
+      }, [utils.state.iddleAction]);
+
 
     return {
         state: {
@@ -319,15 +331,15 @@ export const UseGameState = (): GameProps => {
             finishGame: (currentRound + 1) >= settings.state.match.rounds
         },
         timerMenu: {
-            time: TimesEnum.SEC30,
+            time: TimesEnum.WRITING_WORD,
             callBack: timerMenuCallback
         },
         timerGame: {
-            time: TimesEnum.SEC60,
+            time: TimesEnum.PLAYING,
             callBack: timerGameCallback
         },
         timerScores: {
-            time: TimesEnum.SEC15,
+            time: TimesEnum.SCORES_PAGE,
             callBack: nextRound,
         },
         handle: {

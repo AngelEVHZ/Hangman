@@ -1,15 +1,22 @@
 
+import { useEffect } from "react";
 import { useState } from "react";
-import { AlertMsgProps } from "../../types/CommondTypes";
+import { Routes } from "../../Constant/RoutesEnum";
+import { AlertMsgProps, IddleProps } from "../../types/CommondTypes";
 
 export interface UtilsContextInterface {
     handle: {
         setShowLoader: (value: boolean) => void;
         showAlert: (alert: AlertMsgProps) => void;
+        onAction: () => void;
+        onActive: () => void;
+        onIdle: () => void;
+        resetIddle: () => void;
     },
     state: {
         showLoader: boolean;
         alert: AlertMsgProps;
+        iddleAction: IddleProps;
     }
 }
 
@@ -17,7 +24,7 @@ export const UseUtilsState = (): UtilsContextInterface => {
     const [showLoader, setShowLoader] = useState<boolean>(false);
     const [alert, setAlert] = useState<AlertMsgProps>({ type: "", msg: "", show: false })
     const [alertTimeOut, setAlertTimeOut] = useState<any>(null)
-
+    const [iddleAction, setIddleAction] = useState<IddleProps>({ activate: false, path: "" });
 
     const showAlert = (alert: AlertMsgProps) => {
         if (alertTimeOut) clearTimeout(alertTimeOut);
@@ -27,16 +34,34 @@ export const UseUtilsState = (): UtilsContextInterface => {
         }, 1500);
         setAlertTimeOut(time);
     }
+    const resetIddle = () => {
+        setIddleAction({ activate: false, path: "" });
+    };
 
+    const onAction = () => {
+    };
+
+    const onActive = () => {
+    };
+
+    const onIdle = () => {
+        console.log("user is idle", window.location.pathname);
+        setIddleAction({ activate: true, path:window.location.pathname });
+    };
 
     return {
         handle: {
             setShowLoader,
             showAlert,
+            onAction,
+            onActive,
+            onIdle,
+            resetIddle
         },
         state: {
             showLoader,
-            alert
+            alert,
+            iddleAction,
         }
     };
 }

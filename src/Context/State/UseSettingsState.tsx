@@ -1,11 +1,8 @@
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { PlayerSettings, UserSession, GameMatch, GameScore, PlayerScore, ScoreResume, PlayerScoreResume } from "../../types/UserSession";
 import { defaultTo, get } from "lodash";
 import { RandomWords, TargetWord } from "../../types/GameTypes";
-import { AlertMsgProps } from "../../types/CommondTypes";
-import { useHistory } from "react-router-dom";
-import { Routes } from "../../Constant/RoutesEnum";
 
 export interface SettingsContextInterface {
     handle: {
@@ -240,6 +237,14 @@ export const UseSettingsState = (): SettingsContextInterface => {
     }
 
     const deleteStorage = (): void => {
+        setPlayers([]);
+        setPlayerSettings({
+            playerId: "",
+            gameId: "",
+            nickName: "",
+            host: false,
+        });
+        setMatch({ score: [], rounds: 0 });
         localStorage.removeItem(prefix + "users");
         localStorage.removeItem(prefix + "player-settings");
         localStorage.removeItem(prefix + "game-match");

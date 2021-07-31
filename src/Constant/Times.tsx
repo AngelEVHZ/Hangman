@@ -1,5 +1,6 @@
 export enum TimesEnum {
-    SEC30 = 30,
-    SEC60 = 60,
-    SEC15 = 15,
+    PLAYING = 60, //seconds
+    WRITING_WORD = 30, //seconds
+    SCORES_PAGE = 15, //seconds
+    IDDLE = 120 * 1000 //miliseconds,
 }
