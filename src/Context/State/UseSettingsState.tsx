@@ -1,15 +1,14 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PlayerSettings, UserSession, GameMatch, GameScore, PlayerScore, ScoreResume, PlayerScoreResume } from "../../types/UserSession";
 import { defaultTo, get } from "lodash";
 import { RandomWords, TargetWord } from "../../types/GameTypes";
 import { AlertMsgProps } from "../../types/CommondTypes";
-
-
+import { useHistory } from "react-router-dom";
+import { Routes } from "../../Constant/RoutesEnum";
 
 export interface SettingsContextInterface {
     handle: {
-        setShowLoader: (value: boolean) => void;
         saveUsers: (saveUsers: UserSession[]) => void;
         getUsers: () => UserSession[];
         deleteStorage: () => void;
@@ -26,21 +25,17 @@ export interface SettingsContextInterface {
         allPlayerFinish: (roundIndex: number) => boolean;
         generateScore: () => ScoreResume;
         getPlayerName: (playerId: string) => string;
-        showAlert: (alert: AlertMsgProps) => void;
     },
     state: {
-        showLoader: boolean;
         playerSettings: PlayerSettings;
         players: UserSession[];
         match: GameMatch;
         scoreResume: ScoreResume;
-        alert: AlertMsgProps;
     }
 }
 
 const prefix = "hangman-";
 export const UseSettingsState = (): SettingsContextInterface => {
-    const [showLoader, setShowLoader] = useState<boolean>(false);
     const [players, setPlayers] = useState<UserSession[]>([]);
     const [playerSettings, setPlayerSettings] = useState<PlayerSettings>({
         playerId: "",
@@ -50,17 +45,9 @@ export const UseSettingsState = (): SettingsContextInterface => {
     });
     const [scoreResume, setScoreResume] = useState<ScoreResume>({ players: [] });
     const [currentMatch, setMatch] = useState<GameMatch>({ score: [], rounds: 0 });
-    const [alert, setAlert] = useState<AlertMsgProps>({ type: "", msg: "", show: false })
-    const [alertTimeOut, setAlertTimeOut] = useState<any>(null)
 
-    const showAlert = (alert: AlertMsgProps) => {
-        if (alertTimeOut) clearTimeout(alertTimeOut);
-        setAlert(alert);
-        const time = setTimeout(() => {
-            setAlert({ show: false, msg: "", type: "" });
-        }, 1500);
-        setAlertTimeOut(time);
-    }
+
+
 
     const initMatch = (rounds: number) => {
         const match: GameMatch = {
@@ -265,7 +252,6 @@ export const UseSettingsState = (): SettingsContextInterface => {
     return {
         handle: {
             isPlayerReady,
-            setShowLoader,
             saveUsers,
             getUsers,
             deleteStorage,
@@ -281,15 +267,12 @@ export const UseSettingsState = (): SettingsContextInterface => {
             allPlayerFinish,
             generateScore,
             getPlayerName,
-            showAlert,
         },
         state: {
             match: currentMatch,
-            showLoader,
             players,
             playerSettings,
             scoreResume,
-            alert
         }
     };
 }

@@ -9,7 +9,9 @@ import { NotifyResponse } from "../../types/NotifyResponse";
 import { CreateSessionRequest, FinishRound, GenericNotify, NextRound, NotifyAll, PlayerWord, SetRandomWords, SocketAction, StartGame } from "../../types/SocketAction";
 import { UserSession } from "../../types/UserSession";
 import { useSettings } from "../SettingsProvider";
+import { useUtils } from "../UtilsProvider";
 import { SettingsContextInterface } from "./UseSettingsState";
+import { UtilsContextInterface } from "./UseUtilsState";
 
 export interface SocketContextInterface {
     state: SocketState,
@@ -39,6 +41,7 @@ export const UseSocketState = (): SocketContextInterface => {
     const [state, setState] = useState<SocketState>(INITIAL_SOCKET_STATE);
     const [conected, setConected] = useState<boolean>(false);
     const settings: SettingsContextInterface = useSettings();
+    const utils: UtilsContextInterface = useUtils();
     const isDev = process.env.REACT_APP_DEV === "DEV";
 
 
@@ -66,7 +69,7 @@ export const UseSocketState = (): SocketContextInterface => {
     };
     const onClose = (event: CloseEvent) => {
         console.log("ON CLOSE");
-        settings.handle.setShowLoader(false);
+        utils.handle.setShowLoader(false);
         setWebSocket(null);
         setConected(false);
         setState({ message: null });
@@ -91,11 +94,11 @@ export const UseSocketState = (): SocketContextInterface => {
         const message = get(state, "message", {}) as NotifyResponse<any>;
         switch (message.action) {
             case NotifyActionEnum.USER_DISCONNECTED:
-                settings.handle.showAlert({show:true, type:"warning", msg:"User Disconected"});
+                utils.handle.showAlert({show:true, type:"warning", msg:"User Disconected"});
                 updateUser(message);
                 break;
             case NotifyActionEnum.USER_JOIN:
-                settings.handle.showAlert({show:true, type:"primary", msg:"User Conected"});
+                utils.handle.showAlert({show:true, type:"primary", msg:"User Conected"});
                 updateUser(message);
                 break;
         }

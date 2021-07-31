@@ -9,7 +9,6 @@ import { SettingsContextInterface, UseSettingsState } from "./State/UseSettingsS
 
 const INITIAL_STATE: SettingsContextInterface = {
     handle: {
-        setShowLoader: () => { },
         saveUsers: () => { },
         savePlayerSettings: () => { },
         getUsers: () => { return [] },
@@ -26,17 +25,14 @@ const INITIAL_STATE: SettingsContextInterface = {
         allPlayerFinish: (roundIndex: number) => {return false},
         generateScore: () => {return {players: []} as ScoreResume},
         getPlayerName: (playerId: string) => {return ""},
-        showAlert: (alert: AlertMsgProps) => {},
     },
     state: {
-        showLoader: false,
         playerSettings: {
             playerId: "",
             gameId: "",
             nickName: "",
             host: false,
         },
-        alert: {show: false, msg:"", type:""},
         match:{
             score:[],
             rounds:0,

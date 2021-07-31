@@ -10,18 +10,21 @@ import Loader from './Components/Commonds/Loader/Loader';
 import AlertMsg from './Components/Commonds/Alert/AlertMsg';
 import "./index.css";
 import Header from './Components/Commonds/Header/Header';
+import { UtilsProvider } from './Context/UtilsProvider';
 
 
 ReactDOM.render(
   <React.StrictMode>
     <div className="background">
       <SettingsProvider>
-        <SocketProvider>
-          <Header />
-          <AlertMsg />
-          <Navigation />
-          <Loader />
-        </SocketProvider>
+        <UtilsProvider>
+          <SocketProvider>
+            <Header />
+            <AlertMsg />
+            <Navigation />
+            <Loader />
+          </SocketProvider>
+        </UtilsProvider>
       </SettingsProvider>
     </div>
   </React.StrictMode>,

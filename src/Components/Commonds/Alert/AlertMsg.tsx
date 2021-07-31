@@ -1,10 +1,10 @@
 import React from "react";
 import { Alert } from "react-bootstrap";
-import { useSettings } from "../../../Context/SettingsProvider";
+import { useUtils } from "../../../Context/UtilsProvider";
 import "./AlertStyle.css"
 const AlertMsg: React.FC<any> = () => {
-    const settings = useSettings();
-    const {alert} = settings.state;
+    const utils = useUtils();
+    const {alert} = utils.state;
 
     return (
         <>

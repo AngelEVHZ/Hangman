@@ -1,13 +1,13 @@
 import React from "react";
 import { Spinner, Modal } from "react-bootstrap";
-import { useSettings } from "../../../Context/SettingsProvider";
+import { useUtils } from "../../../Context/UtilsProvider";
 
 const Loader: React.FC<any> = () => {
-    const settings = useSettings();
+    const utils = useUtils();
 
     return (
         <>
-            <Modal show={settings.state.showLoader} centered>
+            <Modal show={utils.state.showLoader} centered>
                 <Modal.Body><Spinner animation="border" variant="primary" /> </Modal.Body>
             </Modal>
         </>

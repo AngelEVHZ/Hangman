@@ -9,6 +9,8 @@ import { useSocket } from "../../../Context/SocketProvider";
 import { useSettings } from "../../../Context/SettingsProvider";
 import { UserSession } from "../../../types/UserSession";
 import { SettingsContextInterface } from "../../../Context/State/UseSettingsState";
+import { useUtils } from "../../../Context/UtilsProvider";
+import { UtilsContextInterface } from "../../../Context/State/UseUtilsState";
 
 export interface UserProps {
     handle: {
@@ -37,6 +39,7 @@ export const UseLoginState = (): UserProps => {
     const history = useHistory();
     const socket: SocketContextInterface = useSocket();
     const settings: SettingsContextInterface = useSettings();
+    const utils: UtilsContextInterface = useUtils();
     const [loginState, setLoginState] = useState<LocalState>(INITIAL_LOGIN_STATE);
     const [loaded, setLoaded] = useState<boolean>(false);
 
@@ -53,7 +56,7 @@ export const UseLoginState = (): UserProps => {
 
     const joinGame = () => {
         if (!validateNickeName()) return;
-        settings.handle.setShowLoader(true);
+        utils.handle.setShowLoader(true);
         console.log("is conecting");
         socket.actions.connect();
     }
@@ -74,7 +77,7 @@ export const UseLoginState = (): UserProps => {
             socket.actions.joinGame(loginState.nickName, defaultTo(gameId, undefined));
             console.log("SE CONECTO");
         } else {
-            settings.handle.setShowLoader(false);
+            utils.handle.setShowLoader(false);
         }
     }, [socket.conected]);
 
@@ -82,7 +85,7 @@ export const UseLoginState = (): UserProps => {
         if (!loaded || !socket.state.message) return;
         console.log("MESSAGE", socket.state.message);
 
-        settings.handle.setShowLoader(false);
+        utils.handle.setShowLoader(false);
         const data = socket.state.message;
         const action = get(data, "action");
         if (action == NotifyActionEnum.SESSION_CREATED) {

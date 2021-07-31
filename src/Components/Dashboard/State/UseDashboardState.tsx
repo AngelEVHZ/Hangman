@@ -12,6 +12,8 @@ import { NotifyActionEnum, NotifyGameActionEnum } from "../../../Constant/Notify
 import { StartGame } from "../../../types/SocketAction";
 import { GAME_CATALOG } from "../../../Constant/GameModesCatalog";
 import { GameCardProps } from "../dashboardComponents/gameCard";
+import { useUtils } from "../../../Context/UtilsProvider";
+import { UtilsContextInterface } from "../../../Context/State/UseUtilsState";
 
 
 export interface DashBoardProps {
@@ -34,6 +36,7 @@ export const UseDashboardState = (): DashBoardProps => {
     const history = useHistory();
     const socket: SocketContextInterface = useSocket();
     const settings: SettingsContextInterface = useSettings();
+    const utils: UtilsContextInterface = useUtils();
     const [gameStart, setGameStart] = useState<boolean>(false);
     const [gameCatalog, UpdateCatalog] = useState<GameCardProps[]>(GAME_CATALOG);
     const [gameSelected, setGameSelected] = useState<string>("");
@@ -72,7 +75,7 @@ export const UseDashboardState = (): DashBoardProps => {
     const copyInvitation = () => {
         const url = window.location.origin + "/?game-id="+ settings.state.playerSettings.gameId;
         navigator.clipboard.writeText(url)
-        settings.handle.showAlert({show:true, type:"info",msg:"Invitacion copiada!"});
+        utils.handle.showAlert({show:true, type:"info",msg:"Invitacion copiada!"});
     }
 
     const selectGame = (item: GameCardProps) => {
