@@ -242,6 +242,7 @@ export const UseSocketState = (): SocketContextInterface => {
 
     const notify = (data: SocketAction<any>) => {
         if (webSocket) {
+            console.log("DATA ENVIADA", data);
             webSocket.send(JSON.stringify(data));
         } else if (isDev){
             DEV_MOCK(data);

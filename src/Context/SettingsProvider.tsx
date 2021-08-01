@@ -1,6 +1,5 @@
 
 import React, { useContext } from "react";
-import { AlertMsgProps } from "../types/CommondTypes";
 import { RandomWords } from "../types/GameTypes";
 import { ScoreResume } from "../types/UserSession";
 import { SettingsContextInterface, UseSettingsState } from "./State/UseSettingsState";
@@ -15,13 +14,14 @@ const INITIAL_STATE: SettingsContextInterface = {
         deleteStorage: () => { },
         existSession: () => { return false },
         initMatch: (rounds: number) => { },
+        finishMatch: () => {},
         setPlayerWord: (roundIndex: number, word: string, playerId?: string) => { },
         isPlayerReady: (roundIndex: number, playerId?: string) =>  {return false},
         allPlayerReady: (roundIndex: number) => {return false},
         randomizeWords: (roundIndex: number) => { return {} as RandomWords},
         setRandomWords: (roundIndex: number, words: RandomWords) => {},
         getPlayerTargetWord: (roundIndex: number, playerId?: string) => {return ""},
-        setFinishGame: (roundIndex: number, completed: boolean, time: number, playerId?: string) => {},
+        setFinishRound: (roundIndex: number, completed: boolean, time: number, playerId?: string) => {},
         allPlayerFinish: (roundIndex: number) => {return false},
         generateScore: () => {return {players: []} as ScoreResume},
         getPlayerName: (playerId: string) => {return ""},
@@ -36,7 +36,9 @@ const INITIAL_STATE: SettingsContextInterface = {
         match:{
             score:[],
             rounds:0,
+            players:[],
         },
+        isPlaying: false,
         scoreResume: {players:[]},
         players: [],
     }

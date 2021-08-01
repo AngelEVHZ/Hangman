@@ -6,6 +6,7 @@ export interface UserSession {
     conected: number;
     playerId: string;
     owner: boolean;
+    isPlaying?: boolean;
 }
 
 export interface PlayerSettings {
@@ -18,6 +19,7 @@ export interface PlayerSettings {
 export interface GameMatch {
     score: GameScore[];
     rounds: number;
+    players: UserSession[];
 }
 export interface GameScore {
     [key: string]: PlayerScore

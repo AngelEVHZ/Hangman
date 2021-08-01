@@ -95,7 +95,7 @@ export const UseGameState = (): GameProps => {
     //GAME CALLBACK
     const finishGameCallback = () => {
         const seconds = getPlayedTime();
-        settings.handle.setFinishGame(currentRound, completed, seconds);
+        settings.handle.setFinishRound(currentRound, completed, seconds);
         socket.actions.sendFinish(completed, currentRound, seconds);
         console.log("FINISH CALLBACK");
     }
@@ -151,7 +151,7 @@ export const UseGameState = (): GameProps => {
                     break;
                 case NotifyGameActionEnum.FINISH_ROUND:
                     const data: FinishRound = message.data as FinishRound;
-                    settings.handle.setFinishGame(data.round, data.completed, data.time, data.playerId);
+                    settings.handle.setFinishRound(data.round, data.completed, data.time, data.playerId);
                     break;
                 case NotifyGameActionEnum.SHOW_SCORES:
                     if (settings.state.playerSettings.host) return;
