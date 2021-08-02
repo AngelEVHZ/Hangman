@@ -14,7 +14,7 @@ const GameMode: React.FC<any> = (props: GameModeProps) => {
             <div className="container">
                 <div className="row d-flex justify-content-center">
                     {props.catalog.map((card) => {
-                        return (<div className="col-md-3">
+                        return (<div className="col-md-3 col-sm-6 pb-4 ">
                             <GameCard item={card} selectGame={props.selectGame}></GameCard>
                         </div>)
                     }
