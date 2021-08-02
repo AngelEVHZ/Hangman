@@ -16,7 +16,7 @@ const LetterInputs: React.FC<any> = (props: LetterInputsProps) => {
 
     const { userLetter, wordLetters } = props;
     const onFinishClas = props.completed ? "completed" : props.gameOver ? "game-over" : "";
-    const printLetters = props.gameOver ? wordLetters : userLetter;
+    const reveal = props.completed || props.gameOver;
 
     if (!finish && (props.completed || props.gameOver)) {
         setFinish(true);
@@ -28,9 +28,10 @@ const LetterInputs: React.FC<any> = (props: LetterInputsProps) => {
         return (
             <div key={index} className="space"> </div>
         );
+        const printLetter = reveal || userLetter[index] != " " ? wordLetters[index] : userLetter[index];
         return (
             <div key={index} className="answer-space" >
-               <Button variant="outline-dark" className={`button letter-button ${onFinishClas}`}>{printLetters[index]}</Button>
+               <Button variant="outline-dark" className={`button letter-button ${onFinishClas}`}>{printLetter}</Button>
             </div>
         );
     } 
