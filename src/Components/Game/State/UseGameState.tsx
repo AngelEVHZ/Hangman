@@ -118,7 +118,7 @@ export const UseGameState = (): GameProps => {
     }
 
     const downHandler = (event: KeyboardEvent) => {
-        const key = event.key;
+        const key = event.key || "";
         setKey({key: key.normalize('NFD').replace(/[\u0300-\u036f]/g, "")});
     }
 

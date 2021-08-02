@@ -17,7 +17,7 @@ const Players: React.FC<PlayerProps> = (props: PlayerProps) => {
                     <div className="col">
                         <Card className="card-player shadow p-3 mb-5 rounded">
                         <Card.Header>
-                            PlayersReady
+                            Players
                         </Card.Header>
                             {/*     <Card.Body>
                 <Dropdown>
