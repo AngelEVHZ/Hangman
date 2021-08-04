@@ -220,20 +220,32 @@ export const UseSettingsState = (): SettingsContextInterface => {
 
         match.players.forEach((player: UserSession) => {
             orderer.push({ playerId: player.playerId, word: score[player.playerId].originalWord });
+
             if ((Math.floor(Math.random() * 2) + 1) > 1) {
                 randomized.push({ playerId: player.playerId, word: "" });
             } else {
                 randomized.unshift({ playerId: player.playerId, word: "" });
             }
+
             randomWords[player.playerId] = { word: score[player.playerId].originalWord } as TargetWord;
         });
+        console.log("ESTE ES EL MATCH" ,match);
+        console.log("ESTAS SON LAS orderer " ,orderer);
+        console.log("ESTAS SON LAS orderer " ,randomized);
+        console.log("ESTAS SON LAS RANDOM WORDS" ,randomWords);
 
         if (match.players.length <= 1) return randomWords;
+
+        console.log("*****************");
         const size = match.players.length;
         for (let i = 0; i < size; i++) {
+            console.log("*****************");
             const origin = orderer.pop();
             const target = randomized.find((item => item.playerId != get(origin, "playerId")));
+
+            console.log("ORDENACION", origin,target);
             randomized = randomized.filter(item => item.playerId != get(target, "playerId"));
+            console.log("randomized", randomized);
             randomWords[get(target, "playerId", "")].word = get(origin, "word", "");
         }
 
