@@ -210,48 +210,34 @@ export const UseSettingsState = (): SettingsContextInterface => {
         return score[id].targetWord;
     }
 
+    
     const randomizeWords = (roundIndex: number): RandomWords => {
         const match = {...currentMatch};
         const score = getCurrentScore(roundIndex);
         
-        let randomWords: RandomWords = {};
-        let orderer: { playerId: string, word: string }[] = [];
-        let randomized: { playerId: string, word: string }[] = [];
+        let playersInMess: { playerId: string, word: string }[] = [];
+        let wordsOrderedRandom: RandomWords = {};
 
         match.players.forEach((player: UserSession) => {
-            orderer.push({ playerId: player.playerId, word: score[player.playerId].originalWord });
-
             if ((Math.floor(Math.random() * 2) + 1) > 1) {
-                randomized.push({ playerId: player.playerId, word: "" });
+                playersInMess.push({ playerId: player.playerId, word: score[player.playerId].originalWord });
+               
             } else {
-                randomized.unshift({ playerId: player.playerId, word: "" });
+                playersInMess.unshift({ playerId: player.playerId, word: score[player.playerId].originalWord });
             }
-
-            randomWords[player.playerId] = { word: score[player.playerId].originalWord } as TargetWord;
+            wordsOrderedRandom[player.playerId] = { word: score[player.playerId].originalWord } as TargetWord;
         });
-        console.log("ESTE ES EL MATCH" ,match);
-        console.log("ESTAS SON LAS orderer " ,orderer);
-        console.log("ESTAS SON LAS orderer " ,randomized);
-        console.log("ESTAS SON LAS RANDOM WORDS" ,randomWords);
 
-        if (match.players.length <= 1) return randomWords;
-
-        console.log("*****************");
+        if (match.players.length <= 1) return wordsOrderedRandom;
         const size = match.players.length;
         for (let i = 0; i < size; i++) {
-            console.log("*****************");
-            const origin = orderer.pop();
-            const target = randomized.find((item => item.playerId != get(origin, "playerId")));
-
-            console.log("ORDENACION", origin,target);
-            randomized = randomized.filter(item => item.playerId != get(target, "playerId"));
-            console.log("randomized", randomized);
-            randomWords[get(target, "playerId", "")].word = get(origin, "word", "");
+            const currentPlayerId = playersInMess[i].playerId;
+            let previewIndex = i - 1;
+            if (previewIndex < 0) previewIndex = size - 1;
+            const previewPlayerWord = playersInMess[previewIndex].word;
+            wordsOrderedRandom[currentPlayerId] = { word: previewPlayerWord } as TargetWord;
         }
-
-        console.log("randomWords", randomWords);
-        return randomWords;
-
+        return wordsOrderedRandom;
     }
 
     const generateScore = (): ScoreResume => {
