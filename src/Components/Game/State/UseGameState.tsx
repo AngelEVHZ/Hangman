@@ -60,8 +60,10 @@ export const UseGameState = (): GameProps => {
     const utils: UtilsContextInterface = useUtils();
 
     //GAME LOGIC VARS
+    const [originalLetters, setOriginalLetters] = useState([""]);
     const [wordLetters, setWordLetters] = useState([""]);
     const [userLetter, setUserLetter] = useState(new Array(wordLetters.length).fill(""));
+
     const [currentKey, setKey] = useState({key:""});
     const [errors, setErrors] = useState(new Array(6).fill(false));
     const [gameOver, setGameover] = useState(false);
@@ -82,7 +84,8 @@ export const UseGameState = (): GameProps => {
     const timerMenuCallback = () => {
         if (userWordSended) return;
         console.log("termino el tiempo");
-        sendWord("time");
+        const randomWord =  settings.handle.getRandomWord();
+        sendWord(randomWord);
     }
     const timerGameCallback = () => {
         if (gameOver || !roundStart || completed) {
@@ -115,8 +118,8 @@ export const UseGameState = (): GameProps => {
     }
 
     const downHandler = (event: KeyboardEvent) => {
-        const key = event.key;
-        setKey({key});
+        const key = event.key || "";
+        setKey({key: key.normalize('NFD').replace(/[\u0300-\u036f]/g, "")});
     }
 
     const startGame = () => {
@@ -213,10 +216,12 @@ export const UseGameState = (): GameProps => {
 
 
     const initRound = () => {
-        const word = settings.handle.getPlayerTargetWord(currentRound).toLocaleUpperCase();
-        setUserLetter(new Array(word.length).fill(" "));
-        const wordArray = Array.from(word);
-        setWordLetters(wordArray);
+        const originalWord = settings.handle.getPlayerTargetWord(currentRound).toLocaleUpperCase();
+        const wordNormalize = originalWord.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+
+        setUserLetter(new Array(wordNormalize.length).fill(" "));
+        setOriginalLetters(Array.from(originalWord));
+        setWordLetters(Array.from(wordNormalize));
         setRountStart(true);
         setGameover(false);
         setCompleted(false);
@@ -233,6 +238,7 @@ export const UseGameState = (): GameProps => {
         setPlayersFinish(false);
         setUserLetter([""]);
         setWordLetters([""]);
+        setOriginalLetters([""]);
         setUserWord("");
     }
 
@@ -316,7 +322,7 @@ export const UseGameState = (): GameProps => {
 
     return {
         state: {
-            wordLetters,
+            wordLetters: originalLetters,
             userLetter,
             errors,
             roundStart,

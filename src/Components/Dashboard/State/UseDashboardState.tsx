@@ -81,9 +81,9 @@ export const UseDashboardState = (): DashBoardProps => {
         setGameStart(true);
         socket.actions.startGame(3);
     }
-    const copyInvitation = () => {
+    const copyInvitation = async () => {
         const url = window.location.origin + "/?game-id="+ settings.state.playerSettings.gameId;
-        navigator.clipboard.writeText(url)
+        await window.navigator.clipboard.writeText(url);
         utils.handle.showAlert({show:true, type:"info",msg:"Invitacion copiada!"});
     }
 

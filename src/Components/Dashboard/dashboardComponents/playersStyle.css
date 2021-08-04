@@ -4,9 +4,13 @@
 }
 
 .player{
-    border-radius: 20px !important;
-    margin: 20px;
-    text-align: center;
+    background-color: rgba(255, 255, 255, 0.7) !important;
+    border-radius: 100px 25px 25px 100px !important;
+    margin: 5px;
+    text-align: start;
+    font-size: 20px !important;
+    font-weight: bold;
+    color: #7E0627;
 }
 
 
@@ -16,3 +20,16 @@
     background-color: rgba(0,0,0,0.3) !important;
     
 }
+
+.avatar{
+    margin: 0px 0px 2px;
+    width: 60px;
+    height: 60px;
+    min-height: 48px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    left: 0px;
+    position: absolute;
+    top: -15px;
+}
+

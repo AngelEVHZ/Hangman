@@ -25,6 +25,7 @@ const INITIAL_STATE: SettingsContextInterface = {
         allPlayerFinish: (roundIndex: number) => {return false},
         generateScore: () => {return {players: []} as ScoreResume},
         getPlayerName: (playerId: string) => {return ""},
+        getRandomWord: () => {return ""}
     },
     state: {
         playerSettings: {

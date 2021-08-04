@@ -3,6 +3,7 @@ import { useState } from "react";
 import { PlayerSettings, UserSession, GameMatch, GameScore, PlayerScore, ScoreResume, PlayerScoreResume } from "../../types/UserSession";
 import { defaultTo, get } from "lodash";
 import { RandomWords, TargetWord } from "../../types/GameTypes";
+import { WordsCatalog } from "../../Constant/WordsCatalog";
 
 export interface SettingsContextInterface {
     handle: {
@@ -23,6 +24,7 @@ export interface SettingsContextInterface {
         allPlayerFinish: (roundIndex: number) => boolean;
         generateScore: () => ScoreResume;
         getPlayerName: (playerId: string) => string;
+        getRandomWord: () => string;
     },
     state: {
         playerSettings: PlayerSettings;
@@ -296,8 +298,19 @@ export const UseSettingsState = (): SettingsContextInterface => {
         return getUsers().length > 0
     }
 
+    const getRandomNumber =(max: number, includeMax?: boolean) => {
+        return (Math.floor(Math.random() * max) + (includeMax ? 1 : 0))
+    }
+
+    const getRandomWord = () => {
+        const size = WordsCatalog.length;
+        const wordIndex = getRandomNumber(size);
+        return WordsCatalog[wordIndex] || WordsCatalog[0];
+    }
+
     return {
         handle: {
+            getRandomWord,
             isPlayerReady,
             saveUsers,
             getUsers,

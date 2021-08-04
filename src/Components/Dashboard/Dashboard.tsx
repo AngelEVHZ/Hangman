@@ -12,10 +12,10 @@ const Dashboard: React.FC<any> = () => {
     return (
         <div>
             <div className="row mt-5">
-                <div className="col-md-3">
+                <div className="col-lg-3 col-md-12">
                     <Players players={state.players}></Players>
                 </div>
-                <div className="col-md-7 pl-3">
+                <div className="col-lg-7 col-md-12">
                     <GameMode catalog={state.gameCatalog} selectGame={handle.selectGame}></GameMode>
                     <br></br>
                     <br></br>
@@ -32,7 +32,7 @@ const Dashboard: React.FC<any> = () => {
                         </div>
                     </div>
                 </div>
-                <div className="col-md-2">
+                <div className="col-lg-2 col-md-12">
                     publicidad
                 </div>
             </div>
