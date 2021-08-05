@@ -34,7 +34,7 @@ const Game: React.FC<any> = () => {
                         }
                         {!state.playersFinish && state.roundStart &&
                             <div className="card">
-                                <header className="card-header">
+                                <header className="card-header p-3">
                                     <Timer {...timerGame}
                                         time={timerGame.time}
                                         stop={state.gameOver || state.completed}

@@ -19,11 +19,17 @@ const MenuBoard: React.FC<any> = (props: MenuBoardProps) => {
         <>
             <div className="card">
                 <div className="card-content">
-                    <p className="card-header-title">
-                        <h3 className="text-center">Escribe una palabra:</h3>
-                    </p>
                     <div className="content">
-                        <input className="input is-medium" type="text" placeholder="Palabra..." onChange={props.handle.changeUserWord} ></input>
+                        <div className="columns is-centered">
+                            <div className="column is-four-fifths">
+                                <div className="field">
+                                    <label className="label"><h3 className="text-center">Escribe una palabra:</h3></label>
+                                    <div className="control">
+                                        <input className="input is-medium is-fullwidth" type="text" placeholder="Palabra..." onChange={props.handle.changeUserWord} ></input>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <footer className="card-footer">
@@ -31,7 +37,7 @@ const MenuBoard: React.FC<any> = (props: MenuBoardProps) => {
                         <Timer {...props.timer}></Timer>
                     </div>
                     <div className="card-footer-item">
-                        <button className="button is-primary is-outlined"
+                        <button className="btn-full-size "
                             onClick={props.handle.startGame}
                             disabled={props.isReady}>Enviar!</button>
                     </div>

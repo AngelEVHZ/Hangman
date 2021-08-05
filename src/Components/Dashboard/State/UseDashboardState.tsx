@@ -38,11 +38,15 @@ export const UseDashboardState = (): DashBoardProps => {
     const settings: SettingsContextInterface = useSettings();
     const utils: UtilsContextInterface = useUtils();
     const [gameStart, setGameStart] = useState<boolean>(false);
-    const [gameCatalog, UpdateCatalog] = useState<GameCardProps[]>(GAME_CATALOG);
+    const [gameCatalog, UpdateCatalog] = useState<GameCardProps[]>([...GAME_CATALOG]);
     const [gameSelected, setGameSelected] = useState<string>("");
 
     
     useEffect(() => {
+        const catalog = [...gameCatalog];
+        unselectCatalog(catalog);
+        UpdateCatalog(catalog);
+        console.log(catalog);
         if (!socket.conected) {
             history.push(Routes.LOGIN);
         }
@@ -51,7 +55,6 @@ export const UseDashboardState = (): DashBoardProps => {
     useEffect(() => {
         const iddleAction = utils.state.iddleAction;
         if (iddleAction.activate && iddleAction.path != Routes.LOGIN) {
-            console.log("INACTIVO");
             utils.handle.resetIddle();
             history.push(Routes.LOGIN);
         }
@@ -87,11 +90,15 @@ export const UseDashboardState = (): DashBoardProps => {
         utils.handle.showAlert({show:true, type:"info",msg:"Invitacion copiada!"});
     }
 
+    const unselectCatalog = (catalog: GameCardProps[], defaultIdSeleted?: string) => {
+        catalog.forEach( (game) => {
+            game.selected = defaultIdSeleted ? game.id == defaultIdSeleted : false;
+        })
+    }
+
     const selectGame = (item: GameCardProps) => {
         const catalog = [...gameCatalog];
-        catalog.forEach( (game) => {
-            game.selected = game.id === item.id;
-        })
+        unselectCatalog(catalog, item.id);
         setGameSelected(item.id);
         UpdateCatalog(catalog);
     }

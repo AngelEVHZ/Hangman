@@ -1,16 +1,16 @@
 #pipe-vertical {
     position: absolute;
     width: 20px;
-    height: 80%;
-    left: 90px;
-    top: 70px;
+    height: 386px;
+    left: 165px;
+    top: 141px;
 }
 #pipe-horizontal {
     position: absolute;
     width: 200px;
     height: 20px;
-    left: 90px;
-    top: 70px;
+    left: 165px;
+    top: 141px;
 }
 
 #rope {
@@ -18,15 +18,15 @@
     position: absolute;
     width: 10px;
     height: 44px;
-    left: 267px;
-    top: 84px;
+    left: 347px;
+    top: 151px;
 }
 #head {
     position: absolute;
     width: 50px;
     height: 50px;
-    left: 247px;
-    top: 117px;
+    left: 327px;
+    top: 170px;
     border-radius: 50%;
 }
 
@@ -34,8 +34,8 @@
     position: absolute;
     width: 15px;
     height: 110px;
-    left: 261px;
-    top: 160px;
+    left: 341px;
+    top: 213px;
     border-radius: 10px;
 }
 
@@ -43,8 +43,8 @@
     position: absolute;
     width: 93px;
     height: 15px;
-    left: 204px;
-    top: 203px;
+    left: 284px;
+    top: 256px;
     border-radius: 10px;
     transform: rotate(103deg);
 }
@@ -53,8 +53,8 @@
     position: absolute;
     width: 93px;
     height: 15px;
-    left: 238px;
-    top: 205px;
+    left: 318px;
+    top: 258px;
     border-radius: 10px;
     transform: rotate(76deg);
 }
@@ -63,8 +63,8 @@
     position: absolute;
     width: 111px;
     height: 15px;
-    left: 202px;
-    top: 302px;
+    left: 282px;
+    top: 355px;
     border-radius: 10px;
     transform: rotate(103deg);
 }
@@ -73,8 +73,8 @@
     position: absolute;
     width: 111px;
     height: 15px;
-    left: 218px;
-    top: 308px;
+    left: 298px;
+    top: 360px;
     border-radius: 10px;
     transform: rotate(86deg);
 }

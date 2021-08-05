@@ -19,7 +19,7 @@ interface CameScoreProps {
 }
 
 const GameScore: React.FC<any> = (props: CameScoreProps) => {
-    const buttonText = props.finishGame ? "Salir" : "NEXT ROUND";
+    const buttonText = props.finishGame ? "Salir!" : "Next Round!";
     const scoreResume = props.scoreResume;
 
     const renderTableRow = (player: PlayerScoreResume, index: number) => {
@@ -43,27 +43,29 @@ const GameScore: React.FC<any> = (props: CameScoreProps) => {
     return (
         <div className="content">
             <div className="card">
-                <table className="table">
-                    <thead>
-                        <tr>
-                            <th>Player</th>
-                            {Array.from({ length: props.match.rounds }).map((_, index) => (
-                                <th key={index}>Round {index + 1}</th>
-                            ))}
-                            <th>Final</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {scoreResume.players.map((player, index) => renderTableRow(player, index))}
-                    </tbody>
-                </table>
+                <div className="card-content content-size">
+                    <table className="table">
+                        <thead>
+                            <tr>
+                                <th>Player</th>
+                                {Array.from({ length: props.match.rounds }).map((_, index) => (
+                                    <th key={index}>Round {index + 1}</th>
+                                ))}
+                                <th>Final</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {scoreResume.players.map((player, index) => renderTableRow(player, index))}
+                        </tbody>
+                    </table>
+                </div>
                 <footer className="card-footer">
                     <div className="card-footer-item">
                         <Timer {...props.timer}></Timer>
                     </div>
                     <div className="card-footer-item">
-                        <button className="button is-primary is-outlined"
+                        <button className="btn-full-size "
                             onClick={props.nextRound}
                             disabled={!props.host}>{buttonText}</button>
                     </div>

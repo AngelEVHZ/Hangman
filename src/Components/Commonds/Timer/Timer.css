@@ -30,15 +30,15 @@
   }
   
   .base-timer__path-remaining.green {
-    color: rgb(65, 184, 131);
+    color: #6caddf
   }
   
   .base-timer__path-remaining.orange {
-    color: orange;
+    color: #b06010
   }
   
   .base-timer__path-remaining.red {
-    color: red;
+    color: #b50938
   }
   
   .base-timer__label {

@@ -9,11 +9,13 @@ export const GAME_CATALOG: GameCardProps[] = [
         selected: false,
         title: "Normal",
         description: "Modo de juego basico",
+        available: true,
         icon: (<p><FontAwesomeIcon className="icon" icon={faQuestion} /></p>)
     },
     {
         id:"mode-2",
         selected: false,
+        available: true,
         title: "Contra Reloj",
         description: "Modo de juego basico",
         icon: (<p><FontAwesomeIcon className="icon" icon={faStopwatch} /></p>)
@@ -21,6 +23,7 @@ export const GAME_CATALOG: GameCardProps[] = [
     {
         id:"mode-3",
         selected: false,
+        available: false,
         title: "Proximamente",
         description: "Modo de juego basico",
         icon: (<p><FontAwesomeIcon className="icon" icon={faGift} /></p>)
@@ -28,6 +31,7 @@ export const GAME_CATALOG: GameCardProps[] = [
     {
         id:"mode-4",
         selected: false,
+        available: false,
         title: "Proximamente",
         description: "Modo de juego basico",
         icon: (<p><FontAwesomeIcon className="icon" icon={faGift} /></p>)
