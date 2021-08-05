@@ -9,9 +9,9 @@ const AlertMsg: React.FC<any> = () => {
         <>
             {alert.show &&
                 <div className="fade-in-down-top">
-                    <article className="message is-warning">
+                    <article className={`message ${alert.type}`}>
                         <div className="message-body">
-                            <strong>  {alert.msg}</strong>
+                            <strong>{alert.msg}</strong>
                         </div>
                     </article>
                 </div>

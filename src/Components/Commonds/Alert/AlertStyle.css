@@ -6,8 +6,8 @@
     position: fixed;
     text-align: center;
 	animation-name: mover;
-    left: 0;
-    bottom: 0;
+    left: 10px;
+    bottom: 10px;
     width: 25%;
 	animation-iteration-count: 1;
 	animation-timing-function: ease;
@@ -18,5 +18,5 @@
 
 @keyframes mover {
     0% { bottom: -50px; opacity: 0; }
-    100% { bottom: 0; opacity: 1;}
+    100% { bottom: 10px; opacity: 1;}
 }

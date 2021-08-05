@@ -87,7 +87,7 @@ export const UseDashboardState = (): DashBoardProps => {
     const copyInvitation = async () => {
         const url = window.location.origin + "/?game-id="+ settings.state.playerSettings.gameId;
         await window.navigator.clipboard.writeText(url);
-        utils.handle.showAlert({show:true, type:"info",msg:"Invitacion copiada!"});
+        utils.handle.showAlert({show:true, type:"is-warning",msg:"Invitacion copiada!"});
     }
 
     const unselectCatalog = (catalog: GameCardProps[], defaultIdSeleted?: string) => {

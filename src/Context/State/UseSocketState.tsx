@@ -92,11 +92,11 @@ export const UseSocketState = (): SocketContextInterface => {
         const message = get(state, "message", {}) as NotifyResponse<any>;
         switch (message.action) {
             case NotifyActionEnum.USER_DISCONNECTED:
-                utils.handle.showAlert({show:true, type:"warning", msg:"User Disconected"});
+                utils.handle.showAlert({show:true, type:"is-danger", msg:"User Disconected"});
                 updateUser(message);
                 break;
             case NotifyActionEnum.USER_JOIN:
-                utils.handle.showAlert({show:true, type:"primary", msg:"User Conected"});
+                utils.handle.showAlert({show:true, type:"is-info", msg:"User Conected"});
                 updateUser(message);
                 break;
         }

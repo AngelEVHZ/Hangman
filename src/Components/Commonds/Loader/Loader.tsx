@@ -1,6 +1,6 @@
 import React from "react";
 import { useUtils } from "../../../Context/UtilsProvider";
-
+import "./LoaderStyle.css";
 const Loader: React.FC<any> = () => {
     const utils = useUtils();
     const isActive = utils.state.showLoader ? "is-active" : "";
@@ -10,7 +10,11 @@ const Loader: React.FC<any> = () => {
                 <div className="modal-background"></div>
                 <div className="modal-card">
                     <section className="modal-card-body">
-                        <button className="button is-warning is-loading">Loading</button>
+                        <div className="spinner">
+                            <div className="bounce1"></div>
+                            <div className="bounce2"></div>
+                            <div className="bounce3"></div>
+                        </div>
                     </section>
                 </div>
             </div>
