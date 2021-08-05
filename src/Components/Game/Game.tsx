@@ -1,7 +1,6 @@
 import React from "react";
 import LetterInputs from "./GameComponents/LetterInputs";
 import { UseGameState } from "./State/UseGameState";
-import { Card, Col, Container, ListGroup, Row, Button } from "react-bootstrap";
 import Board from "./GameComponents/Board";
 import MenuBoard from "./GameComponents/MenuBoard";
 import Players from "../Dashboard/dashboardComponents/players";
@@ -13,13 +12,12 @@ const Game: React.FC<any> = () => {
 
     return (
         <>
-            <Container fluid>
-                <Row className="mt-5">
-                    <Col sm={3} >
-                        <Players players={state.players}>
-                        </Players>
-                    </Col>
-                    <Col sm={6} >
+            <div className="content m-5">
+                <div className="columns">
+                    <div className="column is-one-fifth">
+                        <Players players={state.players}></Players>
+                    </div>
+                    <div className="column">
                         {state.playersFinish &&
                             <div>
                                 <GameScore
@@ -35,21 +33,19 @@ const Game: React.FC<any> = () => {
 
                         }
                         {!state.playersFinish && state.roundStart &&
-                            <Card body>
-                                <ListGroup variant="flush">
-                                    <ListGroup.Item>
-                                        <Timer {...timerGame}
-                                            time={timerGame.time}
-                                            stop={state.gameOver || state.completed}
-                                            callBack={timerGame.callBack}
-                                        ></Timer>
-                                    </ListGroup.Item>
-                                    <ListGroup.Item>
+                            <div className="card">
+                                <header className="card-header">
+                                    <Timer {...timerGame}
+                                        time={timerGame.time}
+                                        stop={state.gameOver || state.completed}
+                                        callBack={timerGame.callBack}
+                                    ></Timer>
+                                </header>
+                                <div className="card-content">
+                                    <div className="content">
                                         <Board
                                             errors={state.errors}>
                                         </Board>
-                                    </ListGroup.Item>
-                                    <ListGroup.Item>
                                         <LetterInputs
                                             callBack={handle.finishGameCallback}
                                             userLetter={state.userLetter}
@@ -57,17 +53,20 @@ const Game: React.FC<any> = () => {
                                             gameOver={state.gameOver}
                                             completed={state.completed}
                                         ></LetterInputs>
-                                    </ListGroup.Item>
-                                </ListGroup>
-                            </Card>
+                                    </div>
+                                </div>
+                            </div>
                         }
                         {!state.playersFinish && !state.roundStart &&
                             <MenuBoard handle={handle} isReady={state.isReady} timer={timerMenu}></MenuBoard>
                         }
-                    </Col>
-                    <Col sm={3}> PUBLICIDAD</Col>
-                </Row>
-            </Container>
+
+                    </div>
+                    <div className="column is-one-fifth">
+                        PUBLICIDAD
+                    </div>
+                </div>
+            </div>
         </>
     );
 };

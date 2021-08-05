@@ -1,6 +1,5 @@
 
 import React from "react";
-import { Container } from "react-bootstrap";
 import "./GameStyle.css";
 import "./HangmanStyle.css";
 interface BoardProps {
@@ -21,7 +20,7 @@ const Board: React.FC<any> = (props: BoardProps) => {
 
 
     return (
-        <Container>
+        <div className="content">
             <div className="board">
                 <div className="hang-man">
                     {errors.length >= 6 &&
@@ -37,7 +36,7 @@ const Board: React.FC<any> = (props: BoardProps) => {
                     }
                 </div>
             </div>
-        </Container>
+        </div>
     );
 };
 export default Board;

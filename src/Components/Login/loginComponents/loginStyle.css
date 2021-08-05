@@ -1,6 +1,6 @@
 .btn-big{
   width: 200px;
-  height: 50px;
+  height: 60px !important;
   background-color: #004990 !important;
   border: none !important;
 }

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import Navigation from './Containers/Navigation';
 import reportWebVitals from './reportWebVitals';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bulma/css/bulma.min.css';
 import { SocketProvider } from "./Context/SocketProvider";
 import { SettingsProvider } from './Context/SettingsProvider';
 import Loader from './Components/Commonds/Loader/Loader';

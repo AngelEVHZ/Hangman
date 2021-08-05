@@ -7,11 +7,11 @@ const Login: React.FC<any> = () => {
    const {handle, state} = UseLoginState();
    return (
       <div>
-         <div className="row">
-            <div className="col-md-6">
+         <div className="columns">
+            <div className="column">
                <LoginHowToPlay></LoginHowToPlay>
             </div>
-            <div className="col-md-6">
+            <div className="column">
                <LoginForm  changeNickName={handle.changeNickName} 
                joinGame={handle.joinGame} 
                isJoining={state.isJoining}></LoginForm>

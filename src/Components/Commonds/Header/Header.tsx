@@ -1,20 +1,15 @@
 import React from "react";
-import { Container, Navbar, Row, Col } from "react-bootstrap";
 const Header: React.FC<any> = () => {
-
-
     return (
-        <Navbar className="header">
-            <Container fluid>
-                <Navbar.Brand href="/">
-                    <Row className="pl-5 pt-2">
-                        <Col>
-                            <p className="white-title">HANGMAN</p>
-                        </Col>
-                    </Row>
-                </Navbar.Brand>
-            </Container>
-        </Navbar>
+        <div>
+            <nav className="navbar header p-3" role="navigation" aria-label="main navigation">
+                <div className="navbar-brand">
+                    <a className="navbar-item" href="/">
+                        <h1 className="title is-1 white-title">HANGMAN</h1>
+                    </a>
+                </div>
+            </nav>
+        </div>
     );
 };
 export default Header;

@@ -25,11 +25,9 @@ code {
 
 
 .header {
-  background-color: rgba(0,0,0,0.6);
+  background-color: rgba(0,0,0,0.6) !important;
   box-shadow: 0 10px 20px 0 rgba(0,0,0,0.3);
 }
 .white-title{
-  font-weight: bold;
-  color: white;
-  font-size: 30px;
+  color: white !important;
 }

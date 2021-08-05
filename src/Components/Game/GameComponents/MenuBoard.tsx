@@ -1,6 +1,5 @@
 
 import React from "react";
-import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import Timer from "../../Commonds/Timer/Timer";
 import "./GameStyle.css";
 interface MenuBoardProps {
@@ -9,7 +8,7 @@ interface MenuBoardProps {
         changeUserWord: (event: React.ChangeEvent<HTMLInputElement>) => void;
     }
     isReady: boolean;
-    timer:{
+    timer: {
         time: number;
         callBack: () => void;
     }
@@ -17,33 +16,28 @@ interface MenuBoardProps {
 
 const MenuBoard: React.FC<any> = (props: MenuBoardProps) => {
     return (
-        <Container>
-            <Card body>
-                <Row className="justify-content-md-center">
-                    <Col><h3 className="text-center">Escribe una palabra:</h3></Col>
-                </Row>
-                <Row className="justify-content-md-center">
-                    <Col>
-                        <Form onSubmit={(event) => { event.preventDefault() }}>
-                            <Form.Group className="mb-3" controlId="formBasicEmail">
-                                <Form.Control onChange={props.handle.changeUserWord} />
-                            </Form.Group>
-                        </Form>
-
-                    </Col>
-                </Row>
-                <Row className=" align-items-end">
-                    <Col >
+        <>
+            <div className="card">
+                <div className="card-content">
+                    <p className="card-header-title">
+                        <h3 className="text-center">Escribe una palabra:</h3>
+                    </p>
+                    <div className="content">
+                        <input className="input is-medium" type="text" placeholder="Palabra..." onChange={props.handle.changeUserWord} ></input>
+                    </div>
+                </div>
+                <footer className="card-footer">
+                    <div className="card-footer-item">
                         <Timer {...props.timer}></Timer>
-                    </Col>
-                    <Col className="content-end">
-                        <Button className="btn btn-lg ml-auto btn-full-size"
+                    </div>
+                    <div className="card-footer-item">
+                        <button className="button is-primary is-outlined"
                             onClick={props.handle.startGame}
-                            disabled={props.isReady}>Enviar!</Button>
-                    </Col>
-                </Row>
-            </Card>
-        </Container>
+                            disabled={props.isReady}>Enviar!</button>
+                    </div>
+                </footer>
+            </div>
+        </>
     );
 };
 export default MenuBoard;

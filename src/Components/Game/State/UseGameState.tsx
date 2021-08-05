@@ -83,7 +83,6 @@ export const UseGameState = (): GameProps => {
     // TIMER
     const timerMenuCallback = () => {
         if (userWordSended) return;
-        console.log("termino el tiempo");
         const randomWord =  settings.handle.getRandomWord();
         sendWord(randomWord);
     }

@@ -11,10 +11,10 @@ const GameMode: React.FC<any> = (props: GameModeProps) => {
 
     return (
         <div>
-            <div className="container">
-                <div className="row d-flex justify-content-center">
+            <div className="content">
+                <div className="columns">
                     {props.catalog.map((card) => {
-                        return (<div className="col-md-3 col-sm-6 pb-4 ">
+                        return (<div className="column is-one-quarter">
                             <GameCard item={card} selectGame={props.selectGame}></GameCard>
                         </div>)
                     }

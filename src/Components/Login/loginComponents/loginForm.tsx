@@ -14,7 +14,8 @@ const LoginForm: React.FC<LoginFormProps> = (props: LoginFormProps) => {
                 <div id="formContent">
                     <div>
                         <input type="text" id="login" className="fadeIn second" name="login" placeholder="Aqui tu nombre :)" onChange={props.changeNickName} />
-                        <button type="button" className="fadeIn btn btn-primary btn-big" onClick={props.joinGame}>{btnText}</button>
+                        <button className="button is-primary btn-big"
+                            onClick={props.joinGame}>{btnText}</button>
                     </div>
                 </div>
             </div>

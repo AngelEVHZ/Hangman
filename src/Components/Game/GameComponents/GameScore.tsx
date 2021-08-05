@@ -1,6 +1,5 @@
 
 import React from "react";
-import { Button, Card, Col, Container, Row, Table } from "react-bootstrap";
 import { GameMatch, PlayerScoreResume, ScoreResume } from "../../../types/UserSession";
 import Timer from "../../Commonds/Timer/Timer";
 import "./GameStyle.css";
@@ -41,11 +40,10 @@ const GameScore: React.FC<any> = (props: CameScoreProps) => {
         );
     }
 
-
     return (
-        <Container>
-            <Card body>
-                <Table responsive>
+        <div className="content">
+            <div className="card">
+                <table className="table">
                     <thead>
                         <tr>
                             <th>Player</th>
@@ -59,21 +57,19 @@ const GameScore: React.FC<any> = (props: CameScoreProps) => {
                     <tbody>
                         {scoreResume.players.map((player, index) => renderTableRow(player, index))}
                     </tbody>
-                </Table>
-
-                <Row className="pt-5">
-                    <Col>
+                </table>
+                <footer className="card-footer">
+                    <div className="card-footer-item">
                         <Timer {...props.timer}></Timer>
-                    </Col>
-                    <Col className="content-end">
-                        <Button
+                    </div>
+                    <div className="card-footer-item">
+                        <button className="button is-primary is-outlined"
                             onClick={props.nextRound}
-                            className="btn btn-lg ml-auto btn-medium"
-                            disabled={!props.host}>{buttonText}</Button>
-                    </Col>
-                </Row>
-            </Card>
-        </Container>
+                            disabled={!props.host}>{buttonText}</button>
+                    </div>
+                </footer>
+            </div>
+        </div>
     );
 };
 export default GameScore;

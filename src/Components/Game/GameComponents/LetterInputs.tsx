@@ -1,7 +1,6 @@
 
 import React from "react";
 import { useState } from "react";
-import { Col, Container, Row, Button } from "react-bootstrap";
 import "./GameStyle.css";
 interface LetterInputsProps {
     userLetter: string[];
@@ -23,27 +22,32 @@ const LetterInputs: React.FC<any> = (props: LetterInputsProps) => {
         props.callBack();
     }
 
-    const renderLetter = ( letter:string, index:number) => {
+    const renderLetter = (letter: string, index: number) => {
         if (letter == " ")
-        return (
-            <div key={index} className="space"> </div>
-        );
+            return (
+                <div key={index} className="space"> </div>
+            );
         const printLetter = reveal || userLetter[index] != " " ? wordLetters[index] : userLetter[index];
         return (
             <div key={index} className="answer-space" >
-               <Button variant="outline-dark" className={`button letter-button ${onFinishClas}`}>{printLetter}</Button>
+                <button className={`button is-outlined letter-button ${onFinishClas}`}>{printLetter}</button>
             </div>
         );
-    } 
+    }
 
     return (
-        <Container>
-            <Row className="justify-content-md-center">
-                {wordLetters.map((letter, index) => {
-                    return renderLetter(letter, index)
-                })}
-            </Row>
-        </Container>
+        <div className="content m-3">
+            <div className="columns is-centered">
+                <div className="column">
+                    <div className="buttons is-centered">
+                        {wordLetters.map((letter, index) => {
+                            return renderLetter(letter, index)
+                        })}
+                    </div>
+                </div>
+            </div>
+        </div>
+
     );
 };
 export default LetterInputs;

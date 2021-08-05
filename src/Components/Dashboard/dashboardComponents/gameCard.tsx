@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import './gameStyle.css';
-import { Card } from "react-bootstrap";
 
 export interface GameCardProps {
     selected: boolean;
@@ -22,7 +21,7 @@ const GameCard: React.FC<any> = (props: GameCardLocalProps) => {
     const colorClass = onHover ? "game-card-hover" : item.selected ? "game-card-selected" : "";
     return (
         <div className="">
-            <Card className={`gameCard ${colorClass}`}
+            <div className={`card gameCard ${colorClass}`}
                 onMouseEnter={() => setOnHover(true)}
                 onMouseLeave={() => setOnHover(false)}
                 onClick={()=>props.selectGame(item)}>
@@ -37,7 +36,7 @@ const GameCard: React.FC<any> = (props: GameCardLocalProps) => {
                         <p className="description-card">{item.description}</p>
                     </div>
                 }
-            </Card>
+            </div>
         </div>
     );
 };
