@@ -1,7 +1,6 @@
 
 import React from "react";
-import "./GameStyle.css";
-import "./HangmanStyle.css";
+import "./BoardStyle.css";
 interface BoardProps {
     errors: boolean[];
 }

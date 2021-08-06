@@ -22,7 +22,7 @@ export interface SocketContextInterface {
         closeSocket: () => void;
         sendWord: (word: string, round: number) => void;
         sendRandomWord: (words: RandomWords, round: number) => void;
-        startGame: (rounds: number) => void;
+        startGame: (rounds: number, gameKind: string) => void;
         sendFinish: (completed: boolean, round: number, time: number) => void;
         sendShowScores: () => void;
         sendNextRound: (round: number) => void;
@@ -195,13 +195,14 @@ export const UseSocketState = (): SocketContextInterface => {
         }
         notify(data);
     }
-    const startGame = (rounds: number) => {
+    const startGame = (rounds: number, gameKind: string) => {
         const data: SocketAction<NotifyAll> = {
             action: SocketActionEnum.NOTIFY_ALL,
             data: {
                 gameId: settings.state.playerSettings.gameId,
                 notification: {
                     rounds,
+                    gameKind,
                     action: NotifyGameActionEnum.START_GAME
                 } as StartGame
             }

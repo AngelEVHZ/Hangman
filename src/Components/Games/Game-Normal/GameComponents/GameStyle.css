@@ -1,0 +1,16 @@
+
+.btn-full-size {
+    background: none;
+    width: 100% !important;
+    border:  none !important;
+    color: #b06010 !important;
+    height: 100% !important;
+    font-size: 25px;
+    font-weight: bold;
+    
+}
+
+.btn-full-size:hover {
+    /* background-color: #b06010 !important; */
+    color: #004990 !important;
+}

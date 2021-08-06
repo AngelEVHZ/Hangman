@@ -39,6 +39,7 @@ export interface SetRandomWords {
 
 export interface StartGame {
     rounds: number;
+    gameKind: string;
     action: NotifyGameActionEnum,
 }
 

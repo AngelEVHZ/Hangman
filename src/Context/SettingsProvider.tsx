@@ -14,18 +14,19 @@ const INITIAL_STATE: SettingsContextInterface = {
         deleteStorage: () => { },
         existSession: () => { return false },
         initMatch: (rounds: number) => { },
-        finishMatch: () => {},
+        finishMatch: () => { },
         setPlayerWord: (roundIndex: number, word: string, playerId?: string) => { },
-        isPlayerReady: (roundIndex: number, playerId?: string) =>  {return false},
-        allPlayerReady: (roundIndex: number) => {return false},
-        randomizeWords: (roundIndex: number) => { return {} as RandomWords},
-        setRandomWords: (roundIndex: number, words: RandomWords) => {},
-        getPlayerTargetWord: (roundIndex: number, playerId?: string) => {return ""},
-        setFinishRound: (roundIndex: number, completed: boolean, time: number, playerId?: string) => {},
-        allPlayerFinish: (roundIndex: number) => {return false},
-        generateScore: () => {return {players: []} as ScoreResume},
-        getPlayerName: (playerId: string) => {return ""},
-        getRandomWord: () => {return ""}
+        isPlayerReady: (roundIndex: number, playerId?: string) => { return false },
+        allPlayerReady: (roundIndex: number) => { return false },
+        randomizeWords: (roundIndex: number) => { return {} as RandomWords },
+        setRandomWords: (roundIndex: number, words: RandomWords) => { },
+        getPlayerTargetWord: (roundIndex: number, playerId?: string) => { return "" },
+        setFinishRound: (roundIndex: number, completed: boolean, time: number, playerId?: string) => { },
+        allPlayerFinish: (roundIndex: number) => { return false },
+        generateScore: () => { return { players: [] } as ScoreResume },
+        getPlayerName: (playerId: string) => { return "" },
+        getRandomWord: () => { return "" },
+        setGameKind: (gameId: string) => { },
     },
     state: {
         playerSettings: {
@@ -34,14 +35,15 @@ const INITIAL_STATE: SettingsContextInterface = {
             nickName: "",
             host: false,
         },
-        match:{
-            score:[],
-            rounds:0,
-            players:[],
+        match: {
+            score: [],
+            rounds: 0,
+            players: [],
         },
         isPlaying: false,
-        scoreResume: {players:[]},
+        scoreResume: { players: [] },
         players: [],
+        gameKindSelected: "",
     }
 }
 

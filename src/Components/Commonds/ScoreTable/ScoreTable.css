@@ -1,0 +1,33 @@
+.content-size{
+    min-height: 300px;
+}
+
+.icon-trophy{
+    font-size: 20px;
+}
+.place-1{
+    color: rgb(169, 159, 48);
+}
+.place-2{
+    color: rgb(103, 103, 103);
+}
+.place-3{
+    color: rgb(101, 65, 38);
+}
+
+
+.btn-full-size {
+    background: none;
+    width: 100% !important;
+    border:  none !important;
+    color: #b06010 !important;
+    height: 100% !important;
+    font-size: 25px;
+    font-weight: bold;
+    
+}
+
+.btn-full-size:hover {
+    /* background-color: #b06010 !important; */
+    color: #004990 !important;
+}

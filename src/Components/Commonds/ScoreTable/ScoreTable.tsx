@@ -1,11 +1,11 @@
 
 import React from "react";
 import { GameMatch, PlayerScoreResume, ScoreResume } from "../../../types/UserSession";
-import Timer from "../../Commonds/Timer/Timer";
-import "./GameStyle.css";
+import Timer from "../Timer/Timer";
+import "./ScoreTable.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrophy } from "@fortawesome/free-solid-svg-icons";
-interface CameScoreProps {
+interface ScoreTableProps {
     match: GameMatch;
     finishGame: boolean;
     scoreResume: ScoreResume;
@@ -18,7 +18,7 @@ interface CameScoreProps {
     }
 }
 
-const GameScore: React.FC<any> = (props: CameScoreProps) => {
+const ScoreTable: React.FC<any> = (props: ScoreTableProps) => {
     const buttonText = props.finishGame ? "Salir!" : "Next Round!";
     const scoreResume = props.scoreResume;
 
@@ -74,4 +74,4 @@ const GameScore: React.FC<any> = (props: CameScoreProps) => {
         </div>
     );
 };
-export default GameScore;
+export default ScoreTable;

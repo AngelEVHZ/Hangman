@@ -1,13 +1,13 @@
 import React from "react";
-import LetterInputs from "./GameComponents/LetterInputs";
+import LetterInputs from "../../Commonds/LetterInputs/LetterInputs";
 import { UseGameState } from "./State/UseGameState";
-import Board from "./GameComponents/Board";
+import Board from "../../Commonds/Board/Board";
 import MenuBoard from "./GameComponents/MenuBoard";
-import Players from "../Dashboard/dashboardComponents/players";
-import Timer from "../Commonds/Timer/Timer";
-import GameScore from "./GameComponents/GameScore";
+import Players from "../../Dashboard/dashboardComponents/players";
+import Timer from "../../Commonds/Timer/Timer";
+import ScoreTable from "../../Commonds/ScoreTable/ScoreTable";
 
-const Game: React.FC<any> = () => {
+const GameNormal: React.FC<any> = () => {
     const { handle, state, timerMenu, timerGame, timerScores } = UseGameState();
 
     return (
@@ -20,7 +20,7 @@ const Game: React.FC<any> = () => {
                     <div className="column">
                         {state.playersFinish &&
                             <div>
-                                <GameScore
+                                <ScoreTable
                                     host={state.host}
                                     match={state.match}
                                     scoreResume={state.scoreResume}
@@ -28,7 +28,7 @@ const Game: React.FC<any> = () => {
                                     nextRound={handle.nextRound}
                                     timer={timerScores}
                                     finishGame={state.finishGame}
-                                ></GameScore>
+                                ></ScoreTable>
                             </div>
 
                         }
@@ -70,4 +70,4 @@ const Game: React.FC<any> = () => {
         </>
     );
 };
-export default Game;
+export default GameNormal;

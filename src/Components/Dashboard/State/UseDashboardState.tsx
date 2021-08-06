@@ -14,6 +14,7 @@ import { GAME_CATALOG } from "../../../Constant/GameModesCatalog";
 import { GameCardProps } from "../dashboardComponents/gameCard";
 import { useUtils } from "../../../Context/UtilsProvider";
 import { UtilsContextInterface } from "../../../Context/State/UseUtilsState";
+import { TimesEnum } from "../../../Constant/Times";
 
 
 export interface DashBoardProps {
@@ -24,7 +25,7 @@ export interface DashBoardProps {
         gameCatalog: GameCardProps[];
         gameSelected: string;
     },
-    handle:{
+    handle: {
         startGame: () => void;
         copyInvitation: () => void;
         selectGame: (item: GameCardProps) => void;
@@ -38,14 +39,9 @@ export const UseDashboardState = (): DashBoardProps => {
     const settings: SettingsContextInterface = useSettings();
     const utils: UtilsContextInterface = useUtils();
     const [gameStart, setGameStart] = useState<boolean>(false);
-    const [gameCatalog, UpdateCatalog] = useState<GameCardProps[]>([...GAME_CATALOG]);
-    const [gameSelected, setGameSelected] = useState<string>("");
 
-    
     useEffect(() => {
-        const catalog = [...gameCatalog];
-        unselectCatalog(catalog);
-        UpdateCatalog(catalog);
+        settings.handle.setGameKind("");
         if (!socket.conected) {
             history.push(Routes.LOGIN);
         }
@@ -57,7 +53,7 @@ export const UseDashboardState = (): DashBoardProps => {
             utils.handle.resetIddle();
             history.push(Routes.LOGIN);
         }
-      }, [utils.state.iddleAction]);
+    }, [utils.state.iddleAction]);
 
     useEffect(() => {
         if (!socket.state.message) return;
@@ -67,39 +63,36 @@ export const UseDashboardState = (): DashBoardProps => {
             switch (action) {
                 case NotifyGameActionEnum.START_GAME:
                     const data = message.data as StartGame;
-                    initMatch(data.rounds);
+                    initMatch(data.rounds, data.gameKind);
                     break;
             }
         }
 
     }, [socket.state.message]);
 
-    const initMatch = (rounds: number) => {
-        settings.handle.initMatch(rounds);
-        history.push(Routes.GAME);
+    const initMatch = (rounds: number, gameKind: string) => {
+        settings.handle.setGameKind(gameKind);
+        setTimeout(() => {
+            settings.handle.initMatch(rounds);
+            history.push(Routes.GAME_NAVIGATION);
+        }, TimesEnum.START_GAME);
+      
     }
 
     const startGame = () => {
+        if (gameStart) return;
         setGameStart(true);
-        socket.actions.startGame(3);
+        const gameKind = settings.state.gameKindSelected;
+        socket.actions.startGame(3, gameKind);
     }
     const copyInvitation = async () => {
-        const url = window.location.origin + "/?game-id="+ settings.state.playerSettings.gameId;
+        const url = window.location.origin + "/?game-id=" + settings.state.playerSettings.gameId;
         await window.navigator.clipboard.writeText(url);
-        utils.handle.showAlert({show:true, type:"is-warning",msg:"Invitacion copiada!"});
-    }
-
-    const unselectCatalog = (catalog: GameCardProps[], defaultIdSeleted?: string) => {
-        catalog.forEach( (game) => {
-            game.selected = defaultIdSeleted ? game.id == defaultIdSeleted : false;
-        })
+        utils.handle.showAlert({ show: true, type: "is-warning", msg: "Invitacion copiada!" });
     }
 
     const selectGame = (item: GameCardProps) => {
-        const catalog = [...gameCatalog];
-        unselectCatalog(catalog, item.id);
-        setGameSelected(item.id);
-        UpdateCatalog(catalog);
+        settings.handle.setGameKind(item.id);
     }
 
     return {
@@ -107,10 +100,10 @@ export const UseDashboardState = (): DashBoardProps => {
             players: settings.state.players,
             host: settings.state.playerSettings.host,
             submited: gameStart,
-            gameCatalog,
-            gameSelected
+            gameCatalog: GAME_CATALOG,
+            gameSelected: settings.state.gameKindSelected,
         },
-        handle:{
+        handle: {
             startGame,
             copyInvitation,
             selectGame

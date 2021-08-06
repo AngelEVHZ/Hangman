@@ -2,19 +2,19 @@
 import { get } from "lodash";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { NotifyActionEnum, NotifyGameActionEnum } from "../../../Constant/NotifyActionEnum";
-import { TimesEnum } from "../../../Constant/Times";
-import { useSettings } from "../../../Context/SettingsProvider";
-import { useSocket } from "../../../Context/SocketProvider";
-import { SettingsContextInterface } from "../../../Context/State/UseSettingsState";
-import { SocketContextInterface } from "../../../Context/State/UseSocketState";
-import { Routes } from "../../../Constant/RoutesEnum";
-import { RandomWords } from "../../../types/GameTypes";
-import { FinishRound, NextRound, PlayerWord, SetRandomWords } from "../../../types/SocketAction";
-import { GameMatch, ScoreResume, UserSession } from "../../../types/UserSession";
-import { UtilsContextInterface } from "../../../Context/State/UseUtilsState";
-import { useUtils } from "../../../Context/UtilsProvider";
-import { MAXIMUM_WORDS } from "../../../Constant/UtilsConstants";
+import { NotifyActionEnum, NotifyGameActionEnum } from "../../../../Constant/NotifyActionEnum";
+import { TimesEnum } from "../../../../Constant/Times";
+import { useSettings } from "../../../../Context/SettingsProvider";
+import { useSocket } from "../../../../Context/SocketProvider";
+import { SettingsContextInterface } from "../../../../Context/State/UseSettingsState";
+import { SocketContextInterface } from "../../../../Context/State/UseSocketState";
+import { Routes } from "../../../../Constant/RoutesEnum";
+import { RandomWords } from "../../../../types/GameTypes";
+import { FinishRound, NextRound, PlayerWord, SetRandomWords } from "../../../../types/SocketAction";
+import { GameMatch, ScoreResume, UserSession } from "../../../../types/UserSession";
+import { UtilsContextInterface } from "../../../../Context/State/UseUtilsState";
+import { useUtils } from "../../../../Context/UtilsProvider";
+import { MAXIMUM_WORDS } from "../../../../Constant/UtilsConstants";
 
 export interface GameProps {
     handle: {

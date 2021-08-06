@@ -1,6 +1,6 @@
 
 import React from "react";
-import Timer from "../../Commonds/Timer/Timer";
+import Timer from "../../../Commonds/Timer/Timer";
 import "./GameStyle.css";
 interface MenuBoardProps {
     handle: {
@@ -26,12 +26,12 @@ const MenuBoard: React.FC<any> = (props: MenuBoardProps) => {
                                 <div className="field">
                                     <label className="label"><h3 className="text-center">Escribe una palabra:</h3></label>
                                     <div className="control">
-                                        <input 
-                                        className="input is-medium is-fullwidth" 
-                                        type="text" 
-                                        placeholder="Palabra..." 
-                                        onChange={props.handle.changeUserWord} 
-                                        value={props.userWord}></input>
+                                        <input
+                                            className="input is-medium is-fullwidth"
+                                            type="text"
+                                            placeholder="Palabra..."
+                                            onChange={props.handle.changeUserWord}
+                                            value={props.userWord}></input>
                                     </div>
                                 </div>
                             </div>

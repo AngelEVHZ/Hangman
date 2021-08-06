@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import './gameStyle.css';
 
 export interface GameCardProps {
-    selected: boolean;
     id: string;
     title: String;
     description: string;
@@ -13,13 +12,14 @@ export interface GameCardProps {
 
 interface GameCardLocalProps {
     item: GameCardProps;
+    selected: boolean;
     selectGame: (item: GameCardProps) => void;
 }
 
 const GameCard: React.FC<any> = (props: GameCardLocalProps) => {
-    const { item } = props;
+    const { item , selected} = props;
     const [onHover, setOnHover] = useState(false);
-    const colorClass = onHover ? "game-card-hover" : item.selected ? "game-card-selected" : "";
+    const colorClass = onHover ? "game-card-hover" : selected ? "game-card-selected" : "";
     return (
         <div className="">
             {item.available &&

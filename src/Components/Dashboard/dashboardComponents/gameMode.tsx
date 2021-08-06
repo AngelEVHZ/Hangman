@@ -5,6 +5,7 @@ import GameCard, { GameCardProps } from "./gameCard";
 interface GameModeProps {
     catalog: GameCardProps[];
     selectGame: (item: GameCardProps) => void;
+    gameSelected: string;
 }
 
 const GameMode: React.FC<any> = (props: GameModeProps) => {
@@ -15,7 +16,7 @@ const GameMode: React.FC<any> = (props: GameModeProps) => {
                 <div className="columns">
                     {props.catalog.map((card) => {
                         return (<div className="column is-one-quarter">
-                            <GameCard item={card} selectGame={props.selectGame}></GameCard>
+                            <GameCard selected={card.id === props.gameSelected} item={card} selectGame={props.selectGame}></GameCard>
                         </div>)
                     }
                     )}

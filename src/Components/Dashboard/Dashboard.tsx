@@ -15,7 +15,10 @@ const Dashboard: React.FC<any> = () => {
                     <Players players={state.players}></Players>
                 </div>
                 <div className="column">
-                    <GameMode catalog={state.gameCatalog} selectGame={handle.selectGame}></GameMode>
+                    <GameMode
+                        catalog={state.gameCatalog}
+                        selectGame={handle.selectGame}
+                        gameSelected={state.gameSelected}></GameMode>
                     <br></br>
                     <br></br>
                     <br></br>

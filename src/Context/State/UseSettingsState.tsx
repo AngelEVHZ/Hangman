@@ -25,6 +25,7 @@ export interface SettingsContextInterface {
         generateScore: () => ScoreResume;
         getPlayerName: (playerId: string) => string;
         getRandomWord: () => string;
+        setGameKind: (gameId: string) => void;
     },
     state: {
         playerSettings: PlayerSettings;
@@ -32,6 +33,7 @@ export interface SettingsContextInterface {
         match: GameMatch;
         scoreResume: ScoreResume;
         isPlaying: boolean;
+        gameKindSelected: string;
     }
 }
 
@@ -47,6 +49,7 @@ export const UseSettingsState = (): SettingsContextInterface => {
     const [scoreResume, setScoreResume] = useState<ScoreResume>({ players: [] });
     const [currentMatch, setMatch] = useState<GameMatch>({ score: [], rounds: 0, players:[] });
     const [isPlaying, setIsPlaying] = useState(false);
+    const [gameKindSelected, setGameKind] = useState("");
 
     const initMatch = (rounds: number) => {
         const match: GameMatch = {
@@ -308,6 +311,7 @@ export const UseSettingsState = (): SettingsContextInterface => {
 
     return {
         handle: {
+            setGameKind,
             getRandomWord,
             isPlayerReady,
             saveUsers,
@@ -333,6 +337,7 @@ export const UseSettingsState = (): SettingsContextInterface => {
             playerSettings,
             scoreResume,
             isPlaying,
+            gameKindSelected
         }
     };
 }

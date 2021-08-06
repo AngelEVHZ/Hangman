@@ -2,6 +2,7 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { Routes } from "../../Constant/RoutesEnum";
+import { TimesEnum } from "../../Constant/Times";
 import { AlertMsgProps, IddleProps } from "../../types/CommondTypes";
 
 export interface UtilsContextInterface {
@@ -32,7 +33,7 @@ export const UseUtilsState = (): UtilsContextInterface => {
         setAlert(alert);
         const time = setTimeout(() => {
             setAlert({ show: false, msg: "", type: "" });
-        }, 1500);
+        }, TimesEnum.ALERT);
         setAlertTimeOut(time);
     }
     const resetIddle = () => {

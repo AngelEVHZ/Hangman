@@ -1,7 +1,7 @@
 
 import React from "react";
 import { useState } from "react";
-import "./GameStyle.css";
+import "./LetterInputsStyle.css";
 interface LetterInputsProps {
     userLetter: string[];
     wordLetters: string[];
