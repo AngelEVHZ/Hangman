@@ -46,7 +46,6 @@ export const UseDashboardState = (): DashBoardProps => {
         const catalog = [...gameCatalog];
         unselectCatalog(catalog);
         UpdateCatalog(catalog);
-        console.log(catalog);
         if (!socket.conected) {
             history.push(Routes.LOGIN);
         }

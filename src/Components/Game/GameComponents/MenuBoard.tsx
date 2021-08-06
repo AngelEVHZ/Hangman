@@ -8,6 +8,7 @@ interface MenuBoardProps {
         changeUserWord: (event: React.ChangeEvent<HTMLInputElement>) => void;
     }
     isReady: boolean;
+    userWord: string;
     timer: {
         time: number;
         callBack: () => void;
@@ -25,7 +26,12 @@ const MenuBoard: React.FC<any> = (props: MenuBoardProps) => {
                                 <div className="field">
                                     <label className="label"><h3 className="text-center">Escribe una palabra:</h3></label>
                                     <div className="control">
-                                        <input className="input is-medium is-fullwidth" type="text" placeholder="Palabra..." onChange={props.handle.changeUserWord} ></input>
+                                        <input 
+                                        className="input is-medium is-fullwidth" 
+                                        type="text" 
+                                        placeholder="Palabra..." 
+                                        onChange={props.handle.changeUserWord} 
+                                        value={props.userWord}></input>
                                     </div>
                                 </div>
                             </div>

@@ -58,7 +58,7 @@ const Game: React.FC<any> = () => {
                             </div>
                         }
                         {!state.playersFinish && !state.roundStart &&
-                            <MenuBoard handle={handle} isReady={state.isReady} timer={timerMenu}></MenuBoard>
+                            <MenuBoard handle={handle} isReady={state.isReady} timer={timerMenu} userWord={state.userWord}></MenuBoard>
                         }
 
                     </div>

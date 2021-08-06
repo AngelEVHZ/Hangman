@@ -14,6 +14,7 @@ import { FinishRound, NextRound, PlayerWord, SetRandomWords } from "../../../typ
 import { GameMatch, ScoreResume, UserSession } from "../../../types/UserSession";
 import { UtilsContextInterface } from "../../../Context/State/UseUtilsState";
 import { useUtils } from "../../../Context/UtilsProvider";
+import { MAXIMUM_WORDS } from "../../../Constant/UtilsConstants";
 
 export interface GameProps {
     handle: {
@@ -49,6 +50,7 @@ export interface GameProps {
         scoreResume: ScoreResume;
         host: boolean;
         finishGame: boolean;
+        userWord: string;
     }
 }
 
@@ -113,6 +115,12 @@ export const UseGameState = (): GameProps => {
         event: React.ChangeEvent<HTMLInputElement>,
     ) => {
         const { value } = event.target;
+
+        if (value.length > MAXIMUM_WORDS) return;
+
+        let onlyLettersRegex = /^[a-zA-Z\s]*$/;
+        if(!onlyLettersRegex.test(value)) return;
+        
         setUserWord(value);
     }
 
@@ -333,7 +341,8 @@ export const UseGameState = (): GameProps => {
             match: settings.state.match,
             scoreResume: settings.state.scoreResume,
             host: settings.state.playerSettings.host,
-            finishGame: (currentRound + 1) >= settings.state.match.rounds
+            finishGame: (currentRound + 1) >= settings.state.match.rounds,
+            userWord,
         },
         timerMenu: {
             time: TimesEnum.WRITING_WORD,
