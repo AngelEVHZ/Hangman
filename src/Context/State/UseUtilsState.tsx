@@ -13,6 +13,7 @@ export interface UtilsContextInterface {
         onActive: () => void;
         onIdle: () => void;
         resetIddle: () => void;
+        log: (tag: string, obj?: object) => void;
     },
     state: {
         showLoader: boolean;
@@ -36,10 +37,14 @@ export const UseUtilsState = (): UtilsContextInterface => {
         }, TimesEnum.ALERT);
         setAlertTimeOut(time);
     }
+
+    const log = (tag: string, obj?: object) => {
+        if (isDev) console.log(tag, obj);
+    }
     const resetIddle = () => {
         setIddleAction({ activate: false, path: "" });
     };
-
+    
     const onAction = () => {
     };
 
@@ -47,7 +52,6 @@ export const UseUtilsState = (): UtilsContextInterface => {
     };
 
     const onIdle = () => {
-        console.log("user is idle", window.location.pathname);
         if (!isDev) setIddleAction({ activate: true, path: window.location.pathname });
     };
 
@@ -58,7 +62,8 @@ export const UseUtilsState = (): UtilsContextInterface => {
             onAction,
             onActive,
             onIdle,
-            resetIddle
+            resetIddle,
+            log,
         },
         state: {
             showLoader,

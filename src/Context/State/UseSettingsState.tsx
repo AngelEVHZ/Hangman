@@ -151,11 +151,9 @@ export const UseSettingsState = (): SettingsContextInterface => {
         localStorage.setItem(prefix + key, item);
     }
     const saveUsers = (saveUsers: UserSession[]) => {
-        console.log("SESSION SAVED");
         setPlayers(saveUsers);
         saveItem("users", JSON.stringify(saveUsers));
         if (isPlaying){
-            console.log("UPDATE PLAYERS");
             updateMatchPlayers(saveUsers);
         }
     }
@@ -166,7 +164,6 @@ export const UseSettingsState = (): SettingsContextInterface => {
         match.players.forEach( (item)=> {
             const find = newPlayers.find( player => player.playerId === item.playerId);
             if (find) {
-                console.log("USER FIND", item);
                 playersStillInGame.push(item);
             }
         });
@@ -180,7 +177,6 @@ export const UseSettingsState = (): SettingsContextInterface => {
     }
 
     const savePlayerSettings = (user: UserSession) => {
-        console.log("PlayerSettings SAVED");
         const player: PlayerSettings = {
             playerId: user.playerId,
             gameId: user.gameId,

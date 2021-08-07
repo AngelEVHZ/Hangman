@@ -101,7 +101,6 @@ export const UseGameState = (): GameProps => {
         const seconds = getPlayedTime();
         settings.handle.setFinishRound(currentRound, completed, seconds);
         socket.actions.sendFinish(completed, currentRound, seconds);
-        console.log("FINISH CALLBACK");
     }
 
     const getPlayedTime = (): number => {
@@ -191,7 +190,6 @@ export const UseGameState = (): GameProps => {
             if (allPlayerReady) {
                 const random = settings.handle.randomizeWords(currentRound);
                 setRandomWords(random);
-                console.log("NOTIFY RANDOM WORDS");
                 socket.actions.sendRandomWord(random, currentRound);
             }
         }
@@ -211,7 +209,6 @@ export const UseGameState = (): GameProps => {
 
     useEffect(() => {
         if (playersReady && !roundStart) {
-            console.log("INICIAMOS ROUND");
             initRound();
         }
     }, [settings.state.match]);
@@ -320,7 +317,6 @@ export const UseGameState = (): GameProps => {
     useEffect(() => {
         const iddleAction = utils.state.iddleAction;
         if (iddleAction.activate && iddleAction.path != Routes.LOGIN) {
-            console.log("INACTIVO");
             utils.handle.resetIddle();
             history.push(Routes.LOGIN);
         }

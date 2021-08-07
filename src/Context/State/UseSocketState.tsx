@@ -54,8 +54,8 @@ export const UseSocketState = (): SocketContextInterface => {
             webSocket.onmessage = (event: MessageEvent) => onMessage(event);
             webSocket.onclose = (event: CloseEvent) => onClose(event);
         } catch (error) {
-            console.log(error);
-            if (isDev){
+            utils.handle.log("ERROR", error);
+            if (isDev) {
                 setConected(true);
             }
         }
@@ -63,40 +63,39 @@ export const UseSocketState = (): SocketContextInterface => {
 
 
     const onOpen = (webSocket: WebSocket) => {
-        console.log("ON OPEN");
+        utils.handle.log("ON OPEN");
         setWebSocket(webSocket);
         setConected(true);
     };
     const onClose = (event: CloseEvent) => {
-        console.log("ON CLOSE");
+        utils.handle.log("ON CLOSE");
         utils.handle.setShowLoader(false);
         setWebSocket(null);
         setConected(false);
         setState({ message: null });
     };
     const onError = (event: Event) => {
-        console.log("ON ERROR", event);
+        utils.handle.log("ON ERROR", event);
         closeSocket();
     };
 
     const onMessage = (event: MessageEvent) => {
-        console.log("ON Message", event);
+        utils.handle.log("ON Message", event);
         const message = JSON.parse(event.data) as NotifyResponse<any>;
         setState({ ...state, message: message });
     };
 
     useEffect(() => {
         if (!state.message) return;
-
-        console.log("ACTION RECIVED", state.message);
+        utils.handle.log("ACTION RECIVED", state.message);
         const message = get(state, "message", {}) as NotifyResponse<any>;
         switch (message.action) {
             case NotifyActionEnum.USER_DISCONNECTED:
-                utils.handle.showAlert({show:true, type:"is-danger", msg:"User Disconected"});
+                utils.handle.showAlert({ show: true, type: "is-danger", msg: "User Disconected" });
                 updateUser(message);
                 break;
             case NotifyActionEnum.USER_JOIN:
-                utils.handle.showAlert({show:true, type:"is-info", msg:"User Conected"});
+                utils.handle.showAlert({ show: true, type: "is-info", msg: "User Conected" });
                 updateUser(message);
                 break;
         }
@@ -104,12 +103,11 @@ export const UseSocketState = (): SocketContextInterface => {
     }, [state.message]);
 
     const updateUser = (message: NotifyResponse<UserSession[]>) => {
-        console.log("USER SESSION", message.data);
         settings.handle.saveUsers(message.data)
     };
 
     const closeSocket = () => {
-        console.log("ON CLOSE SOCKET");
+        utils.handle.log("ON CLOSE SOCKET");
         if (webSocket) {
             webSocket.close();
         }
@@ -241,16 +239,16 @@ export const UseSocketState = (): SocketContextInterface => {
 
     const notify = (data: SocketAction<any>) => {
         if (webSocket) {
-            console.log("DATA ENVIADA", data);
+            utils.handle.log("ON NOTIFY", data);
             webSocket.send(JSON.stringify(data));
-        } else if (isDev){
+        } else if (isDev) {
             DEV_MOCK(data);
         }
     }
 
     const DEV_MOCK = (data: SocketAction<any>) => {
-       let message: any;
-        switch(data.action) {
+        let message: any;
+        switch (data.action) {
             case SocketActionEnum.CONNECT_SESSION:
                 message = {
                     action: NotifyActionEnum.SESSION_CREATED,

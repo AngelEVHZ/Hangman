@@ -15,6 +15,7 @@ const INITIAL_STATE: UtilsContextInterface = {
         onActive: () => { },
         onIdle: () => { },
         resetIddle: () => { },
+        log: (tag: string, obj?: object) => {},
     },
     state: {
         showLoader: false,

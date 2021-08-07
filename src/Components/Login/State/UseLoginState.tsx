@@ -11,6 +11,7 @@ import { UserSession } from "../../../types/UserSession";
 import { SettingsContextInterface } from "../../../Context/State/UseSettingsState";
 import { useUtils } from "../../../Context/UtilsProvider";
 import { UtilsContextInterface } from "../../../Context/State/UseUtilsState";
+import { MAXIMUM_NICKNAME_WORDS } from "../../../Constant/UtilsConstants";
 
 export interface UserProps {
     handle: {
@@ -19,15 +20,16 @@ export interface UserProps {
     },
     state: {
         isJoining: boolean;
+        userName: string;
     }
 }
 
 interface LocalState {
-    nickName: string;
+    userName: string;
 }
 
 const INITIAL_LOGIN_STATE: LocalState = {
-    nickName: ""
+    userName: ""
 }
 function useQuery() {
     return new URLSearchParams(useLocation().search);
@@ -46,18 +48,19 @@ export const UseLoginState = (): UserProps => {
     const changeNickName = (
         event: React.ChangeEvent<HTMLInputElement>,
     ) => {
-        const { name, value } = event.target;
-        setLoginState({ ...loginState, nickName: value });
+        const { value } = event.target;
+
+        if (value.length > MAXIMUM_NICKNAME_WORDS) return;
+        setLoginState({ ...loginState, userName: value });
     }
 
     const validateNickeName = () => {
-        return loginState.nickName.trim().length > 0;
+        return loginState.userName.trim().length > 0;
     }
 
     const joinGame = () => {
         if (!validateNickeName()) return;
         utils.handle.setShowLoader(true);
-        console.log("is conecting");
         socket.actions.connect();
     }
 
@@ -65,7 +68,6 @@ export const UseLoginState = (): UserProps => {
         if (settings.handle.existSession() || socket.conected) {
             socket.actions.closeSocket();
             settings.handle.deleteStorage();
-            console.log("SE ELIMINO LA SESSION");
         };
         setLoaded(true);
     }, []);
@@ -74,8 +76,7 @@ export const UseLoginState = (): UserProps => {
         if (!loaded) return;
 
         if (socket.conected && validateNickeName()) {
-            socket.actions.joinGame(loginState.nickName, defaultTo(gameId, undefined));
-            console.log("SE CONECTO");
+            socket.actions.joinGame(loginState.userName, defaultTo(gameId, undefined));
         } else {
             utils.handle.setShowLoader(false);
         }
@@ -83,8 +84,7 @@ export const UseLoginState = (): UserProps => {
 
     useEffect(() => {
         if (!loaded || !socket.state.message) return;
-        console.log("MESSAGE", socket.state.message);
-
+        utils.handle.log("MESSAGE",socket.state.message);
         utils.handle.setShowLoader(false);
         const data = socket.state.message;
         const action = get(data, "action");
@@ -112,6 +112,7 @@ export const UseLoginState = (): UserProps => {
         },
         state: {
             isJoining: gameId ? true : false,
+            userName: loginState.userName,
         }
     };
 }

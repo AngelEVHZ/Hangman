@@ -15,7 +15,8 @@ const Login: React.FC<any> = () => {
             <div className="column">
                <LoginForm  changeNickName={handle.changeNickName} 
                joinGame={handle.joinGame} 
-               isJoining={state.isJoining}></LoginForm>
+               isJoining={state.isJoining}
+               userName={state.userName}></LoginForm>
             </div>
          </div>
          <Footer />
