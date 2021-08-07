@@ -1,4 +1,5 @@
 import React from "react";
+import Footer from "../Commonds/Footer/Footer";
 import LoginForm from "./loginComponents/loginForm";
 import LoginHowToPlay from "./loginComponents/loginHowToPlay";
 import { UseLoginState } from "./State/UseLoginState";
@@ -17,6 +18,7 @@ const Login: React.FC<any> = () => {
                isJoining={state.isJoining}></LoginForm>
             </div>
          </div>
+         <Footer />
       </div>
    );
 };
