@@ -9,11 +9,23 @@ export interface UserSession {
     isPlaying?: boolean;
 }
 
+export interface UserDisconected {
+    nickName: string;
+    playerId: string;
+    conectedList: UserSession[];
+}
+
 export interface PlayerSettings {
     playerId: string;
     gameId: string;
     nickName: string;
     host: boolean;
+}
+export interface HostSettings {
+    playerId: string;
+    gameId: string;
+    nickName: string;
+    updated: boolean;
 }
   
 export interface GameMatch {

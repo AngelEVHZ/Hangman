@@ -27,6 +27,8 @@ const INITIAL_STATE: SettingsContextInterface = {
         getPlayerName: (playerId: string) => { return "" },
         getRandomWord: () => { return "" },
         setGameKind: (gameId: string) => { },
+        updateHost: () => {},
+        setHostUpdatedFalse: () => {},
     },
     state: {
         playerSettings: {
@@ -44,6 +46,7 @@ const INITIAL_STATE: SettingsContextInterface = {
         scoreResume: { players: [] },
         players: [],
         gameKindSelected: "",
+        hostSettings: null,
     }
 }
 

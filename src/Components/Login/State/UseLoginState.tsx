@@ -89,7 +89,7 @@ export const UseLoginState = (): UserProps => {
         const data = socket.state.message;
         const action = get(data, "action");
         if (action == NotifyActionEnum.SESSION_CREATED) {
-            settings.handle.saveUsers(data.data);
+            settings.handle.saveUsers(data.data, true);
             settings.handle.savePlayerSettings(data.data[0]);
             history.push(Routes.DASHBOARD);
 
@@ -97,7 +97,7 @@ export const UseLoginState = (): UserProps => {
             const users = data.data as UserSession[];
             const owner = users.find((user) => user.owner);
             if (owner) {
-                settings.handle.saveUsers(data.data);
+                settings.handle.saveUsers(data.data, true);
                 settings.handle.savePlayerSettings(defaultTo(owner, {} as UserSession));
                 history.push(Routes.DASHBOARD);
             }

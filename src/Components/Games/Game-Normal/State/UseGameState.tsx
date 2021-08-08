@@ -213,6 +213,17 @@ export const UseGameState = (): GameProps => {
         }
     }, [settings.state.match]);
 
+    useEffect(() => {
+        if (settings.state.hostSettings && settings.state.hostSettings.updated ) {
+            utils.handle.showAlert({ show: true, type: "is-danger", msg: `Ha ocurrido un eror` });
+            settings.handle.setHostUpdatedFalse();
+            history.push(Routes.DASHBOARD);
+        } else  if (!settings.state.hostSettings ) {
+            utils.handle.showAlert({ show: true, type: "is-danger", msg: `Ha ocurrido un eror` });
+            history.push(Routes.LOGIN);
+        }
+    }, [settings.state.hostSettings]);
+
     const setRandomWords = (random: RandomWords) => {
         setPlayersReady(true);
         settings.handle.setRandomWords(currentRound, random);

@@ -1,13 +1,13 @@
 
 import { useState } from "react";
-import { PlayerSettings, UserSession, GameMatch, GameScore, PlayerScore, ScoreResume, PlayerScoreResume } from "../../types/UserSession";
+import { PlayerSettings, UserSession, GameMatch, GameScore, PlayerScore, ScoreResume, PlayerScoreResume, HostSettings } from "../../types/UserSession";
 import { defaultTo, get } from "lodash";
 import { RandomWords, TargetWord } from "../../types/GameTypes";
 import { WordsCatalog } from "../../Constant/WordsCatalog";
 
 export interface SettingsContextInterface {
     handle: {
-        saveUsers: (saveUsers: UserSession[]) => void;
+        saveUsers: (saveUsers: UserSession[], updateHost?:boolean) => void;
         getUsers: () => UserSession[];
         deleteStorage: () => void;
         existSession: () => boolean;
@@ -26,6 +26,8 @@ export interface SettingsContextInterface {
         getPlayerName: (playerId: string) => string;
         getRandomWord: () => string;
         setGameKind: (gameId: string) => void;
+        updateHost: (saveUsers: UserSession[]) => void;
+        setHostUpdatedFalse: () => void;
     },
     state: {
         playerSettings: PlayerSettings;
@@ -34,6 +36,7 @@ export interface SettingsContextInterface {
         scoreResume: ScoreResume;
         isPlaying: boolean;
         gameKindSelected: string;
+        hostSettings: HostSettings | null;
     }
 }
 
@@ -46,8 +49,9 @@ export const UseSettingsState = (): SettingsContextInterface => {
         nickName: "",
         host: false,
     });
+    const [hostSettings, setHostSettings] = useState<HostSettings | null>(null);
     const [scoreResume, setScoreResume] = useState<ScoreResume>({ players: [] });
-    const [currentMatch, setMatch] = useState<GameMatch>({ score: [], rounds: 0, players:[] });
+    const [currentMatch, setMatch] = useState<GameMatch>({ score: [], rounds: 0, players: [] });
     const [isPlaying, setIsPlaying] = useState(false);
     const [gameKindSelected, setGameKind] = useState("");
 
@@ -79,7 +83,7 @@ export const UseSettingsState = (): SettingsContextInterface => {
 
     const finishMatch = () => {
         setIsPlaying(false);
-        const match = { score: [], rounds: 0, players:[] };
+        const match = { score: [], rounds: 0, players: [] };
         setMatch(match);
         saveItem("game-match", JSON.stringify(match));
     }
@@ -101,7 +105,7 @@ export const UseSettingsState = (): SettingsContextInterface => {
     const allPlayerFinish = (roundIndex: number): boolean => {
         if (roundIndex >= currentMatch.rounds) return false;
         const score = getCurrentScore(roundIndex);
-        const match = {...currentMatch};
+        const match = { ...currentMatch };
         const size = match.players.length;
         for (let i = 0; i < size; i++) {
             const player = match.players[i];
@@ -133,7 +137,7 @@ export const UseSettingsState = (): SettingsContextInterface => {
 
     const allPlayerReady = (roundIndex: number): boolean => {
         if (roundIndex >= currentMatch.rounds) return false;
-        const match = {...currentMatch};
+        const match = { ...currentMatch };
         const score = getCurrentScore(roundIndex);
         const size = match.players.length;
         for (let i = 0; i < size; i++) {
@@ -150,19 +154,40 @@ export const UseSettingsState = (): SettingsContextInterface => {
     const saveItem = (key: string, item: string) => {
         localStorage.setItem(prefix + key, item);
     }
-    const saveUsers = (saveUsers: UserSession[]) => {
+    const saveUsers = (saveUsers: UserSession[], setHost?:boolean) => {
         setPlayers(saveUsers);
         saveItem("users", JSON.stringify(saveUsers));
-        if (isPlaying){
+        if (isPlaying) {
             updateMatchPlayers(saveUsers);
+        }
+        if (setHost) {
+            updateHost(saveUsers);
         }
     }
 
+    const updateHost = (saveUsers: UserSession[]) => {
+        const host = saveUsers.find((user) => user.host);
+        if (host) {
+            saveHostSettings(host);
+            if (playerSettings.playerId == host.playerId)
+                savePlayerSettings(host);
+        } else {
+            saveHostSettings(null);
+        }
+    }
+
+    const setHostUpdatedFalse = () => {
+        const host: HostSettings = {...hostSettings} as HostSettings;
+        host.updated = false;
+        setHostSettings(host);
+        saveItem("host-settings", JSON.stringify(host));
+    }
+
     const updateMatchPlayers = (newPlayers: UserSession[]) => {
-        const match = {...currentMatch};
+        const match = { ...currentMatch };
         const playersStillInGame: UserSession[] = [];
-        match.players.forEach( (item)=> {
-            const find = newPlayers.find( player => player.playerId === item.playerId);
+        match.players.forEach((item) => {
+            const find = newPlayers.find(player => player.playerId === item.playerId);
             if (find) {
                 playersStillInGame.push(item);
             }
@@ -176,6 +201,7 @@ export const UseSettingsState = (): SettingsContextInterface => {
         return JSON.parse(defaultTo(localStorage.getItem(prefix + "users"), "[]")) as UserSession[];
     }
 
+
     const savePlayerSettings = (user: UserSession) => {
         const player: PlayerSettings = {
             playerId: user.playerId,
@@ -185,6 +211,21 @@ export const UseSettingsState = (): SettingsContextInterface => {
         }
         setPlayerSettings(player);
         saveItem("player-settings", JSON.stringify(player));
+    }
+    const saveHostSettings = (user: UserSession | null) => {
+        if (user) {
+            const host: HostSettings = {
+                playerId: user.playerId,
+                gameId: user.gameId,
+                nickName: user.nickName,
+                updated: hostSettings ? true: false,
+            }
+            setHostSettings(host);
+            saveItem("host-settings", JSON.stringify(host));
+        } else {
+            setHostSettings(null);
+            saveItem("host-settings", JSON.stringify({}));
+        }
     }
 
     const getPlayerSettings = (): PlayerSettings => {
@@ -209,18 +250,18 @@ export const UseSettingsState = (): SettingsContextInterface => {
         return score[id].targetWord;
     }
 
-    
+
     const randomizeWords = (roundIndex: number): RandomWords => {
-        const match = {...currentMatch};
+        const match = { ...currentMatch };
         const score = getCurrentScore(roundIndex);
-        
+
         let playersInMess: { playerId: string, word: string }[] = [];
         let wordsOrderedRandom: RandomWords = {};
 
         match.players.forEach((player: UserSession) => {
             if ((Math.floor(Math.random() * 2) + 1) > 1) {
                 playersInMess.push({ playerId: player.playerId, word: score[player.playerId].originalWord });
-               
+
             } else {
                 playersInMess.unshift({ playerId: player.playerId, word: score[player.playerId].originalWord });
             }
@@ -260,13 +301,13 @@ export const UseSettingsState = (): SettingsContextInterface => {
             scoreResume.players.push(resume);
         });
 
-        scoreResume.players = scoreResume.players = 
+        scoreResume.players = scoreResume.players =
             scoreResume.players.sort((a: PlayerScoreResume, b: PlayerScoreResume) => {
                 const keyA = Object.keys(a)[0];
                 const keyB = Object.keys(b)[0];
                 const size = a[keyA].length;
                 return a[keyA][size - 1] > b[keyB][size - 1] ? -1 : 1;
-        });
+            });
 
         setScoreResume(scoreResume);
         return scoreResume;
@@ -285,17 +326,18 @@ export const UseSettingsState = (): SettingsContextInterface => {
             nickName: "",
             host: false,
         });
-        setMatch({ score: [], rounds: 0, players:[] });
+        setMatch({ score: [], rounds: 0, players: [] });
         localStorage.removeItem(prefix + "users");
         localStorage.removeItem(prefix + "player-settings");
         localStorage.removeItem(prefix + "game-match");
+        localStorage.removeItem(prefix + "host-settings");
     }
 
     const existSession = () => {
         return getUsers().length > 0
     }
 
-    const getRandomNumber =(max: number, includeMax?: boolean) => {
+    const getRandomNumber = (max: number, includeMax?: boolean) => {
         return (Math.floor(Math.random() * max) + (includeMax ? 1 : 0))
     }
 
@@ -326,6 +368,8 @@ export const UseSettingsState = (): SettingsContextInterface => {
             allPlayerFinish,
             generateScore,
             getPlayerName,
+            updateHost,
+            setHostUpdatedFalse,
         },
         state: {
             match: currentMatch,
@@ -333,7 +377,8 @@ export const UseSettingsState = (): SettingsContextInterface => {
             playerSettings,
             scoreResume,
             isPlaying,
-            gameKindSelected
+            gameKindSelected,
+            hostSettings,
         }
     };
 }

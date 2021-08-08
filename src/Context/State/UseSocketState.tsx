@@ -1,4 +1,3 @@
-import { settings } from "cluster";
 import { get } from "lodash";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -7,7 +6,7 @@ import { SocketActionEnum } from "../../Constant/SocketActionEnum";
 import { RandomWords } from "../../types/GameTypes";
 import { NotifyResponse } from "../../types/NotifyResponse";
 import { CreateSessionRequest, FinishRound, GenericNotify, NextRound, NotifyAll, PlayerWord, SetRandomWords, SocketAction, StartGame } from "../../types/SocketAction";
-import { UserSession } from "../../types/UserSession";
+import { UserDisconected, UserSession } from "../../types/UserSession";
 import { useSettings } from "../SettingsProvider";
 import { useUtils } from "../UtilsProvider";
 import { SettingsContextInterface } from "./UseSettingsState";
@@ -91,19 +90,26 @@ export const UseSocketState = (): SocketContextInterface => {
         const message = get(state, "message", {}) as NotifyResponse<any>;
         switch (message.action) {
             case NotifyActionEnum.USER_DISCONNECTED:
-                utils.handle.showAlert({ show: true, type: "is-danger", msg: "User Disconected" });
-                updateUser(message);
+                const userDiconected = message.data as UserDisconected;
+                utils.handle.showAlert({ show: true, type: "is-danger", msg: `${userDiconected.nickName} disconnected` });
+                updateUser(userDiconected.conectedList);
+                break;
+            case NotifyActionEnum.HOST_DISCONNECTED:
+                const hostDiconected = message.data as UserDisconected;
+                utils.handle.showAlert({ show: true, type: "is-danger", msg: `HOST has disconected` });
+                updateUser(hostDiconected.conectedList, true);
                 break;
             case NotifyActionEnum.USER_JOIN:
-                utils.handle.showAlert({ show: true, type: "is-info", msg: "User Conected" });
-                updateUser(message);
+                utils.handle.showAlert({ show: true, type: "is-info", msg: "User Connected" });
+                updateUser(message.data);
                 break;
         }
 
     }, [state.message]);
 
-    const updateUser = (message: NotifyResponse<UserSession[]>) => {
-        settings.handle.saveUsers(message.data)
+    const updateUser = (users: UserSession[], updateHost?: boolean) => {
+        settings.handle.saveUsers(users)
+        if (updateHost) settings.handle.updateHost(users);
     };
 
     const closeSocket = () => {
