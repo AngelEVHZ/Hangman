@@ -24,6 +24,7 @@ export interface DashBoardProps {
         submited: boolean;
         gameCatalog: GameCardProps[];
         gameSelected: string;
+        showUrl: { show: boolean, url: string };
     },
     handle: {
         startGame: () => void;
@@ -39,6 +40,7 @@ export const UseDashboardState = (): DashBoardProps => {
     const settings: SettingsContextInterface = useSettings();
     const utils: UtilsContextInterface = useUtils();
     const [gameStart, setGameStart] = useState<boolean>(false);
+    const [showUrl, setShowUrl] = useState<{ show: boolean, url: string }>({ show: false, url: "" });
 
     useEffect(() => {
         settings.handle.setGameKind("");
@@ -76,7 +78,7 @@ export const UseDashboardState = (): DashBoardProps => {
             settings.handle.initMatch(rounds);
             history.push(Routes.GAME_NAVIGATION);
         }, TimesEnum.START_GAME);
-      
+
     }
 
     const startGame = () => {
@@ -87,8 +89,13 @@ export const UseDashboardState = (): DashBoardProps => {
     }
     const copyInvitation = async () => {
         const url = window.location.origin + "/?game-id=" + settings.state.playerSettings.gameId;
-        await window.navigator.clipboard.writeText(url);
-        utils.handle.showAlert({ show: true, type: "is-warning", msg: "Invitacion copiada!" });
+        try {
+            await window.navigator.clipboard.writeText(url);
+            utils.handle.showAlert({ show: true, type: "is-warning", msg: "Invitacion copiada!" });
+        } catch (error) {
+            setShowUrl({ show: true, url });
+        }
+
     }
 
     const selectGame = (item: GameCardProps) => {
@@ -102,6 +109,7 @@ export const UseDashboardState = (): DashBoardProps => {
             submited: gameStart,
             gameCatalog: GAME_CATALOG,
             gameSelected: settings.state.gameKindSelected,
+            showUrl,
         },
         handle: {
             startGame,

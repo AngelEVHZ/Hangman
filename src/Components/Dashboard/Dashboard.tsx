@@ -34,6 +34,16 @@ const Dashboard: React.FC<any> = () => {
                                 onClick={handle.copyInvitation}>INVITE</button>
                         </div>
                     </div>
+                    {state.showUrl.show &&
+                        <div className="columns is-centered">
+                            <div className="column ">
+                                <div className="notification is-warning is-light">
+                                    <p className="subtitle">Copy the url:</p>
+                                    <p className="subtitle ">{state.showUrl.url}</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
                 </div>
                 <div className="column  is-one-fifth">
                     publicidad
