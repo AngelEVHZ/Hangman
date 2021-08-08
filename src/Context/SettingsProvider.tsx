@@ -1,5 +1,6 @@
 
 import React, { useContext } from "react";
+import { PlayerStatusEnum } from "../Constant/PlayerStatusEnum";
 import { RandomWords } from "../types/GameTypes";
 import { ScoreResume } from "../types/UserSession";
 import { SettingsContextInterface, UseSettingsState } from "./State/UseSettingsState";
@@ -27,8 +28,11 @@ const INITIAL_STATE: SettingsContextInterface = {
         getPlayerName: (playerId: string) => { return "" },
         getRandomWord: () => { return "" },
         setGameKind: (gameId: string) => { },
-        updateHost: () => {},
-        setHostUpdatedFalse: () => {},
+        updateHost: () => { },
+        setHostUpdatedFalse: () => { },
+        setMatchRound: (round: number) => { },
+        setMatchRoundStarted: (started: boolean) => {},
+        getPlayerStatus: (playerId: string) => { return PlayerStatusEnum.ON_DASHBOARD },
     },
     state: {
         playerSettings: {

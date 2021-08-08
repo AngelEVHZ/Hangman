@@ -47,6 +47,9 @@ export const UseDashboardState = (): DashBoardProps => {
         if (!socket.conected) {
             history.push(Routes.LOGIN);
         }
+
+        settings.handle.finishMatch();
+
     }, []);
 
     useEffect(() => {
@@ -82,7 +85,7 @@ export const UseDashboardState = (): DashBoardProps => {
     }
 
     const startGame = () => {
-        if (gameStart) return;
+        if (gameStart || !settings.state.playerSettings.host) return;
         setGameStart(true);
         const gameKind = settings.state.gameKindSelected;
         socket.actions.startGame(3, gameKind);
@@ -99,6 +102,7 @@ export const UseDashboardState = (): DashBoardProps => {
     }
 
     const selectGame = (item: GameCardProps) => {
+        if (!settings.state.playerSettings.host) return;
         settings.handle.setGameKind(item.id);
     }
 

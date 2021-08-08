@@ -1,13 +1,14 @@
 
 import { useState } from "react";
 import { PlayerSettings, UserSession, GameMatch, GameScore, PlayerScore, ScoreResume, PlayerScoreResume, HostSettings } from "../../types/UserSession";
-import { defaultTo, get } from "lodash";
+import { defaultTo, get, round } from "lodash";
 import { RandomWords, TargetWord } from "../../types/GameTypes";
 import { WordsCatalog } from "../../Constant/WordsCatalog";
+import { PlayerStatusEnum } from "../../Constant/PlayerStatusEnum";
 
 export interface SettingsContextInterface {
     handle: {
-        saveUsers: (saveUsers: UserSession[], updateHost?:boolean) => void;
+        saveUsers: (saveUsers: UserSession[], updateHost?: boolean) => void;
         getUsers: () => UserSession[];
         deleteStorage: () => void;
         existSession: () => boolean;
@@ -28,6 +29,9 @@ export interface SettingsContextInterface {
         setGameKind: (gameId: string) => void;
         updateHost: (saveUsers: UserSession[]) => void;
         setHostUpdatedFalse: () => void;
+        setMatchRound: (round: number) => void;
+        setMatchRoundStarted: (started: boolean) => void;
+        getPlayerStatus: (playerId: string) => PlayerStatusEnum;
     },
     state: {
         playerSettings: PlayerSettings;
@@ -52,6 +56,8 @@ export const UseSettingsState = (): SettingsContextInterface => {
     const [hostSettings, setHostSettings] = useState<HostSettings | null>(null);
     const [scoreResume, setScoreResume] = useState<ScoreResume>({ players: [] });
     const [currentMatch, setMatch] = useState<GameMatch>({ score: [], rounds: 0, players: [] });
+    const [matchRound, setMatchRound] = useState(0);
+    const [matchRoundStarted, setMatchRoundStarted] = useState(false);
     const [isPlaying, setIsPlaying] = useState(false);
     const [gameKindSelected, setGameKind] = useState("");
 
@@ -79,6 +85,8 @@ export const UseSettingsState = (): SettingsContextInterface => {
         saveItem("game-match", JSON.stringify(match));
         setIsPlaying(true);
         setMatch(match);
+        setMatchRoundStarted(false);
+        setMatchRound(0);
     }
 
     const finishMatch = () => {
@@ -154,7 +162,7 @@ export const UseSettingsState = (): SettingsContextInterface => {
     const saveItem = (key: string, item: string) => {
         localStorage.setItem(prefix + key, item);
     }
-    const saveUsers = (saveUsers: UserSession[], setHost?:boolean) => {
+    const saveUsers = (saveUsers: UserSession[], setHost?: boolean) => {
         setPlayers(saveUsers);
         saveItem("users", JSON.stringify(saveUsers));
         if (isPlaying) {
@@ -177,7 +185,7 @@ export const UseSettingsState = (): SettingsContextInterface => {
     }
 
     const setHostUpdatedFalse = () => {
-        const host: HostSettings = {...hostSettings} as HostSettings;
+        const host: HostSettings = { ...hostSettings } as HostSettings;
         host.updated = false;
         setHostSettings(host);
         saveItem("host-settings", JSON.stringify(host));
@@ -218,7 +226,7 @@ export const UseSettingsState = (): SettingsContextInterface => {
                 playerId: user.playerId,
                 gameId: user.gameId,
                 nickName: user.nickName,
-                updated: hostSettings ? true: false,
+                updated: hostSettings ? true : false,
             }
             setHostSettings(host);
             saveItem("host-settings", JSON.stringify(host));
@@ -347,8 +355,21 @@ export const UseSettingsState = (): SettingsContextInterface => {
         return WordsCatalog[wordIndex] || WordsCatalog[0];
     }
 
+    const getPlayerStatus = (playerId: string): PlayerStatusEnum => {
+        if (!isPlaying || matchRound >= currentMatch.rounds) return PlayerStatusEnum.ON_DASHBOARD;
+
+        const score = getCurrentScore(matchRound);
+        const playerScore = score[playerId];
+        if (!matchRoundStarted && !playerScore.ready) return PlayerStatusEnum.WAITING;
+        if (!matchRoundStarted && playerScore.ready) return PlayerStatusEnum.READY;
+        if (!playerScore.finish) return PlayerStatusEnum.TYPING;
+        if (playerScore.completed) return PlayerStatusEnum.SUCCESS;
+        else return PlayerStatusEnum.FAIL;
+    }
+
     return {
         handle: {
+            setMatchRoundStarted,
             setGameKind,
             getRandomWord,
             isPlayerReady,
@@ -370,6 +391,8 @@ export const UseSettingsState = (): SettingsContextInterface => {
             getPlayerName,
             updateHost,
             setHostUpdatedFalse,
+            setMatchRound,
+            getPlayerStatus,
         },
         state: {
             match: currentMatch,

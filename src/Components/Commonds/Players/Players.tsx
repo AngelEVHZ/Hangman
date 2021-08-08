@@ -1,9 +1,12 @@
 import React from "react";
 import './playersStyle.css';
 import { UserSession } from "../../../types/UserSession";
+import PlayerItem from "./PlayerItem";
 
 interface PlayerProps {
     players: UserSession[];
+    showStatus: boolean;
+
 }
 const Players: React.FC<PlayerProps> = (props: PlayerProps) => {
     const { players } = props;
@@ -18,17 +21,12 @@ const Players: React.FC<PlayerProps> = (props: PlayerProps) => {
                                 <p className="card-header-title">
                                     PLAYERS
                                 </p>
-
                             </header>
                             <div className="card-content">
-                                
-                                    {players.map((player) => {
-                                        return (
-                                            <div className=" player" key={player.playerId}>
-                                                        <p className="title is-4 nick-name"> {player.nickName}</p>
-                                            </div>)
-                                    })}
-                                
+                                {players.map((player) => {
+                                    return (
+                                        <PlayerItem player={player} key={player.playerId} showStatus={props.showStatus}/>)
+                                })}
                             </div>
                         </div>
                     </div>

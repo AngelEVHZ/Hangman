@@ -4,13 +4,17 @@
 }
 
 .player{
+    display: flex;
     background-color: rgba(255, 255, 255, 0.7) !important;
     border-radius: 100px 25px 25px 100px !important;
     margin: 5px;
-    text-align: start;
-    font-size: 20px !important;
-    font-weight: bold;
-    color: #7E0627;
+    margin-bottom: 7px;
+    min-height: 31px;
+}
+
+.player-text{
+    min-width: 75px;
+    height: 15px;
 }
 
 
@@ -22,7 +26,15 @@
 }
 
 .nick-name{
-    text-align: center;
+    padding-top: 1px;
+    padding-right: 8px;
+    width: 100%;
+    text-align: right;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 195px;
+    height: 28px;
+    text-overflow: ellipsis;
 }
 
 .card-header-title{

@@ -170,8 +170,11 @@ export const UseGameState = (): GameProps => {
                 case NotifyGameActionEnum.NEXT_ROUND:
                     if (settings.state.playerSettings.host) return;
                     const nextRound: NextRound = message.data as NextRound;
+                    settings.handle.setMatchRound(nextRound.round);
+                    settings.handle.setMatchRoundStarted(false);
                     setRound(nextRound.round);
                     endRound();
+                    
                     break;
                 case NotifyGameActionEnum.END_MATCH:
                     history.push(Routes.DASHBOARD);
@@ -231,7 +234,7 @@ export const UseGameState = (): GameProps => {
 
 
     const initRound = () => {
-        const originalWord = settings.handle.getPlayerTargetWord(currentRound).toLocaleUpperCase();
+        const originalWord = settings.handle.getPlayerTargetWord(currentRound).toLocaleUpperCase();        
         const wordNormalize = originalWord.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
 
         setUserLetter(new Array(wordNormalize.length).fill(" "));
@@ -242,6 +245,7 @@ export const UseGameState = (): GameProps => {
         setCompleted(false);
         setErrors(new Array(6).fill(false))
         setStartDate(new Date());
+        settings.handle.setMatchRoundStarted(true);
     }
 
     const endRound = () => {
@@ -261,6 +265,8 @@ export const UseGameState = (): GameProps => {
         if (!settings.state.playerSettings.host) return;
         
         const nextRountNumber = currentRound + 1;
+        settings.handle.setMatchRound(nextRountNumber);
+        settings.handle.setMatchRoundStarted(false);
         if (nextRountNumber < settings.state.match.rounds) {
             socket.actions.sendNextRound(nextRountNumber);
             setRound(nextRountNumber);
