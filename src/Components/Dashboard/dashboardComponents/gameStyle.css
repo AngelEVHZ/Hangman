@@ -1,5 +1,6 @@
 .gameCard{
-    height: 200px;
+    height: 150px;
+    width: 250px;
     text-align: center;
     padding: 5px;
     border-radius: 10px !important;
@@ -53,7 +54,13 @@
 
 
 .description-card{
+    margin-top: 25px;
     font-size: 20px;
     font-weight: 700;
     color: white;
+}
+
+
+.card{
+    box-shadow: 0 15px 25px 0 rgba(0,0,0,0.50) !important;
 }

@@ -33,3 +33,18 @@
     top: -15px;
 }
 
+.title{
+    text-align: center;
+}
+
+.card-header-title{
+    text-align: center !important;
+    color: white !important;
+    display: block !important;
+    font-size: 20px;
+    text-shadow: 2px 2px 5px black;
+}
+
+
+
+

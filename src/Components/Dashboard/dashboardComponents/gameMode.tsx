@@ -13,9 +13,9 @@ const GameMode: React.FC<any> = (props: GameModeProps) => {
     return (
         <div>
             <div className="content">
-                <div className="columns">
+                <div className="columns is-multiline">
                     {props.catalog.map((card) => {
-                        return (<div className="column is-one-quarter">
+                        return (<div className="column is-4">
                             <GameCard selected={card.id === props.gameSelected} item={card} selectGame={props.selectGame}></GameCard>
                         </div>)
                     }
