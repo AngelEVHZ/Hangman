@@ -21,19 +21,7 @@
     
 }
 
-.avatar{
-    margin: 0px 0px 2px;
-    width: 60px;
-    height: 60px;
-    min-height: 48px;
-    background-size: cover;
-    background-repeat: no-repeat;
-    left: 0px;
-    position: absolute;
-    top: -15px;
-}
-
-.title{
+.nick-name{
     text-align: center;
 }
 
