@@ -2,10 +2,12 @@ import React from "react";
 import './playersStyle.css';
 import { UserSession } from "../../../types/UserSession";
 import PlayerItem from "./PlayerItem";
+import { PlayerStatusEnum } from "../../../Constant/PlayerStatusEnum";
 
 interface PlayerProps {
     players: UserSession[];
     showStatus: boolean;
+    getPlayerStatus?: (playerId: string) => PlayerStatusEnum;
 
 }
 const Players: React.FC<PlayerProps> = (props: PlayerProps) => {
@@ -25,7 +27,8 @@ const Players: React.FC<PlayerProps> = (props: PlayerProps) => {
                             <div className="card-content">
                                 {players.map((player) => {
                                     return (
-                                        <PlayerItem player={player} key={player.playerId} showStatus={props.showStatus}/>)
+                                        <PlayerItem player={player} key={player.playerId} showStatus={props.showStatus}
+                                            getPlayerStatus={props.getPlayerStatus} />)
                                 })}
                             </div>
                         </div>

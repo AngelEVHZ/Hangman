@@ -9,17 +9,18 @@ import { PlayerStatusEnum } from "../../../Constant/PlayerStatusEnum";
 interface PlayerItemProps {
     player: UserSession;
     showStatus: boolean;
+    getPlayerStatus?: (playerId: string) => PlayerStatusEnum;
 }
 const PlayerItem: React.FC<PlayerItemProps> = (props: PlayerItemProps) => {
     const settings = useSettings();
     const { player } = props;
 
     const getIcon = () => {
-        if (!props.showStatus)
+        if (!props.showStatus || !props.getPlayerStatus)
             return player.host ? (<FontAwesomeIcon className="icon m-0" icon={faCrown} />) : (<></>);
 
         let html = (<></>);
-        const status = settings.handle.getPlayerStatus(player.playerId);
+        const status = props.getPlayerStatus(player.playerId);
         switch (status) {
             case PlayerStatusEnum.WAITING:
                 html = (<FontAwesomeIcon className="icon m-0" icon={faClock} />);

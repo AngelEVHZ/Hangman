@@ -15,7 +15,7 @@ const GameNormal: React.FC<any> = () => {
             <div className="content m-5">
                 <div className="columns">
                     <div className="column is-one-fifth">
-                        <Players players={state.players} showStatus={true}></Players>
+                        <Players players={state.players} showStatus={true} getPlayerStatus={handle.getPlayerStatus}></Players>
                     </div>
                     <div className="column">
                         {state.playersFinish &&

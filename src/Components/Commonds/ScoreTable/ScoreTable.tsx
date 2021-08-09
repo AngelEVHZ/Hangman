@@ -19,7 +19,7 @@ interface ScoreTableProps {
 }
 
 const ScoreTable: React.FC<any> = (props: ScoreTableProps) => {
-    const buttonText = props.finishGame ? "Salir!" : "Next Round!";
+    const buttonText = !props.host ? "Waiting for host..." : props.finishGame ? "Salir!" : "Next Round!";
     const scoreResume = props.scoreResume;
 
     const renderTableRow = (player: PlayerScoreResume, index: number) => {

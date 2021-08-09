@@ -43,7 +43,7 @@ const MenuBoard: React.FC<any> = (props: MenuBoardProps) => {
                         <Timer {...props.timer}></Timer>
                     </div>
                     <div className="card-footer-item">
-                        <button className="btn-full-size "
+                        <button className={`${props.isReady ? "btn-full-disable" : "btn-full-size"}`}
                             onClick={props.handle.startGame}
                             disabled={props.isReady}>Enviar!</button>
                     </div>
