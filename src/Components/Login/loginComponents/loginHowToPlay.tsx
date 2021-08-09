@@ -5,18 +5,19 @@ import "./loginStyle.css";
 const LoginHowToPlay: React.FC<any> = () => {
 
     return (
-        <div>
-            <div className="columns is-centered">
-                <div className="column is-5">
-                    <div className="howtoplay">
-                        <h1>¿Como Jugar?</h1>
-                        <div>
-                            <h3>Invita Amigos</h3>
-                            <h3>Escribe Palabras</h3>
-                            <h3>Comienza a Adivinar!!</h3>
-                        </div>
+        <div className="howtoplaydiv">
+            <div className="gradient-wrapper">
+                <article className="message is-danger gradient-border" >
+                    <div className="message-header">
+                        <p>¿Como Jugar?</p>
+                        {/*<button className="delete" aria-label="delete"></button>*/}
                     </div>
-                </div>
+                    <div className="message-body">
+                        <strong>Invita Amigos</strong><br></br>
+                        <a>Escribe Palabras</a><br></br>
+                        <em>Comienza a Adivinar!!</em><br></br>
+                    </div>
+                </article>
             </div>
         </div>
     );

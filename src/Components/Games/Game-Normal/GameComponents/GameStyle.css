@@ -3,7 +3,7 @@
     background: none;
     width: 100% !important;
     border:  none !important;
-    color: #b06010 !important;
+    color: var(--secondary-button) !important;
     height: 100% !important;
     font-size: 25px;
     font-weight: bold;
@@ -12,14 +12,14 @@
 
 .btn-full-size:hover {
     /* background-color: #b06010 !important; */
-    color: #004990 !important;
+    color: var(--primary-button) !important;
 }
 
 .btn-full-disable {
     background: none;
     width: 100% !important;
     border:  none !important;
-    color: #004990 !important;
+    color: var(--primary-button) !important;
     height: 100% !important;
     font-size: 25px;
     font-weight: bold;

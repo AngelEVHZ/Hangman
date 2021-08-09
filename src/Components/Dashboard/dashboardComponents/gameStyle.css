@@ -4,20 +4,20 @@
     text-align: center;
     padding: 5px;
     border-radius: 10px !important;
-    background-color: rgba(0,0,0,0.3) !important;
+    background-color: var(--primary-color) !important;
     box-shadow: 0 15px 25px 0 rgba(0,0,0,0.50);
     cursor: pointer;
 }
 
 .game-card-hover{
-    background-color: #b06010 !important;
+    background-color: var(--secondary-button) !important;
 }
 .game-card-selected{
-    background-color: #004990 !important;
+    background-color: var(--primary-button) !important;
 }
 
 .not-available {
-    background-color: #727272 !important;
+    background-color: var(--not-available-color) !important;
 }
 
 .btn-dashboard{
@@ -27,12 +27,12 @@
 }
 
 .btn-play{
-    background-color: #004990 !important;
+    background-color: var(--primary-button) !important;
     box-shadow: 0 15px 25px 0 rgba(0,0,0,0.50);
 }
 
 .btn-invite{
-    background-color: #b06010 !important;
+    background-color: var(--secondary-button) !important;
     box-shadow: 0 15px 25px 0 rgba(0,0,0,0.50);
 }
 
