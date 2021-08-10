@@ -7,7 +7,7 @@ const LoginHowToPlay: React.FC<any> = () => {
     return (
         <div className="howtoplaydiv">
             <div className="gradient-wrapper">
-                <article className="message is-danger gradient-border" >
+                <article className="message is-danger gradient-border" id="paletaColores">
                     <div className="message-header">
                         <p>¿Como Jugar?</p>
                         {/*<button className="delete" aria-label="delete"></button>*/}

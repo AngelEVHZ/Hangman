@@ -1,10 +1,12 @@
 :root {
-  --primary-button: #004990;
-  --secondary-button: #b06010;
-  --background-color: #b50938;
+  --background-color: #3E2C41;
   --primary-color:  rgba(0,0,0,0.3);
-  --secondary-color: rgba(0,0,0,0.6);
-  --tertiary-color: #fff;
+  --secondary-color: #261C2C;
+  --tertiary-color: #5C527F;
+  --primary-decoration: #141E61;
+  --secondary-decoration: #EEEEEE;
+  --primary-button: #6E85B2;
+  --secondary-button: #5C527F;
   --not-available-color: #727272;
 }
 

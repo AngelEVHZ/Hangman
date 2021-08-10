@@ -77,6 +77,10 @@
   background: conic-gradient(at 125% 50%, #b78cf7, #ff7c94, #ffcf0d, #ff7c94, #b78cf7)
 }
 
+#paletaColores::before{
+  background: conic-gradient(at 125% 50%, var(--background-color), var(--primary-color), var(--secondary-color), var(--primary-button), var(--primary-decoration))
+}
+
 #fuchsia::before{
   background: conic-gradient(from -270deg at 75% 110%, fuchsia, floralwhite)
 }
@@ -97,8 +101,14 @@
     color: #cccccc;
   }
   
+  .message.is-danger .message-header {
+    background-color: var(--primary-decoration)!important;
+  }
   
-  
+  .message.is-danger {
+    background-color: var(--secondary-decoration)!important;
+  }
+
   /* STRUCTURE */
   
   .wrapper {
@@ -214,7 +224,7 @@
   }
   
   input[type=text]:focus {
-    background-color: var(--tertiary-color);
+    /*background-color: var(--tertiary-color);*/
     border-bottom: 2px solid #5fbae9;
   }
   
