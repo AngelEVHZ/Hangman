@@ -3,9 +3,9 @@ import LetterInputs from "../../Commonds/LetterInputs/LetterInputs";
 import { UseGameState } from "./State/UseGameState";
 import Board from "../../Commonds/Board/Board";
 import MenuBoard from "./GameComponents/MenuBoard";
-import Players from "../../Dashboard/dashboardComponents/players";
 import Timer from "../../Commonds/Timer/Timer";
 import ScoreTable from "../../Commonds/ScoreTable/ScoreTable";
+import Players from "../../Commonds/Players/Players";
 
 const GameNormal: React.FC<any> = () => {
     const { handle, state, timerMenu, timerGame, timerScores } = UseGameState();
@@ -15,7 +15,7 @@ const GameNormal: React.FC<any> = () => {
             <div className="content m-5">
                 <div className="columns">
                     <div className="column is-one-fifth">
-                        <Players players={state.players}></Players>
+                        <Players players={state.players} showStatus={true} getPlayerStatus={handle.getPlayerStatus}></Players>
                     </div>
                     <div className="column">
                         {state.playersFinish &&

@@ -1,4 +1,5 @@
 import React from "react";
+import MenuContraReloj from "./GameComponents/MenuContraReloj";
 
 const GameContraReloj: React.FC<any> = () => {
 
@@ -10,7 +11,7 @@ const GameContraReloj: React.FC<any> = () => {
                         Player
                     </div>
                     <div className="column">
-                        GAME
+                        <MenuContraReloj />
                     </div>
                     <div className="column is-one-fifth">
                         PUBLICIDAD

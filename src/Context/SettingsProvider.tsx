@@ -1,34 +1,26 @@
 
 import React, { useContext } from "react";
-import { RandomWords } from "../types/GameTypes";
-import { ScoreResume } from "../types/UserSession";
 import { SettingsContextInterface, UseSettingsState } from "./State/UseSettingsState";
 
 
 
 const INITIAL_STATE: SettingsContextInterface = {
     handle: {
+        initMatch: (rounds: number) => {},
+        finishMatch: () => {},
         saveUsers: () => { },
         savePlayerSettings: () => { },
         getUsers: () => { return [] },
         deleteStorage: () => { },
         existSession: () => { return false },
-        initMatch: (rounds: number) => { },
-        finishMatch: () => { },
-        setPlayerWord: (roundIndex: number, word: string, playerId?: string) => { },
-        isPlayerReady: (roundIndex: number, playerId?: string) => { return false },
-        allPlayerReady: (roundIndex: number) => { return false },
-        randomizeWords: (roundIndex: number) => { return {} as RandomWords },
-        setRandomWords: (roundIndex: number, words: RandomWords) => { },
-        getPlayerTargetWord: (roundIndex: number, playerId?: string) => { return "" },
-        setFinishRound: (roundIndex: number, completed: boolean, time: number, playerId?: string) => { },
-        allPlayerFinish: (roundIndex: number) => { return false },
-        generateScore: () => { return { players: [] } as ScoreResume },
         getPlayerName: (playerId: string) => { return "" },
         getRandomWord: () => { return "" },
         setGameKind: (gameId: string) => { },
-        updateHost: () => {},
-        setHostUpdatedFalse: () => {},
+        updateHost: () => { },
+        setHostUpdatedFalse: () => { },
+        saveItem: () => {},
+        setIsPlaying: () => {},
+        setMatch: () => {},
     },
     state: {
         playerSettings: {
@@ -37,13 +29,12 @@ const INITIAL_STATE: SettingsContextInterface = {
             nickName: "",
             host: false,
         },
-        match: {
+        currentMatch: {
             score: [],
             rounds: 0,
             players: [],
         },
         isPlaying: false,
-        scoreResume: { players: [] },
         players: [],
         gameKindSelected: "",
         hostSettings: null,

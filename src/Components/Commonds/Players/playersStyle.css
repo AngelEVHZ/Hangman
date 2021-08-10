@@ -1,0 +1,50 @@
+.playersColumn{
+    border-radius: 40px !important;
+    margin: 20px;
+}
+
+.player{
+    display: flex;
+    background-color: rgba(255, 255, 255, 0.7) !important;
+    border-radius: 100px 25px 25px 100px !important;
+    margin: 5px;
+    margin-bottom: 7px;
+    min-height: 31px;
+}
+
+.player-text{
+    min-width: 75px;
+    height: 15px;
+}
+
+
+.card-player{
+    margin-top: 50px;
+    border: none !important;
+    background-color: var(--primary-color) !important;
+    
+}
+
+.nick-name{
+    padding-top: 1px;
+    padding-right: 8px;
+    width: 100%;
+    text-align: right;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 195px;
+    height: 28px;
+    text-overflow: ellipsis;
+}
+
+.card-header-title{
+    text-align: center !important;
+    color: white !important;
+    display: block !important;
+    font-size: 20px;
+    text-shadow: 2px 2px 5px black;
+}
+
+
+
+

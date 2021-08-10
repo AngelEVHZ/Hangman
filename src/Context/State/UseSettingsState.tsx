@@ -1,39 +1,33 @@
 
 import { useState } from "react";
-import { PlayerSettings, UserSession, GameMatch, GameScore, PlayerScore, ScoreResume, PlayerScoreResume, HostSettings } from "../../types/UserSession";
+import { PlayerSettings, UserSession, HostSettings } from "../../types/UserSession";
 import { defaultTo, get } from "lodash";
-import { RandomWords, TargetWord } from "../../types/GameTypes";
 import { WordsCatalog } from "../../Constant/WordsCatalog";
+import { StorageEnum } from "../../Constant/StorageEnum";
+import { GameMatch, GameScore, PlayerScore } from "../../types/GameNormalTypes";
 
 export interface SettingsContextInterface {
     handle: {
-        saveUsers: (saveUsers: UserSession[], updateHost?:boolean) => void;
+        initMatch: (rounds: number) => void;
+        finishMatch: () => void;
+        saveUsers: (saveUsers: UserSession[], updateHost?: boolean) => void;
         getUsers: () => UserSession[];
         deleteStorage: () => void;
         existSession: () => boolean;
         savePlayerSettings: (user: UserSession) => void;
-        initMatch: (rounds: number) => void;
-        finishMatch: () => void;
-        setPlayerWord: (roundIndex: number, word: string, playerId?: string,) => void;
-        isPlayerReady: (roundIndex: number, playerId?: string) => boolean;
-        allPlayerReady: (roundIndex: number) => boolean;
-        randomizeWords: (roundIndex: number) => RandomWords;
-        setRandomWords: (roundIndex: number, words: RandomWords) => void;
-        getPlayerTargetWord: (roundIndex: number, playerId?: string) => string;
-        setFinishRound: (roundIndex: number, completed: boolean, time: number, playerId?: string) => void;
-        allPlayerFinish: (roundIndex: number) => boolean;
-        generateScore: () => ScoreResume;
         getPlayerName: (playerId: string) => string;
         getRandomWord: () => string;
         setGameKind: (gameId: string) => void;
         updateHost: (saveUsers: UserSession[]) => void;
         setHostUpdatedFalse: () => void;
+        saveItem: (key: StorageEnum, item: string) => void;
+        setIsPlaying: (isPlaying: boolean) => void;
+        setMatch: (match: GameMatch) => void;
     },
     state: {
         playerSettings: PlayerSettings;
         players: UserSession[];
-        match: GameMatch;
-        scoreResume: ScoreResume;
+        currentMatch: GameMatch;
         isPlaying: boolean;
         gameKindSelected: string;
         hostSettings: HostSettings | null;
@@ -50,10 +44,17 @@ export const UseSettingsState = (): SettingsContextInterface => {
         host: false,
     });
     const [hostSettings, setHostSettings] = useState<HostSettings | null>(null);
-    const [scoreResume, setScoreResume] = useState<ScoreResume>({ players: [] });
     const [currentMatch, setMatch] = useState<GameMatch>({ score: [], rounds: 0, players: [] });
     const [isPlaying, setIsPlaying] = useState(false);
     const [gameKindSelected, setGameKind] = useState("");
+
+
+    const finishMatch = () => {
+        setIsPlaying(false);
+        const match = { score: [], rounds: 0, players: [] };
+        setMatch(match);
+        saveItem(StorageEnum.GAME_MATCH, JSON.stringify(match));
+    }
 
     const initMatch = (rounds: number) => {
         const match: GameMatch = {
@@ -76,87 +77,18 @@ export const UseSettingsState = (): SettingsContextInterface => {
             });
             match.score.push(score);
         }
-        saveItem("game-match", JSON.stringify(match));
+        saveItem(StorageEnum.GAME_MATCH, JSON.stringify(match));
         setIsPlaying(true);
         setMatch(match);
     }
 
-    const finishMatch = () => {
-        setIsPlaying(false);
-        const match = { score: [], rounds: 0, players: [] };
-        setMatch(match);
-        saveItem("game-match", JSON.stringify(match));
-    }
 
-    const setFinishRound = (roundIndex: number, completed: boolean, time: number, playerId?: string) => {
-        if (roundIndex >= currentMatch.rounds) return;
-        const id = playerId ? playerId : playerSettings.playerId;
-        const match = { ...currentMatch };
-        const score = match.score[roundIndex]
-        if (!score[id]) return;
-        score[id].time = time;
-        score[id].finish = true;
-        score[id].completed = completed;
-        score[id].score = completed ? 1 : 0;
-        saveItem("game-match", JSON.stringify(match));
-        setMatch(match);
-    }
-
-    const allPlayerFinish = (roundIndex: number): boolean => {
-        if (roundIndex >= currentMatch.rounds) return false;
-        const score = getCurrentScore(roundIndex);
-        const match = { ...currentMatch };
-        const size = match.players.length;
-        for (let i = 0; i < size; i++) {
-            const player = match.players[i];
-            if (!score[player.playerId].finish) return false;
-        }
-        return true;
-    }
-
-
-    const setPlayerWord = (roundIndex: number, word: string, playerId?: string) => {
-        if (roundIndex >= currentMatch.rounds) return;
-        const id = playerId ? playerId : playerSettings.playerId;
-        const match = { ...currentMatch };
-        const score = match.score[roundIndex]
-        if (!score[id]) return;
-        score[id].originalWord = word;
-        score[id].ready = true;
-        saveItem("game-match", JSON.stringify(match));
-        setMatch(match);
-    }
-
-    const isPlayerReady = (roundIndex: number, playerId?: string) => {
-        if (roundIndex >= currentMatch.rounds) return false;
-        const id = playerId ? playerId : playerSettings.playerId;
-        const score = getCurrentScore(roundIndex);
-        if (!score[id]) return false;
-        return score[id].ready;
-    }
-
-    const allPlayerReady = (roundIndex: number): boolean => {
-        if (roundIndex >= currentMatch.rounds) return false;
-        const match = { ...currentMatch };
-        const score = getCurrentScore(roundIndex);
-        const size = match.players.length;
-        for (let i = 0; i < size; i++) {
-            const player = match.players[i];
-            if (!score[player.playerId].ready) return false;
-        }
-        return true;
-    }
-
-    const getCurrentScore = (roundIndex: number): GameScore => {
-        return currentMatch.score[roundIndex]
-    }
-
-    const saveItem = (key: string, item: string) => {
+    const saveItem = (key: StorageEnum, item: string) => {
         localStorage.setItem(prefix + key, item);
     }
-    const saveUsers = (saveUsers: UserSession[], setHost?:boolean) => {
+    const saveUsers = (saveUsers: UserSession[], setHost?: boolean) => {
         setPlayers(saveUsers);
-        saveItem("users", JSON.stringify(saveUsers));
+        saveItem(StorageEnum.USERS, JSON.stringify(saveUsers));
         if (isPlaying) {
             updateMatchPlayers(saveUsers);
         }
@@ -164,6 +96,21 @@ export const UseSettingsState = (): SettingsContextInterface => {
             updateHost(saveUsers);
         }
     }
+
+    const updateMatchPlayers = (newPlayers: UserSession[]) => {
+        const match = { ...currentMatch };
+        const playersStillInGame: UserSession[] = [];
+        match.players.forEach((item) => {
+            const find = newPlayers.find(player => player.playerId === item.playerId);
+            if (find) {
+                playersStillInGame.push(item);
+            }
+        });
+        match.players = playersStillInGame;
+        saveItem(StorageEnum.GAME_MATCH, JSON.stringify(match));
+        setMatch(match);
+    }
+
 
     const updateHost = (saveUsers: UserSession[]) => {
         const host = saveUsers.find((user) => user.host);
@@ -177,30 +124,15 @@ export const UseSettingsState = (): SettingsContextInterface => {
     }
 
     const setHostUpdatedFalse = () => {
-        const host: HostSettings = {...hostSettings} as HostSettings;
+        const host: HostSettings = { ...hostSettings } as HostSettings;
         host.updated = false;
         setHostSettings(host);
-        saveItem("host-settings", JSON.stringify(host));
-    }
-
-    const updateMatchPlayers = (newPlayers: UserSession[]) => {
-        const match = { ...currentMatch };
-        const playersStillInGame: UserSession[] = [];
-        match.players.forEach((item) => {
-            const find = newPlayers.find(player => player.playerId === item.playerId);
-            if (find) {
-                playersStillInGame.push(item);
-            }
-        });
-        match.players = playersStillInGame;
-        saveItem("game-match", JSON.stringify(match));
-        setMatch(match);
+        saveItem(StorageEnum.HOST_SETTINGS, JSON.stringify(host));
     }
 
     const getUsers = (): UserSession[] => {
         return JSON.parse(defaultTo(localStorage.getItem(prefix + "users"), "[]")) as UserSession[];
     }
-
 
     const savePlayerSettings = (user: UserSession) => {
         const player: PlayerSettings = {
@@ -210,107 +142,27 @@ export const UseSettingsState = (): SettingsContextInterface => {
             host: user.host
         }
         setPlayerSettings(player);
-        saveItem("player-settings", JSON.stringify(player));
+        saveItem(StorageEnum.PLAYER_SETTINGS, JSON.stringify(player));
     }
+
     const saveHostSettings = (user: UserSession | null) => {
         if (user) {
             const host: HostSettings = {
                 playerId: user.playerId,
                 gameId: user.gameId,
                 nickName: user.nickName,
-                updated: hostSettings ? true: false,
+                updated: hostSettings ? true : false,
             }
             setHostSettings(host);
-            saveItem("host-settings", JSON.stringify(host));
+            saveItem(StorageEnum.HOST_SETTINGS, JSON.stringify(host));
         } else {
             setHostSettings(null);
-            saveItem("host-settings", JSON.stringify({}));
+            saveItem(StorageEnum.HOST_SETTINGS, JSON.stringify({}));
         }
     }
 
     const getPlayerSettings = (): PlayerSettings => {
         return JSON.parse(defaultTo(localStorage.getItem(prefix + "player-settings"), "{}")) as PlayerSettings;
-    }
-
-    const setRandomWords = (roundIndex: number, words: RandomWords) => {
-        const match = { ...currentMatch };
-        const score = match.score[roundIndex]
-        match.players.forEach((player: UserSession) => {
-            score[player.playerId].targetWord = words[player.playerId].word;
-        });
-        saveItem("game-match", JSON.stringify(match));
-        setMatch(match);
-    }
-
-    const getPlayerTargetWord = (roundIndex: number, playerId?: string): string => {
-        if (roundIndex >= currentMatch.rounds) return "";
-        const id = playerId ? playerId : playerSettings.playerId;
-        const score = getCurrentScore(roundIndex);
-        if (!score[id]) return "";
-        return score[id].targetWord;
-    }
-
-
-    const randomizeWords = (roundIndex: number): RandomWords => {
-        const match = { ...currentMatch };
-        const score = getCurrentScore(roundIndex);
-
-        let playersInMess: { playerId: string, word: string }[] = [];
-        let wordsOrderedRandom: RandomWords = {};
-
-        match.players.forEach((player: UserSession) => {
-            if ((Math.floor(Math.random() * 2) + 1) > 1) {
-                playersInMess.push({ playerId: player.playerId, word: score[player.playerId].originalWord });
-
-            } else {
-                playersInMess.unshift({ playerId: player.playerId, word: score[player.playerId].originalWord });
-            }
-            wordsOrderedRandom[player.playerId] = { word: score[player.playerId].originalWord } as TargetWord;
-        });
-
-        if (match.players.length <= 1) return wordsOrderedRandom;
-        const size = match.players.length;
-        for (let i = 0; i < size; i++) {
-            const currentPlayerId = playersInMess[i].playerId;
-            let previewIndex = i - 1;
-            if (previewIndex < 0) previewIndex = size - 1;
-            const previewPlayerWord = playersInMess[previewIndex].word;
-            wordsOrderedRandom[currentPlayerId] = { word: previewPlayerWord } as TargetWord;
-        }
-        return wordsOrderedRandom;
-    }
-
-    const generateScore = (): ScoreResume => {
-        const match = { ...currentMatch };
-        const scoreResume: ScoreResume = {
-            players: []
-        };
-
-        match.players.forEach((player: UserSession) => {
-            const resume: PlayerScoreResume = {
-                [player.playerId]: []
-            }
-            let scoreAcumulated = 0;
-            for (let i = 0; i < match.rounds; i++) {
-                const score: GameScore = match.score[i];
-                const playerScore: PlayerScore = score[player.playerId];
-                resume[player.playerId].push(playerScore.score)
-                scoreAcumulated += playerScore.score;
-            }
-            resume[player.playerId].push(scoreAcumulated)
-            scoreResume.players.push(resume);
-        });
-
-        scoreResume.players = scoreResume.players =
-            scoreResume.players.sort((a: PlayerScoreResume, b: PlayerScoreResume) => {
-                const keyA = Object.keys(a)[0];
-                const keyB = Object.keys(b)[0];
-                const size = a[keyA].length;
-                return a[keyA][size - 1] > b[keyB][size - 1] ? -1 : 1;
-            });
-
-        setScoreResume(scoreResume);
-        return scoreResume;
     }
 
     const getPlayerName = (playerId: string): string => {
@@ -347,35 +199,29 @@ export const UseSettingsState = (): SettingsContextInterface => {
         return WordsCatalog[wordIndex] || WordsCatalog[0];
     }
 
+
     return {
         handle: {
+            initMatch,
+            finishMatch,
+            saveItem,
             setGameKind,
             getRandomWord,
-            isPlayerReady,
             saveUsers,
             getUsers,
             deleteStorage,
             existSession,
             savePlayerSettings,
-            initMatch,
-            finishMatch,
-            setPlayerWord,
-            allPlayerReady,
-            randomizeWords,
-            setRandomWords,
-            getPlayerTargetWord,
-            setFinishRound,
-            allPlayerFinish,
-            generateScore,
             getPlayerName,
             updateHost,
             setHostUpdatedFalse,
+            setIsPlaying,
+            setMatch,
         },
         state: {
-            match: currentMatch,
+            currentMatch: currentMatch,
             players,
             playerSettings,
-            scoreResume,
             isPlaying,
             gameKindSelected,
             hostSettings,

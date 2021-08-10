@@ -11,7 +11,6 @@
 }
 
 .btn-full-size:hover {
-    /* background-color: #b06010 !important; */
     color: var(--primary-button) !important;
 }
 

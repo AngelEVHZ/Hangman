@@ -34,11 +34,11 @@
   }
   
   .base-timer__path-remaining.orange {
-    color: #b06010
+    color: var(--secondary-button)
   }
   
   .base-timer__path-remaining.red {
-    color: #b50938
+    color: var(--background-color)
   }
   
   .base-timer__label {

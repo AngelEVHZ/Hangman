@@ -1,10 +1,10 @@
 
 import React from "react";
-import { GameMatch, PlayerScoreResume, ScoreResume } from "../../../types/UserSession";
 import Timer from "../Timer/Timer";
 import "./ScoreTable.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrophy } from "@fortawesome/free-solid-svg-icons";
+import { GameMatch, PlayerScoreResume, ScoreResume } from "../../../types/GameNormalTypes";
 interface ScoreTableProps {
     match: GameMatch;
     finishGame: boolean;
@@ -19,7 +19,7 @@ interface ScoreTableProps {
 }
 
 const ScoreTable: React.FC<any> = (props: ScoreTableProps) => {
-    const buttonText = props.finishGame ? "Salir!" : "Next Round!";
+    const buttonText = !props.host ? "Waiting for host..." : props.finishGame ? "Salir!" : "Next Round!";
     const scoreResume = props.scoreResume;
 
     const renderTableRow = (player: PlayerScoreResume, index: number) => {

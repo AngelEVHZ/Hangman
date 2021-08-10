@@ -1,3 +1,16 @@
+:root {
+  --background-color: #3E2C41;
+  --primary-color:  rgba(0,0,0,0.3);
+  --secondary-color: #261C2C;
+  --tertiary-color: #5C527F;
+  --primary-decoration: #141E61;
+  --secondary-decoration: #EEEEEE;
+  --primary-button: #6E85B2;
+  --secondary-button: #5C527F;
+  --not-available-color: #727272;
+}
+
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -8,7 +21,7 @@ body {
 }
 
 html{
-  background-color: #b50938 !important;
+  background-color: var(--background-color) !important;
   height: 100%;
 }
 
@@ -20,13 +33,13 @@ code {
 
 .background{
   width: 100%;
-  background-color: #b50938;
+  /*background-color: #b50938;*/
 }
 
 
 .header {
-  background-color: rgba(0,0,0,0.6) !important;
-  box-shadow: 0 10px 20px 0 rgba(0,0,0,0.3);
+  background-color: var(--secondary-color)!important;
+  box-shadow: 0 10px 20px 0 var(--primary-color);
 }
 .white-title{
   color: white !important;

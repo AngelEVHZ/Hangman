@@ -23,6 +23,7 @@ export enum NotifyGameActionEnum {
     START_GAME = "START_GAME",
     FINISH_ROUND = "FINISH_ROUND",
     SHOW_SCORES = "SHOW_SCORES",
+    PLAYER_IS_READY = "PLAYER_IS_READY",
     NEXT_ROUND = "NEXT_ROUND",
     END_MATCH = "END_MATCH"
 }

@@ -11,10 +11,13 @@ import { SocketContextInterface } from "../../../../Context/State/UseSocketState
 import { Routes } from "../../../../Constant/RoutesEnum";
 import { RandomWords } from "../../../../types/GameTypes";
 import { FinishRound, NextRound, PlayerWord, SetRandomWords } from "../../../../types/SocketAction";
-import { GameMatch, ScoreResume, UserSession } from "../../../../types/UserSession";
+import { UserSession } from "../../../../types/UserSession";
 import { UtilsContextInterface } from "../../../../Context/State/UseUtilsState";
 import { useUtils } from "../../../../Context/UtilsProvider";
 import { MAXIMUM_WORDS } from "../../../../Constant/UtilsConstants";
+import { GameLogic, useGameLogic } from "./UseGameLogic";
+import { PlayerStatusEnum } from "../../../../Constant/PlayerStatusEnum";
+import { GameMatch, ScoreResume } from "../../../../types/GameNormalTypes";
 
 export interface GameProps {
     handle: {
@@ -23,6 +26,7 @@ export interface GameProps {
         finishGameCallback: () => void;
         nextRound: () => void;
         getPlayerName: (playerId: string) => string;
+        getPlayerStatus: (playerId: string) => PlayerStatusEnum;
     },
     timerMenu: {
         time: number;
@@ -59,6 +63,8 @@ export const UseGameState = (): GameProps => {
     const history = useHistory();
     const socket: SocketContextInterface = useSocket();
     const settings: SettingsContextInterface = useSettings();
+    const gameLogic: GameLogic = useGameLogic();
+
     const utils: UtilsContextInterface = useUtils();
 
     //GAME LOGIC VARS
@@ -99,7 +105,7 @@ export const UseGameState = (): GameProps => {
     //GAME CALLBACK
     const finishGameCallback = () => {
         const seconds = getPlayedTime();
-        settings.handle.setFinishRound(currentRound, completed, seconds);
+        gameLogic.handle.setFinishRound(currentRound, completed, seconds);
         socket.actions.sendFinish(completed, currentRound, seconds);
     }
 
@@ -138,7 +144,7 @@ export const UseGameState = (): GameProps => {
 
     const sendWord = (word: string) => {
         if (userWordSended) return;
-        settings.handle.setPlayerWord(currentRound, word);
+        gameLogic.handle.setPlayerWord(currentRound, word);
         socket.actions.sendWord(word, currentRound);
         setUserWordSended(true);
     }
@@ -151,7 +157,7 @@ export const UseGameState = (): GameProps => {
             switch (action) {
                 case NotifyGameActionEnum.PLAYER_WORD:
                     const playerWord: PlayerWord = message.data as PlayerWord;
-                    settings.handle.setPlayerWord(playerWord.round, playerWord.word, playerWord.playerId);
+                    gameLogic.handle.setPlayerWord(playerWord.round, playerWord.word, playerWord.playerId);
                     break;
                 case NotifyGameActionEnum.SET_ROUND_WORDS:
                     if (settings.state.playerSettings.host) return;
@@ -160,18 +166,21 @@ export const UseGameState = (): GameProps => {
                     break;
                 case NotifyGameActionEnum.FINISH_ROUND:
                     const data: FinishRound = message.data as FinishRound;
-                    settings.handle.setFinishRound(data.round, data.completed, data.time, data.playerId);
+                    gameLogic.handle.setFinishRound(data.round, data.completed, data.time, data.playerId);
                     break;
                 case NotifyGameActionEnum.SHOW_SCORES:
                     if (settings.state.playerSettings.host) return;
-                    settings.handle.generateScore();
+                    gameLogic.handle.generateScore();
                     setPlayersFinish(true);
                     break;
                 case NotifyGameActionEnum.NEXT_ROUND:
                     if (settings.state.playerSettings.host) return;
                     const nextRound: NextRound = message.data as NextRound;
+                    gameLogic.handle.setMatchRound(nextRound.round);
+                    gameLogic.handle.setMatchRoundStarted(false);
                     setRound(nextRound.round);
                     endRound();
+                    
                     break;
                 case NotifyGameActionEnum.END_MATCH:
                     history.push(Routes.DASHBOARD);
@@ -186,21 +195,21 @@ export const UseGameState = (): GameProps => {
         if (!settings.state.playerSettings.host) return;
 
         if (!playersReady) {
-            const allPlayerReady = settings.handle.allPlayerReady(currentRound);
+            const allPlayerReady = gameLogic.handle.allPlayerReady(currentRound);
             if (allPlayerReady) {
-                const random = settings.handle.randomizeWords(currentRound);
+                const random = gameLogic.handle.randomizeWords(currentRound);
                 setRandomWords(random);
                 socket.actions.sendRandomWord(random, currentRound);
             }
         }
 
         if (!playersFinish && (gameOver || completed)) {
-            const allPlayerFinish = settings.handle.allPlayerFinish(currentRound);
+            const allPlayerFinish = gameLogic.handle.allPlayerFinish(currentRound);
             if (allPlayerFinish) {
                 setTimeout(function () {
                     socket.actions.sendShowScores();
                     setPlayersFinish(true);
-                    settings.handle.generateScore();
+                    gameLogic.handle.generateScore();
 
                 }, 2500);
             }
@@ -211,7 +220,7 @@ export const UseGameState = (): GameProps => {
         if (playersReady && !roundStart) {
             initRound();
         }
-    }, [settings.state.match]);
+    }, [settings.state.currentMatch]);
 
     useEffect(() => {
         if (settings.state.hostSettings && settings.state.hostSettings.updated ) {
@@ -226,12 +235,12 @@ export const UseGameState = (): GameProps => {
 
     const setRandomWords = (random: RandomWords) => {
         setPlayersReady(true);
-        settings.handle.setRandomWords(currentRound, random);
+        gameLogic.handle.setRandomWords(currentRound, random);
     }
 
 
     const initRound = () => {
-        const originalWord = settings.handle.getPlayerTargetWord(currentRound).toLocaleUpperCase();
+        const originalWord = gameLogic.handle.getPlayerTargetWord(currentRound).toLocaleUpperCase();        
         const wordNormalize = originalWord.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
 
         setUserLetter(new Array(wordNormalize.length).fill(" "));
@@ -242,6 +251,7 @@ export const UseGameState = (): GameProps => {
         setCompleted(false);
         setErrors(new Array(6).fill(false))
         setStartDate(new Date());
+        gameLogic.handle.setMatchRoundStarted(true);
     }
 
     const endRound = () => {
@@ -261,7 +271,9 @@ export const UseGameState = (): GameProps => {
         if (!settings.state.playerSettings.host) return;
         
         const nextRountNumber = currentRound + 1;
-        if (nextRountNumber < settings.state.match.rounds) {
+        gameLogic.handle.setMatchRound(nextRountNumber);
+        gameLogic.handle.setMatchRoundStarted(false);
+        if (nextRountNumber < settings.state.currentMatch.rounds) {
             socket.actions.sendNextRound(nextRountNumber);
             setRound(nextRountNumber);
             endRound();
@@ -313,8 +325,6 @@ export const UseGameState = (): GameProps => {
         setUserLetter(userLetterCopy);
     }, [currentKey]);
 
-
-
     useEffect(() => {
         if (!socket.conected) {
             history.push(Routes.LOGIN);
@@ -343,12 +353,12 @@ export const UseGameState = (): GameProps => {
             completed,
             gameOver,
             playersFinish,
-            isReady: settings.handle.isPlayerReady(currentRound),
+            isReady: gameLogic.handle.isPlayerReady(currentRound),
             players: settings.state.players,
-            match: settings.state.match,
-            scoreResume: settings.state.scoreResume,
+            match: settings.state.currentMatch,
+            scoreResume: gameLogic.state.scoreResume,
             host: settings.state.playerSettings.host,
-            finishGame: (currentRound + 1) >= settings.state.match.rounds,
+            finishGame: (currentRound + 1) >= settings.state.currentMatch.rounds,
             userWord,
         },
         timerMenu: {
@@ -364,6 +374,7 @@ export const UseGameState = (): GameProps => {
             callBack: nextRound,
         },
         handle: {
+            getPlayerStatus: gameLogic.handle.getPlayerStatus,
             getPlayerName: settings.handle.getPlayerName,
             finishGameCallback,
             changeUserWord,

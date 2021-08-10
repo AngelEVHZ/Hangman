@@ -1,9 +1,9 @@
 import React from "react";
 import { UseDashboardState } from "./State/UseDashboardState";
-import Players from "./dashboardComponents/players";
 import './dashboardComponents/gameStyle.css';
 
 import GameMode from "./dashboardComponents/gameMode";
+import Players from "../Commonds/Players/Players";
 
 const Dashboard: React.FC<any> = () => {
     const { handle, state } = UseDashboardState();
@@ -12,7 +12,7 @@ const Dashboard: React.FC<any> = () => {
         <div className="content m-5">
             <div className="columns">
                 <div className="column is-one-fifth">
-                    <Players players={state.players}></Players>
+                    <Players players={state.players} showStatus={false}></Players>
                 </div>
                 <div className="column">
                     <GameMode
