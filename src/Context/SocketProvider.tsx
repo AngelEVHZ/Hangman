@@ -8,6 +8,7 @@ const INITIAL_STATE: SocketContextInterface = {
     state: INITIAL_SOCKET_STATE,
     conected: false,
     actions: {
+        notify: () => {},
         connect: () => { },
         joinGame: (nickName: string, gameId?: string) => { },
         closeSocket: () => { },

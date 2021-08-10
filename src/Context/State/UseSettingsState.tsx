@@ -1,9 +1,10 @@
 
 import { useState } from "react";
-import { PlayerSettings, UserSession, GameMatch, GameScore, PlayerScore, ScoreResume, PlayerScoreResume, HostSettings } from "../../types/UserSession";
+import { PlayerSettings, UserSession, HostSettings } from "../../types/UserSession";
 import { defaultTo, get } from "lodash";
 import { WordsCatalog } from "../../Constant/WordsCatalog";
 import { StorageEnum } from "../../Constant/StorageEnum";
+import { GameMatch, GameScore, PlayerScore } from "../../types/GameNormalTypes";
 
 export interface SettingsContextInterface {
     handle: {

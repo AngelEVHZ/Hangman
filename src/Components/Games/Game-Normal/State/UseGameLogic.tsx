@@ -4,8 +4,9 @@ import { PlayerStatusEnum } from "../../../../Constant/PlayerStatusEnum";
 import { StorageEnum } from "../../../../Constant/StorageEnum";
 import { useSettings } from "../../../../Context/SettingsProvider";
 import { SettingsContextInterface } from "../../../../Context/State/UseSettingsState";
+import { GameScore, PlayerScore, PlayerScoreResume, ScoreResume } from "../../../../types/GameNormalTypes";
 import { RandomWords, TargetWord } from "../../../../types/GameTypes";
-import { GameScore, PlayerScore, PlayerScoreResume, ScoreResume, UserSession } from "../../../../types/UserSession";
+import { UserSession } from "../../../../types/UserSession";
 
 export interface GameLogic {
     handle: {

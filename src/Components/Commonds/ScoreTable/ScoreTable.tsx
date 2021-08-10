@@ -1,10 +1,10 @@
 
 import React from "react";
-import { GameMatch, PlayerScoreResume, ScoreResume } from "../../../types/UserSession";
 import Timer from "../Timer/Timer";
 import "./ScoreTable.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrophy } from "@fortawesome/free-solid-svg-icons";
+import { GameMatch, PlayerScoreResume, ScoreResume } from "../../../types/GameNormalTypes";
 interface ScoreTableProps {
     match: GameMatch;
     finishGame: boolean;

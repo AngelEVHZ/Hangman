@@ -47,9 +47,7 @@ export const UseDashboardState = (): DashBoardProps => {
         if (!socket.conected) {
             history.push(Routes.LOGIN);
         }
-
         settings.handle.finishMatch();
-
     }, []);
 
     useEffect(() => {
@@ -72,7 +70,6 @@ export const UseDashboardState = (): DashBoardProps => {
                     break;
             }
         }
-
     }, [socket.state.message]);
 
     const initMatch = (rounds: number, gameKind: string) => {

@@ -26,6 +26,7 @@ export interface SocketContextInterface {
         sendShowScores: () => void;
         sendNextRound: (round: number) => void;
         sendEndMatch: () => void;
+        notify: (data: SocketAction<any>) => void;
     };
 }
 interface SocketState {
@@ -285,6 +286,7 @@ export const UseSocketState = (): SocketContextInterface => {
         state,
         conected,
         actions: {
+            notify,
             connect,
             joinGame,
             closeSocket,

@@ -1,0 +1,25 @@
+
+.btn-full-size {
+    background: none;
+    width: 100% !important;
+    border:  none !important;
+    color: var(--secondary-button) !important;
+    height: 100% !important;
+    font-size: 25px;
+    font-weight: bold;
+    
+}
+
+.btn-full-size:hover {
+    color: var(--primary-button) !important;
+}
+
+.btn-full-disable {
+    background: none;
+    width: 100% !important;
+    border:  none !important;
+    color: var(--primary-button) !important;
+    height: 100% !important;
+    font-size: 25px;
+    font-weight: bold;
+}

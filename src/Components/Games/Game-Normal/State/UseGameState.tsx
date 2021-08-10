@@ -11,12 +11,13 @@ import { SocketContextInterface } from "../../../../Context/State/UseSocketState
 import { Routes } from "../../../../Constant/RoutesEnum";
 import { RandomWords } from "../../../../types/GameTypes";
 import { FinishRound, NextRound, PlayerWord, SetRandomWords } from "../../../../types/SocketAction";
-import { GameMatch, ScoreResume, UserSession } from "../../../../types/UserSession";
+import { UserSession } from "../../../../types/UserSession";
 import { UtilsContextInterface } from "../../../../Context/State/UseUtilsState";
 import { useUtils } from "../../../../Context/UtilsProvider";
 import { MAXIMUM_WORDS } from "../../../../Constant/UtilsConstants";
 import { GameLogic, useGameLogic } from "./UseGameLogic";
 import { PlayerStatusEnum } from "../../../../Constant/PlayerStatusEnum";
+import { GameMatch, ScoreResume } from "../../../../types/GameNormalTypes";
 
 export interface GameProps {
     handle: {
