@@ -55,6 +55,7 @@ export interface GameProps {
         host: boolean;
         finishGame: boolean;
         userWord: string;
+        keyTypedList: string[];
     }
 }
 
@@ -76,6 +77,7 @@ export const UseGameState = (): GameProps => {
     const [errors, setErrors] = useState(new Array(6).fill(false));
     const [gameOver, setGameover] = useState(false);
     const [completed, setCompleted] = useState(false);
+    const [keyTypedList, setKeyTypedList] = useState<string[]>([]);
 
 
 
@@ -129,9 +131,10 @@ export const UseGameState = (): GameProps => {
         setUserWord(value);
     }
 
-    const downHandler = (event: KeyboardEvent) => {
+    const keyDownHandler = (event: KeyboardEvent) => {
         const key = event.key || "";
-        setKey({key: key.normalize('NFD').replace(/[\u0300-\u036f]/g, "")});
+        const normalizedKey = key.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+        setKey({key: normalizedKey});
     }
 
     const startGame = () => {
@@ -251,6 +254,7 @@ export const UseGameState = (): GameProps => {
         setCompleted(false);
         setErrors(new Array(6).fill(false))
         setStartDate(new Date());
+        setKeyTypedList([]);
         gameLogic.handle.setMatchRoundStarted(true);
     }
 
@@ -265,6 +269,7 @@ export const UseGameState = (): GameProps => {
         setWordLetters([""]);
         setOriginalLetters([""]);
         setUserWord("");
+        setKeyTypedList([]);
     }
 
     const nextRound = () => {
@@ -308,19 +313,27 @@ export const UseGameState = (): GameProps => {
         if (gameOver || !roundStart || completed) {
             return;
         }
+        const keyTyped = currentKey.key;
 
+        const keyTypedListCopy = [...keyTypedList];
+        if (keyTypedListCopy.find( key => key === keyTyped))
+            return;
+        
         const userLetterCopy: string[] = [...userLetter];
         let correct = false;
         for (let i = 0; i < wordLetters.length; i++) {
-            if (currentKey.key.toUpperCase() === wordLetters[i].toLocaleUpperCase()) {
+            if (keyTyped.toUpperCase() === wordLetters[i].toLocaleUpperCase()) {
                 correct = true;
-                userLetterCopy[i] = currentKey.key.toLocaleUpperCase();
+                userLetterCopy[i] = keyTyped.toLocaleUpperCase();
             }
         }
 
         if (!correct) {
+            keyTypedListCopy.push(keyTyped);
             validateError();
         }
+        
+        setKeyTypedList(keyTypedListCopy);
         setCompleted(validateComplete(userLetterCopy, wordLetters));
         setUserLetter(userLetterCopy);
     }, [currentKey]);
@@ -329,9 +342,9 @@ export const UseGameState = (): GameProps => {
         if (!socket.conected) {
             history.push(Routes.LOGIN);
         }
-        window.addEventListener("keydown", (event) => { downHandler(event) });
+        window.addEventListener("keydown", (event) => { keyDownHandler(event) });
         return () => {
-            window.removeEventListener("keydown", downHandler);
+            window.removeEventListener("keydown", keyDownHandler);
         };
     }, []);
 
@@ -360,6 +373,7 @@ export const UseGameState = (): GameProps => {
             host: settings.state.playerSettings.host,
             finishGame: (currentRound + 1) >= settings.state.currentMatch.rounds,
             userWord,
+            keyTypedList,
         },
         timerMenu: {
             time: TimesEnum.WRITING_WORD,

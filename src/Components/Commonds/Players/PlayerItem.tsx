@@ -2,8 +2,7 @@ import React from "react";
 import './playersStyle.css';
 import { UserSession } from "../../../types/UserSession";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCrown, faPen, faTimes, faCheck, faClock } from "@fortawesome/free-solid-svg-icons";
-import { useSettings } from "../../../Context/SettingsProvider";
+import { faCrown, faPen, faTimes, faCheck, faClock, faUserClock } from "@fortawesome/free-solid-svg-icons";
 import { PlayerStatusEnum } from "../../../Constant/PlayerStatusEnum";
 
 interface PlayerItemProps {
@@ -12,7 +11,6 @@ interface PlayerItemProps {
     getPlayerStatus?: (playerId: string) => PlayerStatusEnum;
 }
 const PlayerItem: React.FC<PlayerItemProps> = (props: PlayerItemProps) => {
-    const settings = useSettings();
     const { player } = props;
 
     const getIcon = () => {
@@ -36,6 +34,9 @@ const PlayerItem: React.FC<PlayerItemProps> = (props: PlayerItemProps) => {
                 break;
             case PlayerStatusEnum.TYPING:
                 html = (<FontAwesomeIcon className="icon m-0" icon={faPen} />);
+                break;
+            case PlayerStatusEnum.ON_DASHBOARD:
+                html = (<FontAwesomeIcon className="icon m-0" icon={faUserClock} />);
                 break;
         }
 

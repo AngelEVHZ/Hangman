@@ -5,7 +5,7 @@ import LoginHowToPlay from "./loginComponents/loginHowToPlay";
 import { UseLoginState } from "./State/UseLoginState";
 
 const Login: React.FC<any> = () => {
-   const {handle, state} = UseLoginState();
+   const { handle, state } = UseLoginState();
    return (
       <div>
          <div className="columns is-centered mt-6">
@@ -13,10 +13,10 @@ const Login: React.FC<any> = () => {
                <LoginHowToPlay></LoginHowToPlay>
             </div>
             <div className="column is-6">
-               <LoginForm  changeNickName={handle.changeNickName} 
-               joinGame={handle.joinGame} 
-               isJoining={state.isJoining}
-               userName={state.userName}></LoginForm>
+               <LoginForm changeNickName={handle.changeNickName}
+                  joinGame={handle.joinGame}
+                  isJoining={state.isJoining}
+                  userName={state.userName}></LoginForm>
             </div>
          </div>
          <Footer />
