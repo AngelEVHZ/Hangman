@@ -5,7 +5,7 @@ const Header: React.FC<any> = () => {
             <nav className="navbar header p-3" role="navigation" aria-label="main navigation">
                 <div className="navbar-brand">
                     <a className="navbar-item" href="/">
-                        <h1 className="title is-1 white-title">HANGMAN</h1>
+                        <h1 className="title is-1 white-title">Hangman The Game</h1>
                     </a>
                 </div>
             </nav>

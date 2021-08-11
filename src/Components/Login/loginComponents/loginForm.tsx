@@ -11,7 +11,7 @@ const LoginForm: React.FC<LoginFormProps> = (props: LoginFormProps) => {
     const btnText = props.isJoining ? "Unirse" : "Crear Sala";
     return (
         <div>
-            <div className="wrapper fadeInDown">
+            <div className="wrapper ">
                 <div id="formContent">
                     <div className="card-image">
                         <div className="columns is-centered">

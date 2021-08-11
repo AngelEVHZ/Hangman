@@ -1,5 +1,6 @@
 import React from "react";
 import Footer from "../Commonds/Footer/Footer";
+import FloatingActionButton from "../Commonds/FloatingActionButton/FloatingActionButton"
 import LoginForm from "./loginComponents/loginForm";
 import LoginHowToPlay from "./loginComponents/loginHowToPlay";
 import { UseLoginState } from "./State/UseLoginState";
@@ -19,6 +20,7 @@ const Login: React.FC<any> = () => {
                userName={state.userName}></LoginForm>
             </div>
          </div>
+         <FloatingActionButton />
          <Footer />
       </div>
    );
