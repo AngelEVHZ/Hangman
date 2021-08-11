@@ -190,11 +190,14 @@ export const useGameLogic = (): GameLogic => {
 
         const score = getCurrentScore(matchRound);
         const playerScore = score[playerId];
-        if (!matchRoundStarted && !playerScore.ready) return PlayerStatusEnum.WAITING;
-        if (!matchRoundStarted && playerScore.ready) return PlayerStatusEnum.READY;
-        if (!playerScore.finish) return PlayerStatusEnum.TYPING;
-        if (playerScore.completed) return PlayerStatusEnum.SUCCESS;
-        else return PlayerStatusEnum.FAIL;
+        if (playerScore) {
+            if (!matchRoundStarted && !playerScore.ready) return PlayerStatusEnum.WAITING;
+            if (!matchRoundStarted && playerScore.ready) return PlayerStatusEnum.READY;
+            if (!playerScore.finish) return PlayerStatusEnum.TYPING;
+            if (playerScore.completed) return PlayerStatusEnum.SUCCESS;
+            else return PlayerStatusEnum.FAIL;
+        }
+        return PlayerStatusEnum.ON_DASHBOARD;
     }
 
     return {
