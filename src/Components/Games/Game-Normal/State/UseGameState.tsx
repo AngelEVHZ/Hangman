@@ -162,7 +162,7 @@ export const UseGameState = (): GameProps => {
                     const playerWord: PlayerWord = message.data as PlayerWord;
                     gameLogic.handle.setPlayerWord(playerWord.round, playerWord.word, playerWord.playerId);
                     break;
-                case NotifyGameActionEnum.SET_ROUND_WORDS:
+                case NotifyGameActionEnum.SET_GAME_SETTINGS:
                     if (settings.state.playerSettings.host) return;
                     const randomWords: SetRandomWords = message.data as SetRandomWords;
                     setRandomWords(randomWords.words);
@@ -376,7 +376,7 @@ export const UseGameState = (): GameProps => {
             keyTypedList,
         },
         timerMenu: {
-            time: TimesEnum.WRITING_WORD,
+            time: TimesEnum.MENU,
             callBack: timerMenuCallback
         },
         timerGame: {

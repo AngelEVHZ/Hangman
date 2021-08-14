@@ -75,7 +75,7 @@ export const UseDashboardState = (): DashBoardProps => {
     const initMatch = (rounds: number, gameKind: string) => {
         settings.handle.setGameKind(gameKind);
         setTimeout(() => {
-            settings.handle.initMatch(rounds);
+            settings.handle.initMatch(rounds, gameKind);
             history.push(Routes.GAME_NAVIGATION);
         }, TimesEnum.START_GAME);
 

@@ -194,7 +194,7 @@ export const UseSocketState = (): SocketContextInterface => {
                 notification: {
                     words,
                     round,
-                    action: NotifyGameActionEnum.SET_ROUND_WORDS
+                    action: NotifyGameActionEnum.SET_GAME_SETTINGS
                 } as SetRandomWords
             }
         }
