@@ -1,28 +1,28 @@
 :root {
-  --background-color: #E8ECF1;
+  --background-color: #EDEDED;
 
   /* Juegos disponibles  */
-  --primary-color:  #230cf0;
+  --primary-color:  #444444;
   /* Navbar */
-  --secondary-color: #d616ad;
+  --secondary-color: #171717;
   /* Tarjetas de Login y de listado de jugadores */
-  --tertiary-color: #df0c0c;
+  --tertiary-color: #DA0037;
 
 
   /* Boton flotante de informacion */
-  --primary-decoration: #0babe1;
+  --primary-decoration: #DA0037;
 
   /* BACKGROUND DE LOS MODALES */
-  --secondary-decoration: #EEEEEE;
+  --secondary-decoration: #EDEDED;
   
   
   /* ACCION */
-  --primary-button: #7393A7;
+  --primary-button: #171717;
   /* ACCION SECUNDARIO */
-  --secondary-button: #6C737E;
+  --secondary-button: #DA0037;
 
   /* JUEGOS NO DISPONIBLES */
-  --not-available-color: #727272;
+  --not-available-color: #c4c4c4;
 }
 
 
