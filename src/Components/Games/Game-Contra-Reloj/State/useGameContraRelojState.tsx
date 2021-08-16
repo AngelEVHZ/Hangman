@@ -55,7 +55,6 @@ export const UseGameContraRelojState = (): GameContraRelojProps => {
     //GAME STATUS
     const [isPlayerReadyToStart, setIsPlayerReadyToStart] = useState<boolean>(false);
     const [isGameSendedToPlayers, setIsGameSendedToPlayers] = useState<boolean>(false);
-    const [isGameStarted, setIsGameStarted] = useState<boolean>(false);
     const [isGameCompleted, setIsGameCompleted] = useState<boolean>(false);
     const [stopTimer, setStopTimer] = useState<boolean>(false);
 
@@ -66,7 +65,7 @@ export const UseGameContraRelojState = (): GameContraRelojProps => {
     const [startDate, setStartDate] = useState<Date | null>(null);
 
     const hangman = useHangmanLogic({
-        start: isGameStarted && !wordGameOver && !wordCompleted && !isGameCompleted,
+        start: gameLogic.state.isGameStarted && !wordGameOver && !wordCompleted && !isGameCompleted,
         setGameover: setWordGameOver,
         setCompleted: setWordCompleted,
     });
@@ -124,7 +123,7 @@ export const UseGameContraRelojState = (): GameContraRelojProps => {
     });
 
     useEffect(() => {
-        if (!isGameStarted && settings.state.contraRelojMatch.wordList.length > 0) {
+        if (!gameLogic.state.isGameStarted && settings.state.contraRelojMatch.wordList.length > 0) {
             startGame();
         }
 
@@ -162,7 +161,7 @@ export const UseGameContraRelojState = (): GameContraRelojProps => {
     const startGame = () => {
         nextWord();
         setStartDate(new Date());
-        setIsGameStarted(true);
+        gameLogic.handle.setIsGameStarted(true);
     }
 
     const endGame = () => {
@@ -291,7 +290,7 @@ export const UseGameContraRelojState = (): GameContraRelojProps => {
             errors: hangman.state.errors,
             keyTypedList: hangman.state.keyTypedList,
             players: settings.state.players,
-            isGameStarted,
+            isGameStarted: gameLogic.state.isGameStarted,
             wordGameOver,
             wordCompleted,
             showInputLetters,

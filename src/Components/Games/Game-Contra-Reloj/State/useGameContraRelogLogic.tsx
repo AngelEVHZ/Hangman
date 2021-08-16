@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { PlayerStatusEnum } from "../../../../Constant/PlayerStatusEnum";
 import { StorageEnum } from "../../../../Constant/StorageEnum";
 import { WordsCatalog } from "../../../../Constant/WordsCatalog";
@@ -19,12 +20,16 @@ export interface GameContraRelojLogic {
         scoreTableRows: () => {items: any[]}[];
         areAllPlayersReadyToEnd: () => boolean;
         setPlayerScoreFinish: (playerId: string, finish: boolean) => void;
+        setIsGameStarted: (value: boolean) => void;
+    },
+    state:{
+        isGameStarted: boolean;
     }
 }
 
 export const useGameContraRelojLogic = (): GameContraRelojLogic => {
     const settings = useSettings();
-
+    const [isGameStarted, setIsGameStarted] = useState<boolean>(false);
 
     const setPlayerIsReady = (playerId: string) => {
         const contraRelojMatch = { ...settings.state.contraRelojMatch };
@@ -140,6 +145,13 @@ export const useGameContraRelojLogic = (): GameContraRelojLogic => {
     }
 
     const  getPlayerStatus = (playerId: string):PlayerStatusEnum =>  {
+        const contraRelojMatch = { ...settings.state.contraRelojMatch };
+        if (!contraRelojMatch.score[playerId]) return PlayerStatusEnum.WAITING;
+        const playerScore = contraRelojMatch.score[playerId];
+        if (playerScore.ready && !isGameStarted)
+            return PlayerStatusEnum.READY;
+        if (playerScore.ready && !playerScore.finish)
+            return PlayerStatusEnum.TYPING;
         return PlayerStatusEnum.WAITING;
     }
 
@@ -196,6 +208,10 @@ export const useGameContraRelojLogic = (): GameContraRelojLogic => {
             fillPlayerScore,
             getWordListElement,
             getPlayerStatus,
+            setIsGameStarted,
+        },
+        state:{
+            isGameStarted,
         }
     };
 }
