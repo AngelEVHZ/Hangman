@@ -1,12 +1,24 @@
 :root {
-  --background-color: #3E2C41;
-  --primary-color:  rgba(0,0,0,0.3);
-  --secondary-color: #261C2C;
-  --tertiary-color: #5C527F;
-  --primary-decoration: #141E61;
+  --background-color: #E8ECF1;
+
+  --primary-color:  #B5CFD8;
+  --secondary-color: #6C737E;
+  --tertiary-color: #B5CFD8;
+
+
+  /*  */
+  --primary-decoration: #0babe1;
+
+  /* BACKGROUND DE LOS MODALES */
   --secondary-decoration: #EEEEEE;
-  --primary-button: #6E85B2;
-  --secondary-button: #5C527F;
+  
+  
+  /* ACCION */
+  --primary-button: #7393A7;
+  /* ACCION SECUNDARIO */
+  --secondary-button: #6C737E;
+
+  /* JUEGOS NO DISPONIBLES */
   --not-available-color: #727272;
 }
 
