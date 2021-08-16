@@ -18,7 +18,7 @@ const AboutModal: React.FC<AboutModalProps> = (props: AboutModalProps) => {
                         <p>Contactanos:</p>
                     </div>
                     <div className="message-body message-letter">
-                        <em>Si tienes dudas, sugerencias o algo que decir al equipo puedes contactarnos a traves del siguiente correo:</em><br></br><br></br>
+                        <em>Envianos tus comentarios a la siguiente dirección de correo:</em><br></br><br></br>
                         <strong><em>hangman.thegame.contacto@gmail.com</em></strong><br></br><br></br>
                     </div>
                 </article>

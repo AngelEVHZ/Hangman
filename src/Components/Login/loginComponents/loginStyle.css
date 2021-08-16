@@ -103,7 +103,7 @@
   }
   
   .message.is-danger .message-header {
-    background-color: var(--primary-decoration)!important;
+    background-color: var(--tertiary-color)!important;
   }
   
   .message.is-danger {
@@ -136,8 +136,8 @@
     /*max-width: 450px;*/
     position: relative;
     /*padding: 0px;*/
-    -webkit-box-shadow: 0 10px 20px 0 var(--primary-color);
-    box-shadow: 0 10px 20px 0 var(--primary-color);
+    -webkit-box-shadow: 0 10px 20px 0 rgba(0,0,0,0.3);
+    box-shadow: 0 10px 20px 0 rgba(0,0,0,0.3);
     text-align: center;
     /*height: 200px;*/
   }

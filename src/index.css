@@ -1,12 +1,15 @@
 :root {
   --background-color: #E8ECF1;
 
-  --primary-color:  #B5CFD8;
-  --secondary-color: #6C737E;
-  --tertiary-color: #B5CFD8;
+  /* Juegos disponibles  */
+  --primary-color:  #230cf0;
+  /* Navbar */
+  --secondary-color: #d616ad;
+  /* Tarjetas de Login y de listado de jugadores */
+  --tertiary-color: #df0c0c;
 
 
-  /*  */
+  /* Boton flotante de informacion */
   --primary-decoration: #0babe1;
 
   /* BACKGROUND DE LOS MODALES */
@@ -51,7 +54,7 @@ code {
 
 .header {
   background-color: var(--secondary-color)!important;
-  box-shadow: 0 10px 20px 0 var(--primary-color);
+  box-shadow: 0 10px 20px 0 rgba(0,0,0,0.3);
 }
 .white-title{
   color: white !important;

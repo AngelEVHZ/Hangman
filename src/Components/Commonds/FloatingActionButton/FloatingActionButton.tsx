@@ -29,12 +29,12 @@ const FloatingActionButton: React.FC<FloatingButtonProps> = (props: FloatingButt
                         <i className="fas fa-video"><FontAwesomeIcon className="icon m-0" icon={faInfoCircle} /></i>
                     </div>
                 </li>
-                <li onClick={() => props.toggleShowCreditsModal(true)}>
+                {/*<li onClick={() => props.toggleShowCreditsModal(true)}>
                     <span className="fab-label">Creditos</span>
                     <div className="fab-icon-holder">
                         <i className="fas fa-comments"><FontAwesomeIcon className="icon m-0" icon={faCopyright} /></i>
                     </div>
-                </li>
+                </li>*/}
             </ul>
         </div>
     );
