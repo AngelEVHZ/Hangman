@@ -4,7 +4,7 @@ import { UseGameState } from "./State/UseGameState";
 import Board from "../../Commonds/Board/Board";
 import MenuBoard from "./GameComponents/MenuBoard";
 import Timer from "../../Commonds/Timer/Timer";
-import ScoreTable from "../../Commonds/ScoreTable/ScoreTable";
+import ScoreTableGameNormal from "../../Commonds/ScoreTable/ScoreTableGameNormal";
 import Players from "../../Commonds/Players/Players";
 import TypedLetters from "../../Commonds/TypedLetters/TypedLetters";
 
@@ -21,7 +21,7 @@ const GameNormal: React.FC<any> = () => {
                     <div className="column is-6">
                         {state.playersFinish &&
                             <div>
-                                <ScoreTable
+                                <ScoreTableGameNormal
                                     host={state.host}
                                     match={state.match}
                                     scoreResume={state.scoreResume}
@@ -29,7 +29,7 @@ const GameNormal: React.FC<any> = () => {
                                     nextRound={handle.nextRound}
                                     timer={timerScores}
                                     finishGame={state.finishGame}
-                                ></ScoreTable>
+                                ></ScoreTableGameNormal>
                             </div>
 
                         }

@@ -12,13 +12,11 @@ import { Routes } from "../../../../Constant/RoutesEnum";
 import { RandomWords } from "../../../../types/GameTypes";
 import { FinishRound, NextRound, PlayerWord, SetRandomWords } from "../../../../types/SocketAction";
 import { UserSession } from "../../../../types/UserSession";
-import { UtilsContextInterface } from "../../../../Context/State/UseUtilsState";
-import { useUtils } from "../../../../Context/UtilsProvider";
 import { MAXIMUM_WORDS } from "../../../../Constant/UtilsConstants";
 import { GameLogic, useGameLogic } from "./UseGameLogic";
 import { PlayerStatusEnum } from "../../../../Constant/PlayerStatusEnum";
 import { GameMatch, ScoreResume } from "../../../../types/GameNormalTypes";
-
+import { useCommondLogic} from "../../Commond-Logic/useCommondLogic";
 export interface GameProps {
     handle: {
         startGame: () => void;
@@ -65,8 +63,7 @@ export const UseGameState = (): GameProps => {
     const socket: SocketContextInterface = useSocket();
     const settings: SettingsContextInterface = useSettings();
     const gameLogic: GameLogic = useGameLogic();
-
-    const utils: UtilsContextInterface = useUtils();
+    useCommondLogic();
 
     //GAME LOGIC VARS
     const [originalLetters, setOriginalLetters] = useState([""]);
@@ -78,7 +75,6 @@ export const UseGameState = (): GameProps => {
     const [gameOver, setGameover] = useState(false);
     const [completed, setCompleted] = useState(false);
     const [keyTypedList, setKeyTypedList] = useState<string[]>([]);
-
 
 
     //GENERAL VARS
@@ -225,17 +221,7 @@ export const UseGameState = (): GameProps => {
         }
     }, [settings.state.currentMatch]);
 
-    useEffect(() => {
-        if (settings.state.hostSettings && settings.state.hostSettings.updated ) {
-            utils.handle.showAlert({ show: true, type: "is-danger", msg: `Ha ocurrido un eror` });
-            settings.handle.setHostUpdatedFalse();
-            history.push(Routes.DASHBOARD);
-        } else  if (!settings.state.hostSettings ) {
-            utils.handle.showAlert({ show: true, type: "is-danger", msg: `Ha ocurrido un eror` });
-            history.push(Routes.LOGIN);
-        }
-    }, [settings.state.hostSettings]);
-
+    
     const setRandomWords = (random: RandomWords) => {
         setPlayersReady(true);
         gameLogic.handle.setRandomWords(currentRound, random);
@@ -339,23 +325,11 @@ export const UseGameState = (): GameProps => {
     }, [currentKey]);
 
     useEffect(() => {
-        if (!socket.conected) {
-            history.push(Routes.LOGIN);
-        }
         window.addEventListener("keydown", (event) => { keyDownHandler(event) });
         return () => {
             window.removeEventListener("keydown", keyDownHandler);
         };
     }, []);
-
-    useEffect(() => {
-        const iddleAction = utils.state.iddleAction;
-        if (iddleAction.activate && iddleAction.path != Routes.LOGIN) {
-            utils.handle.resetIddle();
-            history.push(Routes.LOGIN);
-        }
-      }, [utils.state.iddleAction]);
-
 
     return {
         state: {

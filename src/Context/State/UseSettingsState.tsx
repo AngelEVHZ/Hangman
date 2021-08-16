@@ -117,6 +117,7 @@ export const UseSettingsState = (): SettingsContextInterface => {
                 failWords: 0,
                 wordsPlayed: [],
                 wordsPlayedZip: "",
+                finish: false,
             } as GameContraRelojPlayer;
         });
         saveItem(StorageEnum.GAME_MATCH, JSON.stringify(match));

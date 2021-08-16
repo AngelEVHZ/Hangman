@@ -13,7 +13,7 @@ export interface GameContraRelojPlayer {
     failWords:number;
     wordsPlayed: WordPlayed[];
     wordsPlayedZip: string;
-
+    finish: boolean;
 }
 export interface WordPlayed {
     wordId: number;
@@ -36,4 +36,5 @@ export interface NotifyEndMatch {
     successWords: number;
     failWords:number;
     action: NotifyGameActionEnum.END_MATCH,
+    finish: boolean;
 }

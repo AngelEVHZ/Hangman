@@ -5,6 +5,7 @@ import Players from "../../Commonds/Players/Players";
 import Timer from "../../Commonds/Timer/Timer";
 import TypedLetters from "../../Commonds/TypedLetters/TypedLetters";
 import MenuContraReloj from "./GameComponents/MenuContraReloj";
+import ScoreTable from "../../Commonds/ScoreTable/ScoreTable";
 import { UseGameContraRelojState } from "./State/useGameContraRelojState";
 
 const GameContraReloj: React.FC<any> = () => {
@@ -18,7 +19,11 @@ const GameContraReloj: React.FC<any> = () => {
                     </div>
                     <div className="column is-6">
                         {state.isGameCompleted &&
-                            <div>SCORE</div>
+                            <div>
+                                <ScoreTable
+                                    {...state.scoreTable}
+                                ></ScoreTable>
+                            </div>
 
                         }
                         {!state.isGameCompleted && state.isGameStarted &&

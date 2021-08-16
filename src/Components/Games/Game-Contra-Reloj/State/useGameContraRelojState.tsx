@@ -8,10 +8,11 @@ import { SocketActionEnum } from "../../../../Constant/SocketActionEnum";
 import { TimesEnum } from "../../../../Constant/Times";
 import { useSettings } from "../../../../Context/SettingsProvider";
 import { useSocket } from "../../../../Context/SocketProvider";
-import { useUtils } from "../../../../Context/UtilsProvider";
 import { NotifyEndMatch, NotifyReady, NotifyWordList, WordPlayed } from "../../../../types/GameContraRelojTypes";
-import { NotifyAll, SocketAction } from "../../../../types/SocketAction";
+import { GenericNotify, NotifyAll, SocketAction } from "../../../../types/SocketAction";
 import { UserSession } from "../../../../types/UserSession";
+import { ScoreTableProps } from "../../../Commonds/ScoreTable/ScoreTable";
+import { useCommondLogic } from "../../Commond-Logic/useCommondLogic";
 import { useHangmanLogic } from "../../Hangman-Logic/useHangmanLogic";
 import { useGameContraRelojLogic } from "./useGameContraRelogLogic";
 
@@ -38,16 +39,17 @@ export interface GameContraRelojProps {
         gameTime: number;
         stopTimer: boolean;
         players: UserSession[];
+        scoreTable: ScoreTableProps;
     }
 }
 
 
 export const UseGameContraRelojState = (): GameContraRelojProps => {
     const gameLogic = useGameContraRelojLogic();
-    const utils = useUtils();
     const history = useHistory();
     const settings = useSettings();
     const socket = useSocket();
+    useCommondLogic();
 
     const [showInputLetters, setShowInputLetters] = useState<boolean>(false);
     //GAME STATUS
@@ -87,6 +89,9 @@ export const UseGameContraRelojState = (): GameContraRelojProps => {
                     const notifyEndMatch: NotifyEndMatch = message.data as NotifyEndMatch;
                     gameLogic.handle.fillPlayerScore(notifyEndMatch);
                     break;
+                case NotifyGameActionEnum.GO_TO:
+                    history.push(Routes.DASHBOARD);
+                    break;
             }
         }
 
@@ -120,7 +125,6 @@ export const UseGameContraRelojState = (): GameContraRelojProps => {
 
     useEffect(() => {
         if (!isGameStarted && settings.state.contraRelojMatch.wordList.length > 0) {
-            console.log("INICIAR JUEGO");
             startGame();
         }
 
@@ -147,6 +151,7 @@ export const UseGameContraRelojState = (): GameContraRelojProps => {
                     successWords: playerScore.successWords,
                     failWords: playerScore.failWords,
                     action: NotifyGameActionEnum.END_MATCH,
+                    finish: true,
                 } as NotifyEndMatch
             }
         }
@@ -155,16 +160,15 @@ export const UseGameContraRelojState = (): GameContraRelojProps => {
 
 
     const startGame = () => {
-        console.log("startGame");
         nextWord();
         setStartDate(new Date());
         setIsGameStarted(true);
     }
 
     const endGame = () => {
+        gameLogic.handle.setPlayerScoreFinish(settings.state.playerSettings.playerId, true);
         setIsGameCompleted(true);
     }
-
 
     const onFinishHangmanRound = () => {
         if (!isNextWordAvailable()) {
@@ -173,7 +177,6 @@ export const UseGameContraRelojState = (): GameContraRelojProps => {
     }
 
     const endWord = () => {
-        console.log("endWord");
         const wordPlayed: WordPlayed = {
             wordId: wordIndex,
             word: hangman.state.word,
@@ -194,9 +197,7 @@ export const UseGameContraRelojState = (): GameContraRelojProps => {
 
     const nextWord = (nextIndex?: boolean) => {
         if (isGameCompleted) return;
-        console.log("nextWord");
         const index = !nextIndex ? wordIndex : (wordIndex + 1);
-        const totalWords = settings.state.contraRelojMatch.wordList.length;
 
         setWordIndex(index);
         setWordGameOver(false);
@@ -250,19 +251,29 @@ export const UseGameContraRelojState = (): GameContraRelojProps => {
         endGame();
     }
 
-    useEffect(() => {
-        const iddleAction = utils.state.iddleAction;
-        if (iddleAction.activate && iddleAction.path != Routes.LOGIN) {
-            utils.handle.resetIddle();
-            history.push(Routes.LOGIN);
-        }
-    }, [utils.state.iddleAction]);
+    const getButtonText = () => {
+        if (!settings.state.playerSettings.host ||
+            !gameLogic.handle.areAllPlayersReadyToEnd())
+            return "Waiting For Players";
+        return "Salir!";
+    }
 
-    useEffect(() => {
-        if (!socket.conected) {
-            history.push(Routes.LOGIN);
+    const buttonGoDashboard = () => {
+        if (!settings.state.playerSettings.host ||
+            !gameLogic.handle.areAllPlayersReadyToEnd())
+            return;
+
+        const data: SocketAction<NotifyAll> = {
+            action: SocketActionEnum.NOTIFY_ALL,
+            data: {
+                gameId: settings.state.playerSettings.gameId,
+                notification: {
+                    action: NotifyGameActionEnum.GO_TO
+                } as GenericNotify,
+            }
         }
-    }, []);
+        socket.actions.notify(data);
+    }
 
     return {
         handle: {
@@ -286,6 +297,18 @@ export const UseGameContraRelojState = (): GameContraRelojProps => {
             showInputLetters,
             isGameCompleted,
             stopTimer,
+            scoreTable: {
+                headers: gameLogic.handle.scoreTableHeaders(),
+                rows: gameLogic.handle.scoreTableRows(),
+                callBack: buttonGoDashboard,
+                disableButton: false,
+                buttonText: getButtonText(),
+                timer: {
+                    showTimer: false,
+                    time: 10,
+                    callBack: () => { },
+                }
+            },
         }
     };
 }

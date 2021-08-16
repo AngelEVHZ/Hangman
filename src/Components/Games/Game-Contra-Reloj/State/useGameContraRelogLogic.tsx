@@ -15,6 +15,10 @@ export interface GameContraRelojLogic {
         getWordListElement: (index: number) => number;
         getPlayerScore: (playerId: string) => GameContraRelojPlayer;
         getPlayerStatus: (playerId: string) => PlayerStatusEnum;
+        scoreTableHeaders: () => string[];
+        scoreTableRows: () => {items: any[]}[];
+        areAllPlayersReadyToEnd: () => boolean;
+        setPlayerScoreFinish: (playerId: string, finish: boolean) => void;
     }
 }
 
@@ -35,6 +39,17 @@ export const useGameContraRelojLogic = (): GameContraRelojLogic => {
         for (let i = 0; i < size; i++) {
             const player = players[i];
             if (!contraRelojMatch.score[player.playerId].ready) return false;
+        }
+        return true;
+    }
+
+    const areAllPlayersReadyToEnd = (): boolean => {
+        const contraRelojMatch = { ...settings.state.contraRelojMatch };
+        const players = [...settings.state.matchPlayers];
+        const size = players.length;
+        for (let i = 0; i < size; i++) {
+            const player = players[i];
+            if (!contraRelojMatch.score[player.playerId].finish) return false;
         }
         return true;
     }
@@ -85,6 +100,13 @@ export const useGameContraRelojLogic = (): GameContraRelojLogic => {
         updateMatch(contraRelojMatch);
     }
 
+    const setPlayerScoreFinish = (playerId: string, finish: boolean) => {
+        const contraRelojMatch = { ...settings.state.contraRelojMatch };
+        if (!contraRelojMatch.score[playerId]) return;
+        const playerScore = contraRelojMatch.score[playerId];
+        playerScore.finish = finish;
+    }
+
     const fillPlayerScore = (data: NotifyEndMatch) => {
         const contraRelojMatch = { ...settings.state.contraRelojMatch };
         if (data.wordsPlayedZip.length <= 0 || !contraRelojMatch.score[data.playerId]) return;
@@ -93,6 +115,7 @@ export const useGameContraRelojLogic = (): GameContraRelojLogic => {
         playerScore.successWords = data.successWords;
         playerScore.failWords = data.failWords;
         playerScore.wordsPlayedZip = data.wordsPlayedZip;
+        playerScore.finish = data.finish;
         updateMatch(contraRelojMatch);
     }
 
@@ -104,7 +127,8 @@ export const useGameContraRelojLogic = (): GameContraRelojLogic => {
                 successWords: 0,
                 failWords: 0,
                 wordsPlayed: [],
-                wordsPlayedZip: ""
+                wordsPlayedZip: "",
+                finish: false,
             };
         return contraRelojMatch.score[playerId];
 
@@ -119,8 +143,50 @@ export const useGameContraRelojLogic = (): GameContraRelojLogic => {
         return PlayerStatusEnum.WAITING;
     }
 
+    const scoreTableHeaders = () => {
+        let headers: string[] = ["Word"];
+        const players = [...settings.state.matchPlayers];
+        players.forEach( (player) => {
+            headers.push(player.nickName);
+        });
+        return headers; 
+    }
+
+    const scoreTableRows = () => {
+        let rows:any[] = [];
+        const contraRelojMatch = { ...settings.state.contraRelojMatch };
+        const score = contraRelojMatch.score;
+        const players = [...settings.state.matchPlayers];
+        let maxWords = 0;
+        const playersZipList: any[] = [];
+        players.forEach( (player) => {
+            playersZipList.push(score[player.playerId].wordsPlayedZip.split(","));
+            const playerToltalWords = score[player.playerId].failWords + score[player.playerId].successWords;
+            if (maxWords < playerToltalWords) maxWords = playerToltalWords;
+        });
+        for (let i = 0; i< maxWords; i++) {
+            let row: { items: any[]} = { items:[]};
+            const wordId = getWordListElement(i);
+            const word = settings.handle.getWordById(wordId);
+            row.items.push(word.toUpperCase());
+            players.forEach( (player, index) => {
+                let msj = "";
+                if (playersZipList[index][i]) {
+                    msj = playersZipList[index][i] == "1" ? "OK": "X";
+                }
+                row.items.push(msj);
+            });
+            rows.push(row);
+        }
+        return rows;
+    }
+
     return {
         handle: {
+            areAllPlayersReadyToEnd,
+            setPlayerScoreFinish,
+            scoreTableHeaders,
+            scoreTableRows,
             getPlayerScore,
             setPlayerIsReady,
             areAllPlayersReadyToStart,
