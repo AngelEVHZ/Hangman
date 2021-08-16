@@ -56,7 +56,7 @@ export const useGameContraRelojLogic = (): GameContraRelojLogic => {
 
 
     const generateWordList = () => {
-        const numberOfWords = 5;
+        const numberOfWords = 60;
         const wordsCatalogSize = WordsCatalog.length;
         const jumps = Math.floor(wordsCatalogSize / numberOfWords);
         let from = 0;
