@@ -3,16 +3,14 @@ import React from "react";
 import Timer from "../../../Commonds/Timer/Timer";
 import "./GameStyle.css";
 interface MenuBoardProps {
-    // handle: {
-    //     startGame: () => void;
-    //     changeUserWord: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    // }
-    // isReady: boolean;
-    // userWord: string;
-    // timer: {
-    //     time: number;
-    //     callBack: () => void;
-    // }
+    handle: {
+        imReadyToStart: () => void;
+    }
+    isReadyToStart: boolean;
+    userWord: string;
+    timer: {
+        time: number;
+    }
 }
 
 const MenuContraReloj: React.FC<any> = (props: MenuBoardProps) => {
@@ -33,10 +31,11 @@ const MenuContraReloj: React.FC<any> = (props: MenuBoardProps) => {
                 </div>
                 <footer className="card-footer">
                     <div className="card-footer-item">
-                        {/* <Timer {...props.timer}></Timer> */}
+                        <Timer time={props.timer.time} callBack={props.handle.imReadyToStart}></Timer>
                     </div>
                     <div className="card-footer-item">
-                        <button className={`btn-full-size`}
+                        <button className={`${props.isReadyToStart ? "btn-full-disable" : "btn-full-size"}`}
+                        onClick={props.handle.imReadyToStart}
                         >I'm Ready!</button>
                     </div>
                 </footer>

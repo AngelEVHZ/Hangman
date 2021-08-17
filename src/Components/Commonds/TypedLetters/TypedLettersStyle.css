@@ -1,0 +1,17 @@
+.fail-letters-container{
+    position: absolute;
+    right: 1rem;
+}
+
+.letters{
+    width: 44px;
+    max-width: 44px;
+    display: grid;
+}
+
+.letter{
+    width: 44px;
+    max-width: 44px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

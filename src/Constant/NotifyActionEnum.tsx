@@ -19,12 +19,13 @@ export type NotifyActionType =
 
 export enum NotifyGameActionEnum {
     PLAYER_WORD = "PLAYER_WORD",
-    SET_ROUND_WORDS = "SET_ROUND_WORDS",
+    SET_GAME_SETTINGS = "SET_GAME_SETTINGS",
     START_GAME = "START_GAME",
     FINISH_ROUND = "FINISH_ROUND",
     SHOW_SCORES = "SHOW_SCORES",
     PLAYER_IS_READY = "PLAYER_IS_READY",
     NEXT_ROUND = "NEXT_ROUND",
-    END_MATCH = "END_MATCH"
+    END_MATCH = "END_MATCH",
+    GO_TO = "GO_TO"
 }
     

@@ -17,10 +17,17 @@ export interface UserProps {
     handle: {
         changeNickName: (event: React.ChangeEvent<HTMLInputElement>) => void;
         joinGame: () => void;
+        toggleShowAboutModal: (value: boolean) => void;
+        toggleShowUsModal: (value: boolean) => void;
+        toggleShowCreditsModal: (value: boolean) => void;
     },
     state: {
         isJoining: boolean;
         userName: string;
+        showAboutModal: boolean;
+        showUsModal: boolean;
+        showCreditsModal: boolean;
+
     }
 }
 
@@ -44,6 +51,9 @@ export const UseLoginState = (): UserProps => {
     const utils: UtilsContextInterface = useUtils();
     const [loginState, setLoginState] = useState<LocalState>(INITIAL_LOGIN_STATE);
     const [loaded, setLoaded] = useState<boolean>(false);
+    const [showAboutModal, toggleShowAboutModal] = useState<boolean>(false);
+    const [showUsModal, toggleShowUsModal] = useState<boolean>(false);
+    const [showCreditsModal, toggleShowCreditsModal] = useState<boolean>(false);
 
     const changeNickName = (
         event: React.ChangeEvent<HTMLInputElement>,
@@ -84,7 +94,7 @@ export const UseLoginState = (): UserProps => {
 
     useEffect(() => {
         if (!loaded || !socket.state.message) return;
-        utils.handle.log("MESSAGE",socket.state.message);
+        utils.handle.log("MESSAGE", socket.state.message);
         utils.handle.setShowLoader(false);
         const data = socket.state.message;
         const action = get(data, "action");
@@ -109,10 +119,16 @@ export const UseLoginState = (): UserProps => {
         handle: {
             changeNickName,
             joinGame,
+            toggleShowAboutModal,
+            toggleShowUsModal,
+            toggleShowCreditsModal,
         },
         state: {
             isJoining: gameId ? true : false,
             userName: loginState.userName,
+            showAboutModal,
+            showUsModal,
+            showCreditsModal,
         }
     };
 }

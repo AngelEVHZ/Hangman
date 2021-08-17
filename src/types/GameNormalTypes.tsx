@@ -1,9 +1,6 @@
-import { UserSession } from "./UserSession";
-
 export interface GameMatch {
     score: GameScore[];
     rounds: number;
-    players: UserSession[];
 }
 export interface GameScore {
     [key: string]: PlayerScore

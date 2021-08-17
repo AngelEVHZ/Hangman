@@ -6,6 +6,9 @@ import { GameCardProps } from "../Components/Dashboard/dashboardComponents/gameC
 export enum GAME_KIND {
     NORMAL = "mode-1",
     CONTRA_RELOJ = "mode-2",
+    PUNTUATION = "mode-3",
+    SEVERO = "mode-4",
+    ELIMINATION = "mode-5",
 };
 
 
@@ -25,21 +28,21 @@ export const GAME_CATALOG: GameCardProps[] = [
         icon: (<p><FontAwesomeIcon className="icon" icon={faStopwatch} /></p>)
     },
     {
-        id:"mode-3",
+        id: GAME_KIND.PUNTUATION,
         available: false,
         title: "Puntuacion",
         description: "",
         icon: (<p><FontAwesomeIcon className="icon" icon={faGift} /></p>)
     },
     {
-        id:"mode-4",
+        id: GAME_KIND.SEVERO,
         available: false,
         title: "Severo",
         description: "",
         icon: (<p><FontAwesomeIcon className="icon" icon={faGift} /></p>)
     },
     {
-        id:"mode-5",
+        id: GAME_KIND.ELIMINATION,
         available: false,
         title: "Eliminacion",
         description: "",
