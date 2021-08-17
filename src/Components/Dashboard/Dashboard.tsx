@@ -5,6 +5,8 @@ import './dashboardComponents/gameStyle.css';
 import GameMode from "./dashboardComponents/gameMode";
 import Players from "../Commonds/Players/Players";
 
+import AdSense from "react-adsense";
+
 const Dashboard: React.FC<any> = () => {
     const { handle, state } = UseDashboardState();
 
@@ -46,7 +48,14 @@ const Dashboard: React.FC<any> = () => {
                     }
                 </div>
                 <div className="column  is-3">
-                    publicidad
+                <AdSense.Google
+                 client='ca-pub-5609202792405393'
+                 slot='1329533272'
+                 style={{ display: 'block' }}
+                 format='auto'
+                 responsive='true'
+                 layoutKey='-gw-1+2a-9x+5c'
+                />
                 </div>
             </div>
         </div>
