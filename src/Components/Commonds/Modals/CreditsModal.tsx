@@ -16,11 +16,10 @@ const CreditsModal: React.FC<CreditsModalProps> = (props: CreditsModalProps) => 
                 <article className="message is-danger">
                     <div className="message-header">
                         <p>Creditos:</p>
+                        <button className="delete" aria-label="delete" onClick={() => props.toggleShowCreditsModal(false)}></button>
                     </div>
                     <div className="message-body message-letter">
-                        <em>Bulma</em><br></br>
-                        <em>React</em><br></br>
-                        <em>AWS</em><br></br><br></br>
+                        <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
                     </div>
                 </article>
             </div>

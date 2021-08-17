@@ -16,6 +16,7 @@ const UsModal: React.FC<UsModalProps> = (props: UsModalProps) => {
                 <article className="message is-danger">
                     <div className="message-header">
                         <p>Acerca de Nosotros:</p>
+                        <button className="delete" aria-label="delete" onClick={() => props.toggleShowUsModal(false)}></button>
                     </div>
                     <div className="message-body message-letter">
                         <em>Somos un grupo de amigos que aman pasarla bien, jugando y creando juegos multijugador en linea. Queremos 

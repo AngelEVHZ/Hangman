@@ -16,6 +16,7 @@ const AboutModal: React.FC<AboutModalProps> = (props: AboutModalProps) => {
                 <article className="message is-danger">
                     <div className="message-header">
                         <p>Contactanos:</p>
+                        <button className="delete" aria-label="delete" onClick={() => props.toggleShowAboutModal(false)}></button>
                     </div>
                     <div className="message-body message-letter">
                         <em>Envianos tus comentarios a la siguiente dirección de correo:</em><br></br><br></br>
