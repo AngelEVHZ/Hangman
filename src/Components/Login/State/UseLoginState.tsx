@@ -75,6 +75,7 @@ export const UseLoginState = (): UserProps => {
     }
 
     useEffect(() => {
+        utils.handle.setShowHeader(true);
         if (settings.handle.existSession() || socket.conected) {
             socket.actions.closeSocket();
             settings.handle.deleteStorage();

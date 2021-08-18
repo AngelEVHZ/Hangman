@@ -15,8 +15,8 @@ const Login: React.FC<any> = () => {
    const { handle, state } = UseLoginState();
    return (
       <div>
-         <div className="columns is-centered mt-6">
-            <div className="column is-6 isMobile">
+         <div className="columns is-centered mt-6 mr-0">
+            <div className="column is-6 is-hidden-mobile">
                <LoginHowToPlay></LoginHowToPlay>
             </div>
             <div className="column is-6">
@@ -26,27 +26,29 @@ const Login: React.FC<any> = () => {
                   userName={state.userName}></LoginForm>
             </div>
          </div>
-         <div className="columns is-centered mt-6">
+         <div className="columns mr-0">
             <div className="colum is-12">
-            <AdSense.Google
-            client='ca-pub-5609202792405393'
-            slot='5894344681'
-            style={{ display: 'block' }}
-            format='auto'
-            responsive='true'
-            layoutKey='-gw-1+2a-9x+5c'
-            />
+               <AdSense.Google
+                  client='ca-pub-5609202792405393'
+                  slot='5894344681'
+                  style={{ display: 'block' }}
+                  format='auto'
+                  responsive='true'
+                  layoutKey='-gw-1+2a-9x+5c'
+               />
             </div>
          </div>
-         <CreditsModal show={state.showCreditsModal} 
-         toggleShowCreditsModal={handle.toggleShowCreditsModal}/>
+
+         <CreditsModal show={state.showCreditsModal}
+            toggleShowCreditsModal={handle.toggleShowCreditsModal} />
          <AboutModal show={state.showAboutModal}
             toggleShowAboutModal={handle.toggleShowAboutModal} />
          <UsModal show={state.showUsModal}
             toggleShowUsModal={handle.toggleShowUsModal} />
          <FloatingActionButton toggleShowAboutModal={handle.toggleShowAboutModal}
-            toggleShowUsModal={handle.toggleShowUsModal} 
-            toggleShowCreditsModal={handle.toggleShowCreditsModal}/>
+            toggleShowUsModal={handle.toggleShowUsModal}
+            toggleShowCreditsModal={handle.toggleShowCreditsModal} />
+
          <Footer />
       </div>
    );

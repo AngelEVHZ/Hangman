@@ -10,4 +10,7 @@
         text-align: center!important;
         display: block!important; 
     }
+    .hide {
+        display: none!important;
+    }
 }

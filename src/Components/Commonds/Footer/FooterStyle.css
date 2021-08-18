@@ -1,17 +1,11 @@
 .footer{
-    position:absolute;
-    left:0;
-    bottom:0;
-    right:0;
     background: none !important;
-    
 }
 
 .white-text{
     color: white !important;
 }
 .footer-text{
-    width: 100%;
-    position: absolute;
+
     bottom: 16px;
 }

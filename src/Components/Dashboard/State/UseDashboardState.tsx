@@ -43,6 +43,7 @@ export const UseDashboardState = (): DashBoardProps => {
     const [showUrl, setShowUrl] = useState<{ show: boolean, url: string }>({ show: false, url: "" });
 
     useEffect(() => {
+        utils.handle.setShowHeader(false);
         settings.handle.setGameKind("");
         if (!socket.conected) {
             history.push(Routes.LOGIN);
