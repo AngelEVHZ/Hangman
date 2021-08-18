@@ -53,6 +53,7 @@ export interface FinishRound {
 }
 
 export interface GenericNotify {
+    msg?: string;
     action: NotifyGameActionEnum,
 }
 export interface NextRound {

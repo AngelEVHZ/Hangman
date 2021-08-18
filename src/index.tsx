@@ -15,7 +15,6 @@ import { UtilsProvider } from './Context/UtilsProvider';
 
 ReactDOM.render(
   <React.StrictMode>
-    <div className="background">
       <SettingsProvider>
         <UtilsProvider>
           <SocketProvider>
@@ -26,7 +25,6 @@ ReactDOM.render(
           </SocketProvider>
         </UtilsProvider>
       </SettingsProvider>
-    </div>
   </React.StrictMode>,
   document.getElementById('root')
 );

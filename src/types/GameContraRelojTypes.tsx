@@ -1,9 +1,7 @@
 import { NotifyGameActionEnum } from "../Constant/NotifyActionEnum";
-import { UserSession } from "./UserSession";
-
 export interface GameContraRelojMatch {
     score: GameContraRelojScore;
-    players: UserSession[];
+    wordList: string[];
 }
 
 export interface GameContraRelojScore {
@@ -14,28 +12,29 @@ export interface GameContraRelojPlayer {
     successWords: number;
     failWords:number;
     wordsPlayed: WordPlayed[];
-
+    wordsPlayedZip: string;
+    finish: boolean;
 }
 export interface WordPlayed {
     wordId: number;
     word: string;
     success: boolean;
 }
-
-export interface WordPlayed {
-    wordId: number;
-    word: string;
-    success: boolean;
-}
-
 export interface NotifyReady {
     playerId: string;
     action: NotifyGameActionEnum.PLAYER_IS_READY,
 }
 
+export interface NotifyWordList {
+    wordList: string;
+    action: NotifyGameActionEnum.SET_GAME_SETTINGS,
+}
+
 export interface NotifyEndMatch {
     playerId: string;
-    time: number;
-    list: string;
+    wordsPlayedZip: string;
+    successWords: number;
+    failWords:number;
     action: NotifyGameActionEnum.END_MATCH,
+    finish: boolean;
 }

@@ -1,7 +1,4 @@
-
-import { useEffect } from "react";
 import { useState } from "react";
-import { Routes } from "../../Constant/RoutesEnum";
 import { TimesEnum } from "../../Constant/Times";
 import { AlertMsgProps, IddleProps } from "../../types/CommondTypes";
 
@@ -14,11 +11,13 @@ export interface UtilsContextInterface {
         onIdle: () => void;
         resetIddle: () => void;
         log: (tag: string, obj?: object) => void;
+        setShowHeader: (value: boolean) => void;
     },
     state: {
         showLoader: boolean;
         alert: AlertMsgProps;
         iddleAction: IddleProps;
+        showHeader: boolean;
     }
 }
 
@@ -28,6 +27,7 @@ export const UseUtilsState = (): UtilsContextInterface => {
     const [alert, setAlert] = useState<AlertMsgProps>({ type: "", msg: "", show: false })
     const [alertTimeOut, setAlertTimeOut] = useState<any>(null)
     const [iddleAction, setIddleAction] = useState<IddleProps>({ activate: false, path: "" });
+    const [showHeader, setShowHeader] = useState<boolean>(false);
 
     const showAlert = (alert: AlertMsgProps) => {
         if (alertTimeOut) clearTimeout(alertTimeOut);
@@ -64,8 +64,10 @@ export const UseUtilsState = (): UtilsContextInterface => {
             onIdle,
             resetIddle,
             log,
+            setShowHeader,
         },
         state: {
+            showHeader,
             showLoader,
             alert,
             iddleAction,

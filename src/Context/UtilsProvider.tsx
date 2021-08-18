@@ -16,8 +16,10 @@ const INITIAL_STATE: UtilsContextInterface = {
         onIdle: () => { },
         resetIddle: () => { },
         log: (tag: string, obj?: object) => {},
+        setShowHeader: (value: boolean) => {},
     },
     state: {
+        showHeader: false,
         showLoader: false,
         alert: { show: false, msg: "", type: "" },
         iddleAction: { activate: false, path: "" },

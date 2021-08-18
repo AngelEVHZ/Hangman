@@ -6,23 +6,27 @@ import { SettingsContextInterface, UseSettingsState } from "./State/UseSettingsS
 
 const INITIAL_STATE: SettingsContextInterface = {
     handle: {
-        initMatch: (rounds: number) => {},
-        finishMatch: () => {},
+        initMatch: () => { },
+        finishMatch: () => { },
         saveUsers: () => { },
         savePlayerSettings: () => { },
         getUsers: () => { return [] },
         deleteStorage: () => { },
         existSession: () => { return false },
         getPlayerName: (playerId: string) => { return "" },
+        setContraRelojMatch: () => { },
         getRandomWord: () => { return "" },
         setGameKind: (gameId: string) => { },
         updateHost: () => { },
         setHostUpdatedFalse: () => { },
-        saveItem: () => {},
-        setIsPlaying: () => {},
-        setMatch: () => {},
+        saveItem: () => { },
+        setIsPlaying: () => { },
+        setMatch: () => { },
+        getWordById: () => { return "" },
+        getRandomNumber: () => { return 0 },
     },
     state: {
+        matchPlayers: [],
         playerSettings: {
             playerId: "",
             gameId: "",
@@ -32,12 +36,12 @@ const INITIAL_STATE: SettingsContextInterface = {
         currentMatch: {
             score: [],
             rounds: 0,
-            players: [],
         },
         isPlaying: false,
         players: [],
         gameKindSelected: "",
         hostSettings: null,
+        contraRelojMatch: { score: {}, wordList: [] }
     }
 }
 

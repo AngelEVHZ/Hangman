@@ -43,6 +43,7 @@ export const UseDashboardState = (): DashBoardProps => {
     const [showUrl, setShowUrl] = useState<{ show: boolean, url: string }>({ show: false, url: "" });
 
     useEffect(() => {
+        utils.handle.setShowHeader(false);
         settings.handle.setGameKind("");
         if (!socket.conected) {
             history.push(Routes.LOGIN);
@@ -75,7 +76,7 @@ export const UseDashboardState = (): DashBoardProps => {
     const initMatch = (rounds: number, gameKind: string) => {
         settings.handle.setGameKind(gameKind);
         setTimeout(() => {
-            settings.handle.initMatch(rounds);
+            settings.handle.initMatch(rounds, gameKind);
             history.push(Routes.GAME_NAVIGATION);
         }, TimesEnum.START_GAME);
 

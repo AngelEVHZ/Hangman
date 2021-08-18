@@ -4,8 +4,9 @@ import { UseGameState } from "./State/UseGameState";
 import Board from "../../Commonds/Board/Board";
 import MenuBoard from "./GameComponents/MenuBoard";
 import Timer from "../../Commonds/Timer/Timer";
-import ScoreTable from "../../Commonds/ScoreTable/ScoreTable";
+import ScoreTableGameNormal from "../../Commonds/ScoreTable/ScoreTableGameNormal";
 import Players from "../../Commonds/Players/Players";
+import TypedLetters from "../../Commonds/TypedLetters/TypedLetters";
 
 const GameNormal: React.FC<any> = () => {
     const { handle, state, timerMenu, timerGame, timerScores } = UseGameState();
@@ -14,13 +15,13 @@ const GameNormal: React.FC<any> = () => {
         <>
             <div className="content m-5">
                 <div className="columns">
-                    <div className="column is-one-fifth">
+                    <div className="column is-3">
                         <Players players={state.players} showStatus={true} getPlayerStatus={handle.getPlayerStatus}></Players>
                     </div>
-                    <div className="column">
+                    <div className="column is-6">
                         {state.playersFinish &&
                             <div>
-                                <ScoreTable
+                                <ScoreTableGameNormal
                                     host={state.host}
                                     match={state.match}
                                     scoreResume={state.scoreResume}
@@ -28,7 +29,7 @@ const GameNormal: React.FC<any> = () => {
                                     nextRound={handle.nextRound}
                                     timer={timerScores}
                                     finishGame={state.finishGame}
-                                ></ScoreTable>
+                                ></ScoreTableGameNormal>
                             </div>
 
                         }
@@ -43,6 +44,7 @@ const GameNormal: React.FC<any> = () => {
                                 </header>
                                 <div className="card-content">
                                     <div className="content">
+                                        <TypedLetters letters={state.keyTypedList}/>
                                         <Board
                                             errors={state.errors}>
                                         </Board>
@@ -62,7 +64,7 @@ const GameNormal: React.FC<any> = () => {
                         }
 
                     </div>
-                    <div className="column is-one-fifth">
+                    <div className="column is-3">
                         PUBLICIDAD
                     </div>
                 </div>

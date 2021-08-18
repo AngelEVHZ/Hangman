@@ -57,10 +57,10 @@ export const useGameLogic = (): GameLogic => {
     const allPlayerFinish = (roundIndex: number): boolean => {
         if (roundIndex >= settings.state.currentMatch.rounds) return false;
         const score = getCurrentScore(roundIndex);
-        const match = { ...settings.state.currentMatch };
-        const size = match.players.length;
+        const players = [...settings.state.matchPlayers];
+        const size = players.length;
         for (let i = 0; i < size; i++) {
-            const player = match.players[i];
+            const player = players[i];
             if (!score[player.playerId].finish) return false;
         }
         return true;
@@ -89,11 +89,11 @@ export const useGameLogic = (): GameLogic => {
 
     const allPlayerReady = (roundIndex: number): boolean => {
         if (roundIndex >= settings.state.currentMatch.rounds) return false;
-        const match = { ...settings.state.currentMatch };
+        const players = [...settings.state.matchPlayers];
         const score = getCurrentScore(roundIndex);
-        const size = match.players.length;
+        const size = players.length;
         for (let i = 0; i < size; i++) {
-            const player = match.players[i];
+            const player = players[i];
             if (!score[player.playerId].ready) return false;
         }
         return true;
@@ -106,7 +106,8 @@ export const useGameLogic = (): GameLogic => {
     const setRandomWords = (roundIndex: number, words: RandomWords) => {
         const match = { ...settings.state.currentMatch };
         const score = match.score[roundIndex]
-        match.players.forEach((player: UserSession) => {
+        const players = [...settings.state.matchPlayers];
+        players.forEach((player: UserSession) => {
             score[player.playerId].targetWord = words[player.playerId].word;
         });
         settings.handle.saveItem(StorageEnum.GAME_MATCH, JSON.stringify(match));
@@ -127,8 +128,9 @@ export const useGameLogic = (): GameLogic => {
 
         let playersInMess: { playerId: string, word: string }[] = [];
         let wordsOrderedRandom: RandomWords = {};
+        const players = [...settings.state.matchPlayers];
 
-        match.players.forEach((player: UserSession) => {
+        players.forEach((player: UserSession) => {
             if ((Math.floor(Math.random() * 2) + 1) > 1) {
                 playersInMess.push({ playerId: player.playerId, word: score[player.playerId].originalWord });
 
@@ -138,8 +140,8 @@ export const useGameLogic = (): GameLogic => {
             wordsOrderedRandom[player.playerId] = { word: score[player.playerId].originalWord } as TargetWord;
         });
 
-        if (match.players.length <= 1) return wordsOrderedRandom;
-        const size = match.players.length;
+        if (players.length <= 1) return wordsOrderedRandom;
+        const size = players.length;
         for (let i = 0; i < size; i++) {
             const currentPlayerId = playersInMess[i].playerId;
             let previewIndex = i - 1;
@@ -156,8 +158,8 @@ export const useGameLogic = (): GameLogic => {
         const scoreResume: ScoreResume = {
             players: []
         };
-
-        match.players.forEach((player: UserSession) => {
+        const players = [...settings.state.matchPlayers];
+        players.forEach((player: UserSession) => {
             const resume: PlayerScoreResume = {
                 [player.playerId]: []
             }
@@ -190,11 +192,14 @@ export const useGameLogic = (): GameLogic => {
 
         const score = getCurrentScore(matchRound);
         const playerScore = score[playerId];
-        if (!matchRoundStarted && !playerScore.ready) return PlayerStatusEnum.WAITING;
-        if (!matchRoundStarted && playerScore.ready) return PlayerStatusEnum.READY;
-        if (!playerScore.finish) return PlayerStatusEnum.TYPING;
-        if (playerScore.completed) return PlayerStatusEnum.SUCCESS;
-        else return PlayerStatusEnum.FAIL;
+        if (playerScore) {
+            if (!matchRoundStarted && !playerScore.ready) return PlayerStatusEnum.WAITING;
+            if (!matchRoundStarted && playerScore.ready) return PlayerStatusEnum.READY;
+            if (!playerScore.finish) return PlayerStatusEnum.TYPING;
+            if (playerScore.completed) return PlayerStatusEnum.SUCCESS;
+            else return PlayerStatusEnum.FAIL;
+        }
+        return PlayerStatusEnum.ON_DASHBOARD;
     }
 
     return {
