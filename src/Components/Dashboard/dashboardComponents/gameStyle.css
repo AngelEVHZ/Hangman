@@ -64,3 +64,17 @@
 .card{
     box-shadow: 0 15px 25px 0 rgba(0,0,0,0.50) !important;
 }
+
+
+
+
+@media only screen and (max-width: 700px) {
+    .on-mobile{
+        max-height: 50vh;
+        border: 1px solid #ddd;
+        background: #f1f1f1;
+        overflow-y: scroll;
+    }
+
+}
+

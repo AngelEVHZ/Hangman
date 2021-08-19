@@ -19,7 +19,7 @@ const Players: React.FC<PlayerProps> = (props: PlayerProps) => {
                 <div className="columns">
                     <div className="column">
                         <div className="card card-player shadow">
-                            <header className="card-header">
+                            <header className="card-header is-hidden-mobile">
                                 <p className="card-header-title">
                                     PLAYERS
                                 </p>

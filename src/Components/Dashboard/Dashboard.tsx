@@ -17,12 +17,16 @@ const Dashboard: React.FC<any> = () => {
                     <Players players={state.players} showStatus={false}></Players>
                 </div>
                 <div className="column is-6">
-                    <GameMode
-                        catalog={state.gameCatalog}
-                        selectGame={handle.selectGame}
-                        gameSelected={state.gameSelected}></GameMode>
-                    <br></br>
-                    <br></br>
+                    <div className="on-mobile">
+                        <GameMode
+                            catalog={state.gameCatalog}
+                            selectGame={handle.selectGame}
+                            gameSelected={state.gameSelected}></GameMode>
+                    </div>
+                    <div className="is-hidden-mobile">
+                        <br></br>
+                        <br></br>
+                    </div>
                     <br></br>
                     <div className="columns is-centered">
                         <div className="column is-one-fifth">
@@ -47,15 +51,15 @@ const Dashboard: React.FC<any> = () => {
                         </div>
                     }
                 </div>
-                <div className="column  is-3">
-                <AdSense.Google
-                 client='ca-pub-5609202792405393'
-                 slot='1329533272'
-                 style={{ display: 'block' }}
-                 format='auto'
-                 responsive='true'
-                 layoutKey='-gw-1+2a-9x+5c'
-                />
+                <div className="column is-3">
+                    <AdSense.Google
+                        client='ca-pub-5609202792405393'
+                        slot='1329533272'
+                        style={{ display: 'block' }}
+                        format='auto'
+                        responsive='true'
+                        layoutKey='-gw-1+2a-9x+5c'
+                    />
                 </div>
             </div>
         </div>
