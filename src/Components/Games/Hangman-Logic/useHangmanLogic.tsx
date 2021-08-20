@@ -33,7 +33,6 @@ export const useHangmanLogic = (props: HangmanProps): UseHangmanLogicProps => {
     const [userWord, setUserWord] = useState("");
 
     const setWord = (word: string) => {
-
         const originalWord = word.toLocaleUpperCase();
         const wordNormalize = originalWord.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
         setUserWord(word);

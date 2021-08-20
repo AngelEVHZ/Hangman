@@ -15,8 +15,9 @@ import { UserSession } from "../../../../types/UserSession";
 import { MAXIMUM_WORDS } from "../../../../Constant/UtilsConstants";
 import { GameLogic, useGameLogic } from "./UseGameLogic";
 import { PlayerStatusEnum } from "../../../../Constant/PlayerStatusEnum";
-import { GameMatch, ScoreResume } from "../../../../types/GameNormalTypes";
-import { useCommondLogic} from "../../Commond-Logic/useCommondLogic";
+import { GameMatch } from "../../../../types/GameNormalTypes";
+import { useCommondLogic } from "../../Commond-Logic/useCommondLogic";
+import { ScoreTableProps } from "../../../Commonds/ScoreTable/ScoreTable";
 export interface GameProps {
     handle: {
         startGame: () => void;
@@ -34,11 +35,8 @@ export interface GameProps {
         time: number;
         callBack: () => void;
     },
-    timerScores: {
-        time: number;
-        callBack: () => void;
-    },
     state: {
+        scoreTable: ScoreTableProps;
         playersFinish: boolean;
         wordLetters: string[],
         userLetter: Array<string>;
@@ -49,9 +47,6 @@ export interface GameProps {
         isReady: boolean;
         players: UserSession[],
         match: GameMatch;
-        scoreResume: ScoreResume;
-        host: boolean;
-        finishGame: boolean;
         userWord: string;
         keyTypedList: string[];
     }
@@ -70,7 +65,7 @@ export const UseGameState = (): GameProps => {
     const [wordLetters, setWordLetters] = useState([""]);
     const [userLetter, setUserLetter] = useState(new Array(wordLetters.length).fill(""));
 
-    const [currentKey, setKey] = useState({key:""});
+    const [currentKey, setKey] = useState({ key: "" });
     const [errors, setErrors] = useState(new Array(6).fill(false));
     const [gameOver, setGameover] = useState(false);
     const [completed, setCompleted] = useState(false);
@@ -89,7 +84,7 @@ export const UseGameState = (): GameProps => {
     // TIMER
     const timerMenuCallback = () => {
         if (userWordSended) return;
-        const randomWord =  settings.handle.getRandomWord();
+        const randomWord = settings.handle.getRandomWord();
         sendWord(randomWord);
     }
     const timerGameCallback = () => {
@@ -122,15 +117,15 @@ export const UseGameState = (): GameProps => {
         if (value.length > MAXIMUM_WORDS) return;
 
         let onlyLettersRegex = /^[a-zA-Z\s]*$/;
-        if(!onlyLettersRegex.test(value)) return;
-        
+        if (!onlyLettersRegex.test(value)) return;
+
         setUserWord(value);
     }
 
     const keyDownHandler = (event: KeyboardEvent) => {
         const key = event.key || "";
         const normalizedKey = key.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-        setKey({key: normalizedKey});
+        setKey({ key: normalizedKey });
     }
 
     const startGame = () => {
@@ -179,7 +174,7 @@ export const UseGameState = (): GameProps => {
                     gameLogic.handle.setMatchRoundStarted(false);
                     setRound(nextRound.round);
                     endRound();
-                    
+
                     break;
                 case NotifyGameActionEnum.END_MATCH:
                     history.push(Routes.DASHBOARD);
@@ -221,7 +216,7 @@ export const UseGameState = (): GameProps => {
         }
     }, [settings.state.currentMatch]);
 
-    
+
     const setRandomWords = (random: RandomWords) => {
         setPlayersReady(true);
         gameLogic.handle.setRandomWords(currentRound, random);
@@ -229,7 +224,7 @@ export const UseGameState = (): GameProps => {
 
 
     const initRound = () => {
-        const originalWord = gameLogic.handle.getPlayerTargetWord(currentRound).toLocaleUpperCase();        
+        const originalWord = gameLogic.handle.getPlayerTargetWord(currentRound).toLocaleUpperCase();
         const wordNormalize = originalWord.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
 
         setUserLetter(new Array(wordNormalize.length).fill(" "));
@@ -260,7 +255,7 @@ export const UseGameState = (): GameProps => {
 
     const nextRound = () => {
         if (!settings.state.playerSettings.host) return;
-        
+
         const nextRountNumber = currentRound + 1;
         gameLogic.handle.setMatchRound(nextRountNumber);
         gameLogic.handle.setMatchRoundStarted(false);
@@ -302,9 +297,9 @@ export const UseGameState = (): GameProps => {
         const keyTyped = currentKey.key;
 
         const keyTypedListCopy = [...keyTypedList];
-        if (keyTypedListCopy.find( key => key === keyTyped))
+        if (keyTypedListCopy.find(key => key === keyTyped))
             return;
-        
+
         const userLetterCopy: string[] = [...userLetter];
         let correct = false;
         for (let i = 0; i < wordLetters.length; i++) {
@@ -318,7 +313,7 @@ export const UseGameState = (): GameProps => {
             keyTypedListCopy.push(keyTyped);
             validateError();
         }
-        
+
         setKeyTypedList(keyTypedListCopy);
         setCompleted(validateComplete(userLetterCopy, wordLetters));
         setUserLetter(userLetterCopy);
@@ -331,8 +326,31 @@ export const UseGameState = (): GameProps => {
         };
     }, []);
 
+    const isFinishGame = (): boolean => {
+        return (currentRound + 1) >= settings.state.currentMatch.rounds
+    }
+
+    const getButtonText = () => {
+        return !settings.state.playerSettings.host ?
+            "Waiting for host..." : isFinishGame() ?
+                "Salir!" : "Next Round!";
+    }
+
+
     return {
         state: {
+            scoreTable: {
+                headers: gameLogic.handle.scoreTableHeaders(),
+                rows: gameLogic.handle.scoreTableRows(),
+                callBack: nextRound,
+                disableButton: false,
+                buttonText: getButtonText(),
+                timer: {
+                    showTimer: true,
+                    time: TimesEnum.SCORES_PAGE,
+                    callBack: nextRound,
+                }
+            },
             wordLetters: originalLetters,
             userLetter,
             errors,
@@ -343,9 +361,6 @@ export const UseGameState = (): GameProps => {
             isReady: gameLogic.handle.isPlayerReady(currentRound),
             players: settings.state.players,
             match: settings.state.currentMatch,
-            scoreResume: gameLogic.state.scoreResume,
-            host: settings.state.playerSettings.host,
-            finishGame: (currentRound + 1) >= settings.state.currentMatch.rounds,
             userWord,
             keyTypedList,
         },
@@ -356,10 +371,6 @@ export const UseGameState = (): GameProps => {
         timerGame: {
             time: TimesEnum.PLAYING,
             callBack: timerGameCallback
-        },
-        timerScores: {
-            time: TimesEnum.SCORES_PAGE,
-            callBack: nextRound,
         },
         handle: {
             getPlayerStatus: gameLogic.handle.getPlayerStatus,
