@@ -1,11 +1,11 @@
 
 import React from "react";
-import "./BoardStyle.css";
-interface BoardProps {
+import "./HangmanStyle.css";
+interface HangmanProps {
     errors: boolean[];
 }
 
-const Board: React.FC<any> = (props: BoardProps) => {
+const Hangman: React.FC<any> = (props: HangmanProps) => {
     const { errors } = props;
 
     const human = [
@@ -38,4 +38,4 @@ const Board: React.FC<any> = (props: BoardProps) => {
         </div>
     );
 };
-export default Board;
+export default Hangman;

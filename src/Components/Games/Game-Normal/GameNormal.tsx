@@ -1,12 +1,9 @@
 import React from "react";
-import LetterInputs from "../../Commonds/LetterInputs/LetterInputs";
 import { UseGameState } from "./State/UseGameState";
-import Board from "../../Commonds/Board/Board";
 import MenuBoard from "./GameComponents/MenuBoard";
-import Timer from "../../Commonds/Timer/Timer";
 import Players from "../../Commonds/Players/Players";
-import TypedLetters from "../../Commonds/TypedLetters/TypedLetters";
 import ScoreTable from "../../Commonds/ScoreTable/ScoreTable";
+import GameBoard from "../../Commonds/GameBoard/GameBoard";
 
 const GameNormal: React.FC<any> = () => {
     const { handle, state, timerMenu, timerGame } = UseGameState();
@@ -28,30 +25,19 @@ const GameNormal: React.FC<any> = () => {
 
                         }
                         {!state.playersFinish && state.roundStart &&
-                            <div className="card">
-                                <header className="card-header p-3">
-                                    <Timer {...timerGame}
-                                        time={timerGame.time}
-                                        stop={state.gameOver || state.completed}
-                                        callBack={timerGame.callBack}
-                                    ></Timer>
-                                </header>
-                                <div className="card-content">
-                                    <div className="content">
-                                        <TypedLetters letters={state.keyTypedList}/>
-                                        <Board
-                                            errors={state.errors}>
-                                        </Board>
-                                        <LetterInputs
-                                            callBack={handle.finishGameCallback}
-                                            userLetter={state.userLetter}
-                                            wordLetters={state.wordLetters}
-                                            gameOver={state.gameOver}
-                                            completed={state.completed}
-                                        ></LetterInputs>
-                                    </div>
-                                </div>
-                            </div>
+                            <GameBoard
+                                timerTime={timerGame.time}
+                                timerStop={state.gameOver || state.completed}
+                                timerCallBack={timerGame.callBack}
+                                onFinishHangman={handle.finishGameCallback}
+                                showInputLetters={true}
+                                errors={state.errors}
+                                keyTypedList={state.keyTypedList}
+                                wordLetters={state.wordLetters}
+                                userLetter={state.userLetter}
+                                gameOver={state.gameOver}
+                                completed={state.completed}
+                            ></GameBoard>
                         }
                         {!state.playersFinish && !state.roundStart &&
                             <MenuBoard handle={handle} isReady={state.isReady} timer={timerMenu} userWord={state.userWord}></MenuBoard>
