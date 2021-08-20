@@ -19,3 +19,25 @@
     text-transform: uppercase;
     margin-bottom: 5px;
 }
+
+
+
+@media only screen and (max-width: 700px) {
+
+    .letter-button {
+        width: 25px !important;
+        height: 30px !important;
+        text-transform: uppercase;
+        padding: 0px !important;
+        margin: 0px !important;
+    }
+    
+    .answer-space{
+        padding: 1px;
+        margin: 0px;
+    }
+    
+    
+}
+
+

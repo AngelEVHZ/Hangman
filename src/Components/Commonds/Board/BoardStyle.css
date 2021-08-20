@@ -4,7 +4,7 @@
 }
 
 .board{
-    height: 500px;
+    height: 35vh;
     padding-bottom: 10px;
 }
 
@@ -111,3 +111,13 @@
 		opacity: 1;
 	}
 }
+
+
+@media only screen and (max-width: 700px) {
+    .board{
+        height: 25vh;
+        padding-bottom: 10px;
+    }  
+}
+
+

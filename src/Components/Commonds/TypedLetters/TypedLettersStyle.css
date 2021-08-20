@@ -7,6 +7,7 @@
     width: 44px;
     max-width: 44px;
     display: grid;
+    justify-content: right;
 }
 
 .letter{
@@ -15,3 +16,20 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+
+
+@media only screen and (max-width: 700px) {
+    .letter{
+        width: 20px;
+        height: 26px !important;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding: 0px !important;
+        margin:  0px !important;
+        margin-bottom: 5px !important;
+    }
+    
+}
+
+
