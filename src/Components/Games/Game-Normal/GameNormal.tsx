@@ -26,6 +26,7 @@ const GameNormal: React.FC<any> = () => {
                         }
                         {!state.playersFinish && state.roundStart &&
                             <GameBoard
+                                onKeyPress={handle.onExternalKeyPress}
                                 timerTime={timerGame.time}
                                 timerStop={state.gameOver || state.completed}
                                 timerCallBack={timerGame.callBack}

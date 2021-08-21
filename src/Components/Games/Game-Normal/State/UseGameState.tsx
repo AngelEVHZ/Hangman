@@ -26,6 +26,7 @@ export interface GameProps {
         nextRound: () => void;
         getPlayerName: (playerId: string) => string;
         getPlayerStatus: (playerId: string) => PlayerStatusEnum;
+        onExternalKeyPress: (key: string) => void;
     },
     timerMenu: {
         time: number;
@@ -120,12 +121,6 @@ export const UseGameState = (): GameProps => {
         if (!onlyLettersRegex.test(value)) return;
 
         setUserWord(value);
-    }
-
-    const keyDownHandler = (event: KeyboardEvent) => {
-        const key = event.key || "";
-        const normalizedKey = key.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-        setKey({ key: normalizedKey });
     }
 
     const startGame = () => {
@@ -319,6 +314,18 @@ export const UseGameState = (): GameProps => {
         setUserLetter(userLetterCopy);
     }, [currentKey]);
 
+
+    const onExternalKeyPress = (key: string) => {
+        const normalizedKey = key.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+        setKey({ key: normalizedKey });
+    }
+
+    const keyDownHandler = (event: KeyboardEvent) => {
+        const key = event.key || "";
+        const normalizedKey = key.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+        setKey({ key: normalizedKey });
+    }
+
     useEffect(() => {
         window.addEventListener("keydown", (event) => { keyDownHandler(event) });
         return () => {
@@ -375,6 +382,7 @@ export const UseGameState = (): GameProps => {
         handle: {
             getPlayerStatus: gameLogic.handle.getPlayerStatus,
             getPlayerName: settings.handle.getPlayerName,
+            onExternalKeyPress,
             finishGameCallback,
             changeUserWord,
             startGame,

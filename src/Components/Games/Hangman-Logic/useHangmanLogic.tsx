@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 export interface UseHangmanLogicProps {
     handle: {
         setWord: (word: string) => void;
+        onExternalKeyPress: (key: string) => void;
     },
     state: {
         originalLetters: string[];
@@ -106,9 +107,15 @@ export const useHangmanLogic = (props: HangmanProps): UseHangmanLogicProps => {
         };
     }, []);
 
+    const onExternalKeyPress = (key: string) => {
+        const normalizedKey = key.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+        setKey({ key: normalizedKey });
+    }
+
     return {
         handle: {
             setWord,
+            onExternalKeyPress,
         },
         state: {
             originalLetters,

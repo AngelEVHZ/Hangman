@@ -25,6 +25,7 @@ const GameContraReloj: React.FC<any> = () => {
                         }
                         {!state.isGameCompleted && state.isGameStarted &&
                             <GameBoard
+                                onKeyPress={handle.onExternalKeyPress}
                                 timerTime={state.gameTime}
                                 timerStop={state.isGameCompleted || state.stopTimer}
                                 timerCallBack={handle.onTimeCallBack}

@@ -23,6 +23,7 @@ export interface GameContraRelojProps {
         onFinishHangmanRound: () => void;
         onTimeCallBack: () => void;
         getPlayerStatus: (playerId: string) => PlayerStatusEnum;
+        onExternalKeyPress: (key: string) => void;
     },
     state: {
         isPlayerReadyToStart: boolean;
@@ -280,6 +281,7 @@ export const UseGameContraRelojState = (): GameContraRelojProps => {
             onFinishHangmanRound,
             onTimeCallBack,
             getPlayerStatus: gameLogic.handle.getPlayerStatus,
+            onExternalKeyPress: hangman.handle.onExternalKeyPress,
         },
         state: {
             isPlayerReadyToStart,
