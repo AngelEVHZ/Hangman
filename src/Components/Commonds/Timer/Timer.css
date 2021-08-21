@@ -41,7 +41,7 @@
     color: var(--background-color)
   }
   
-  .base-timer__label {
+  .base-timer_label {
     position: absolute;
     width: 60px;
     height: 60px;
@@ -52,4 +52,11 @@
     font-size: 25px;
     font-weight: bold;
   }
+  .full-size{
+    width: 100%;
+  }
+
+  .progress::-moz-progress-bar {
+    background-color: red !important;
+}
   

@@ -1,3 +1,5 @@
+import { faTrophy } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect } from "react";
 import { useState } from "react";
 import { PlayerStatusEnum } from "../../../../Constant/PlayerStatusEnum";
@@ -22,9 +24,10 @@ export interface GameLogic {
         setMatchRound: (round: number) => void;
         setMatchRoundStarted: (started: boolean) => void;
         getPlayerStatus: (playerId: string) => PlayerStatusEnum;
+        scoreTableHeaders: () => string[];
+        scoreTableRows: () => { items: any[] }[];
     },
     state: {
-        scoreResume: ScoreResume;
     }
 }
 
@@ -202,8 +205,39 @@ export const useGameLogic = (): GameLogic => {
         return PlayerStatusEnum.ON_DASHBOARD;
     }
 
+    const scoreTableHeaders = () => {
+        let headers: string[] = ["Player"];
+        const rounds = settings.state.currentMatch.rounds;
+        for (let i = 0; i < rounds; i++)
+            headers.push(`Round ${i + 1}`);
+        headers.push("Final");
+        return headers;
+    }
+
+    const scoreTableRows = () => {
+        let rows: any[] = [];
+        scoreResume.players.map((player, index) => {
+            let row: { items: any[] } = { items: [] };
+            const key = Object.keys(player)[0];
+            const name = settings.handle.getPlayerName(key);
+            row.items.push(name);
+            Array.from({ length: player[key].length }).map((_, _index) => {
+                row.items.push(Math.floor(player[key][_index]));
+            });
+            if (index < 3)
+                row.items.push((<p><FontAwesomeIcon className={`icon-trophy place-${index + 1}`} icon={faTrophy} /></p>));
+            else
+                row.items.push("");
+            rows.push(row);
+        });
+        return rows;
+    }
+
+
     return {
         handle: {
+            scoreTableRows,
+            scoreTableHeaders,
             setPlayerWord,
             isPlayerReady,
             allPlayerReady,
@@ -218,7 +252,6 @@ export const useGameLogic = (): GameLogic => {
             getPlayerStatus,
         },
         state: {
-            scoreResume,
         }
     };
 }

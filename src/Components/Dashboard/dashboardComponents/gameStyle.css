@@ -1,3 +1,15 @@
+@media only screen and (max-width: 700px) {
+    .gameCard{
+        width: 90%!important;
+        /*margin: 0px auto!important;*/
+        margin: 15px auto 0px auto!important;
+    }
+
+    .is-centered{
+        text-align: center!important;
+    }
+}
+
 .gameCard{
     height: 150px;
     width: 250px;
@@ -64,3 +76,22 @@
 .card{
     box-shadow: 0 15px 25px 0 rgba(0,0,0,0.50) !important;
 }
+
+
+
+
+@media only screen and (max-width: 700px) {
+    .on-mobile{
+        max-height: 50vh;
+        border: 1px solid #ddd;
+        background: rgba(204,185,185,34%);
+        overflow-y: scroll;
+        border-radius: 10px;
+    }
+
+    .card {
+        box-shadow: 0 10px 20px 0 rgb(0 0 0 / 50%) !important;
+    }
+
+}
+

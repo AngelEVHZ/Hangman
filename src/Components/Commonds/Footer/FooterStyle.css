@@ -1,9 +1,13 @@
 .footer{
     background: none !important;
+    position: absolute;
+    top: 82%;
+    width: 100%;
+    padding: 3rem 1.5rem 2rem!important;
 }
 
-.white-text{
-    color: white !important;
+.color-text{
+    color: var(--secondary-color) !important;
 }
 .footer-text{
 

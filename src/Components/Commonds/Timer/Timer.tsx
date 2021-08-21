@@ -7,6 +7,7 @@ interface TimerProps {
     stop?: boolean;
     hide?: boolean;
     callBack: () => void;
+    responsiveOnMobile?: boolean;
 }
 
 const Timer: React.FC<any> = (props: TimerProps) => {
@@ -18,6 +19,8 @@ const Timer: React.FC<any> = (props: TimerProps) => {
     const WARNING_THRESHOLD = 10;
     const ALERT_THRESHOLD = 5;
 
+    const hideDesktop = props.responsiveOnMobile ? "is-hidden-desktop" : "";
+    const hideMobile = props.responsiveOnMobile ? "is-hidden-touch" : "";
 
     const remainingPathColor = secondsLeft <= ALERT_THRESHOLD ? "red" :
         secondsLeft <= WARNING_THRESHOLD ? "orange" : "green";
@@ -52,9 +55,9 @@ const Timer: React.FC<any> = (props: TimerProps) => {
     ).toFixed(0)} 283`;
 
 
-    return (
-        <>{!props.hide &&
-            <div className="base-timer">
+    const renderDeskTop = () => {
+        return (
+            <div className={`base-timer`}>
                 <svg className="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                     <g className="base-timer__circle">
                         <circle className="base-timer__path-elapsed" cx="50" cy="50" r="45"></circle>
@@ -63,18 +66,52 @@ const Timer: React.FC<any> = (props: TimerProps) => {
                             stroke-dasharray={`${getCircleDasharray}`}
                             className={`base-timer__path-remaining ${remainingPathColor}`}
                             d="
-                                M 50, 50
-                                m -45, 0
-                                a 45,45 0 1,0 90,0
-                                a 45,45 0 1,0 -90,0
-                            "
+                            M 50, 50
+                            m -45, 0
+                            a 45,45 0 1,0 90,0
+                            a 45,45 0 1,0 -90,0
+                        "
                         ></path>
                     </g>
                 </svg>
-                <span id="base-timer-label" className="base-timer__label">
+                <span id="base-timer-label" className="base-timer_label">
                     {secondsLeft}
                 </span>
             </div>
+        );
+    }
+
+    const renderMobile = () => {
+        const percentaje = remaining * 100 / props.time;
+        return (
+            <progress className="progress is-small is-danger" value={percentaje} max="100"></progress>
+        );
+    }
+    return (
+        <>{!props.hide &&
+            <>
+                {props.responsiveOnMobile && (
+                    <>
+                        <div className={`${hideMobile}`}>
+                            {
+                                renderDeskTop()
+                            }
+                        </div>
+                        <div className={`${hideDesktop} full-size`}>
+                            {
+                                renderMobile()
+                            }
+                        </div>
+                    </>
+                )}
+                {!props.responsiveOnMobile && (
+                    <div>
+                        {
+                            renderDeskTop()
+                        }
+                    </div>
+                )}
+            </>
         }</>
     );
 };

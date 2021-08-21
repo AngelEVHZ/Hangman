@@ -18,13 +18,6 @@
 }
 
 
-.card-player{
-    margin-top: 50px;
-    border: none !important;
-    background-color: var(--tertiary-color) !important;
-    
-}
-
 .nick-name{
     padding-top: 1px;
     padding-right: 8px;
@@ -45,6 +38,28 @@
     text-shadow: 2px 2px 5px black;
 }
 
+.card-player{
+    margin-top: 50px;
+    border: none !important;
+    background-color: var(--tertiary-color) !important;
+}
 
 
+
+@media only screen and (max-width: 700px) {
+    .card-player{
+        margin-top: 0px !important;
+    }
+
+    .pad-mobile{
+        padding: 1rem!important;
+        max-width: 43vh;
+        /*border: 1px solid #ddd;*/
+        background: rgba(204,185,185,34%);
+        overflow-x: scroll;
+        border-radius: 10px;
+        display: flex;
+    }
+
+}
 

@@ -59,3 +59,7 @@ code {
 .white-title{
   color: white !important;
 }
+
+::-webkit-scrollbar {
+  display: none;
+}
