@@ -24,7 +24,7 @@ const Players: React.FC<PlayerProps> = (props: PlayerProps) => {
                                     PLAYERS
                                 </p>
                             </header>
-                            <div className="card-content">
+                            <div className="card-content pad-mobile">
                                 {players.map((player) => {
                                     return (
                                         <PlayerItem player={player} key={player.playerId} showStatus={props.showStatus}

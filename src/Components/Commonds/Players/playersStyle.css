@@ -51,5 +51,15 @@
         margin-top: 0px !important;
     }
 
+    .pad-mobile{
+        padding: 1rem!important;
+        max-width: 43vh;
+        /*border: 1px solid #ddd;*/
+        background: rgba(204,185,185,34%);
+        overflow-x: scroll;
+        border-radius: 10px;
+        display: flex;
+    }
+
 }
 
