@@ -100,7 +100,7 @@ export const UseDashboardState = (): DashBoardProps => {
     }
 
     const selectGame = (item: GameCardProps) => {
-        if (!settings.state.playerSettings.host) return;
+        if (gameStart || !settings.state.playerSettings.host) return;
         settings.handle.setGameKind(item.id);
     }
 
