@@ -55,7 +55,7 @@ export const UseDashboardState = (): DashBoardProps => {
         const iddleAction = utils.state.iddleAction;
         if (iddleAction.activate && iddleAction.path != Routes.LOGIN) {
             utils.handle.resetIddle();
-            history.push(Routes.LOGIN);
+            window.location.reload();
         }
     }, [utils.state.iddleAction]);
 

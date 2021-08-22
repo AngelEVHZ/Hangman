@@ -21,5 +21,5 @@ export interface ScoreResume {
 }
 
 export interface PlayerScoreResume {
-    [key: string]: number[]
+    [key: string]: {word: string; score: number}[]
 }

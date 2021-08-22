@@ -15,6 +15,12 @@
     color: rgb(101, 65, 38);
 }
 
+.correct-word-color {
+    color: green;
+}
+.incorrect-word-color {
+    color: red;
+}
 
 .btn-full-size {
     background: none;

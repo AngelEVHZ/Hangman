@@ -170,10 +170,10 @@ export const useGameLogic = (): GameLogic => {
             for (let i = 0; i < match.rounds; i++) {
                 const score: GameScore = match.score[i];
                 const playerScore: PlayerScore = score[player.playerId];
-                resume[player.playerId].push(playerScore.score)
+                resume[player.playerId].push({ score: playerScore.score, word: playerScore.targetWord });
                 scoreAcumulated += playerScore.score;
             }
-            resume[player.playerId].push(scoreAcumulated)
+            resume[player.playerId].push({ score: scoreAcumulated, word: "" })
             scoreResume.players.push(resume);
         });
 
@@ -221,9 +221,20 @@ export const useGameLogic = (): GameLogic => {
             const key = Object.keys(player)[0];
             const name = settings.handle.getPlayerName(key);
             row.items.push(name);
-            Array.from({ length: player[key].length }).map((_, _index) => {
-                row.items.push(Math.floor(player[key][_index]));
+            const size = player[key].length;
+            Array.from({ length: size }).map((_, _index) => {
+                if (_index < (size - 1)) {
+                    const classCorrect = player[key][_index].score > 0 ? "correct-word-color" : "incorrect-word-color";
+                    row.items.push(
+                        <p className={classCorrect}>
+                            {player[key][_index].word}
+                        </p>
+                    );
+                }
+                else
+                    row.items.push(<p>{player[key][_index].score}</p>);
             });
+
             if (index < 3)
                 row.items.push((<p><FontAwesomeIcon className={`icon-trophy place-${index + 1}`} icon={faTrophy} /></p>));
             else
