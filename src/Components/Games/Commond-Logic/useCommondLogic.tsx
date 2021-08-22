@@ -20,7 +20,7 @@ export const useCommondLogic = (): UseCommondLogicProps => {
             utils.handle.showAlert({ show: true, type: "is-danger", msg: `Ha ocurrido un eror` });
             settings.handle.setHostUpdatedFalse();
             history.push(Routes.DASHBOARD);
-        } else  if (!settings.state.hostSettings ) {
+        } else  if (!settings.state.hostSettings && socket.conected ) {
             utils.handle.showAlert({ show: true, type: "is-danger", msg: `Ha ocurrido un eror` });
             history.push(Routes.LOGIN);
         }
@@ -31,7 +31,7 @@ export const useCommondLogic = (): UseCommondLogicProps => {
         const iddleAction = utils.state.iddleAction;
         if (iddleAction.activate && iddleAction.path != Routes.LOGIN) {
             utils.handle.resetIddle();
-            history.push(Routes.LOGIN);
+            window.location.reload();
         }
       }, [utils.state.iddleAction]);
 

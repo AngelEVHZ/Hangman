@@ -28,14 +28,14 @@ const Dashboard: React.FC<any> = () => {
                         <br></br>
                     </div>
                     <br></br>
-                    <div className="columns is-centered">
-                        <div className="column is-one-fifth">
+                    <div className="columns is-mobile is-centered">
+                        <div className="column is-half-mobile is-4">
                             <button className="button is-large is-fullwidth is-primary btn-play"
                                 onClick={handle.startGame}
                                 disabled={!state.gameSelected || !state.host || state.submited}>PLAY</button>
 
                         </div>
-                        <div className="column is-one-fifth">
+                        <div className="column is-half-mobile is-4">
                             <button className="button is-large is-fullwidth is-primary  btn-invite"
                                 onClick={handle.copyInvitation}>INVITE</button>
                         </div>
