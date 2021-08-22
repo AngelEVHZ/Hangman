@@ -286,7 +286,7 @@ export const UseGameContraRelojState = (): GameContraRelojProps => {
         state: {
             isPlayerReadyToStart,
             timeMenu: TimesEnum.MENU,
-            gameTime: TimesEnum.PLAYING,
+            gameTime: TimesEnum.CONTRA_RELOG,
             wordLetters: hangman.state.originalLetters,
             userLetter: hangman.state.userLetter,
             errors: hangman.state.errors,

@@ -52,7 +52,7 @@ export const UseUtilsState = (): UtilsContextInterface => {
     };
 
     const onIdle = () => {
-        if (!isDev) setIddleAction({ activate: true, path: window.location.pathname });
+        setIddleAction({ activate: true, path: window.location.pathname });
     };
 
     return {
