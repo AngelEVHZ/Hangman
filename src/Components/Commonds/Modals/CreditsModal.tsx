@@ -20,6 +20,7 @@ const CreditsModal: React.FC<CreditsModalProps> = (props: CreditsModalProps) => 
                     </div>
                     <div className="message-body message-letter">
                         <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+                        <div>Iconos diseñados por <a href="https://www.flaticon.es/autores/smalllikeart" title="smalllikeart">smalllikeart</a> from <a href="https://www.flaticon.es/" title="Flaticon">www.flaticon.es</a></div>
                     </div>
                 </article>
             </div>

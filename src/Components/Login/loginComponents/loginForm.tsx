@@ -13,11 +13,11 @@ const LoginForm: React.FC<LoginFormProps> = (props: LoginFormProps) => {
         <div>
             <div className="wrapper ">
                 <div id="formContent">
-                    <div className="card-image">
+                    <div className="">
                         <div className="columns is-centered">
                             <div className="column is-half ">
                                 <figure className="image is-128x128 centerIcono">
-                                    <img className="is-rounded" src="https://image.flaticon.com/icons/png/512/147/147140.png" alt="Placeholder image"></img>
+                                    <img className="is-rounded color-white" src="https://image.flaticon.com/icons/png/512/74/74472.png" alt="Placeholder image"></img>
                                 </figure>
                             </div>
                         </div>
