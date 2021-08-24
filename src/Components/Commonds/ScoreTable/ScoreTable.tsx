@@ -32,7 +32,7 @@ const ScoreTable: React.FC<any> = (props: ScoreTableProps) => {
     return (
         <div className="content">
             <div className="card">
-                <div className="card-content content-size">
+                <div className="card-content content-size table-container">
                     <table className="table">
                         <thead>
                             <tr>
