@@ -16,7 +16,7 @@ export const GAME_CATALOG: GameCardProps[] = [
     {
         id: GAME_KIND.NORMAL,
         title: "Normal",
-        description: "ADIVINA LA PALABRA DE TU ADVERSARIO",
+        description: "Escribe... y adivina",
         available: true,
         icon: (<p><FontAwesomeIcon className="icon" icon={faQuestion} /></p>)
     },
@@ -24,7 +24,7 @@ export const GAME_CATALOG: GameCardProps[] = [
         id: GAME_KIND.CONTRA_RELOJ,
         available: true,
         title: "Contra Reloj",
-        description: "¡ADIVINA LO MAS QUE PUEDAS, PUES SE ACABA EL TIEMPO!",
+        description: "¡Adivina más palabras que los demas, antes de que se acabe el tiempo!",
         icon: (<p><FontAwesomeIcon className="icon" icon={faStopwatch} /></p>)
     },
     {

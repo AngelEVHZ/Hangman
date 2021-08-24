@@ -23,7 +23,7 @@ const MenuContraReloj: React.FC<any> = (props: MenuBoardProps) => {
                             <div className="column is-four-fifths">
                                 <div className="field">
 
-                                    <label className="label"><h3 className="text-center">Escribe la mayor cantidad de palabras...</h3></label>
+                                    <label className="label"><h3 className="text-center">¡Adivina más palabras que los demas, antes de que se acabe el tiempo!</h3></label>
                                 </div>
                             </div>
                         </div>
