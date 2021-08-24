@@ -8,7 +8,7 @@
 /*how to play*/
 
 .message.is-danger .message-body {
-  font-size: xx-large;
+  font-size: x-large;
   text-align: center;
 }
 
@@ -46,7 +46,8 @@
 
 .gradient-border{
   width: 100%;
-  height: 350px;
+  /*height: 350px;*/
+  max-width: 450px;
   /*padding: 10px;*/
   background: #13161f;
   position: relative;
