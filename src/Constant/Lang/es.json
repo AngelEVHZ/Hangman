@@ -33,11 +33,33 @@
     "players": {
         "players": "JUGADORES"
     },
-    "game_normal": {
+    "gameNormal": {
         "menu_board": {
             "instruction": "Escribe una palabra:",
             "word": "Palabra...",
             "send": "Enviar!"
+        }
+    },
+    "gameModeCatalog": {
+        "normal": {
+            "title": "Normal",
+            "description": "Escribe... y adivina"
+        },
+        "vs_reloj": {
+            "title": "Contra Reloj",
+            "description": "¡Adivina más palabras que los demas, antes de que se acabe el tiempo!"
+        },
+        "puntuation": {
+            "title": "Por puntos",
+            "description": ""
+        },
+        "severo": {
+            "title": "Severo",
+            "description": ""
+        },
+        "elimination": {
+            "title": "Eliminacion",
+            "description": ""
         }
     }
 }
