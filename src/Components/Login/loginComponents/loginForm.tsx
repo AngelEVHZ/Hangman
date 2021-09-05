@@ -1,4 +1,5 @@
 import React from "react";
+import { useLanguage } from "../../../Context/LanguageProvider";
 import "./loginStyle.css";
 interface LoginFormProps {
     changeNickName: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -8,7 +9,8 @@ interface LoginFormProps {
 }
 
 const LoginForm: React.FC<LoginFormProps> = (props: LoginFormProps) => {
-    const btnText = props.isJoining ? "Unirse" : "Crear Sala";
+    const { lang } = useLanguage();
+    const btnText = props.isJoining ? lang.loginForm.join : lang.loginForm.create_room;
     return (
         <div>
             <div className="wrapper ">
@@ -24,7 +26,7 @@ const LoginForm: React.FC<LoginFormProps> = (props: LoginFormProps) => {
                     </div>
                     <div>
                         <input type="text" id="login" className="fadeIn second"
-                            name="login" placeholder="Aqui tu nombre :)" onChange={props.changeNickName}
+                            name="login" placeholder={lang.loginForm.placeholder} onChange={props.changeNickName}
                             value={props.userName} />
                         <button className="button is-primary btn-big"
                             onClick={props.joinGame}>{btnText}</button>

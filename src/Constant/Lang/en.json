@@ -1,3 +1,43 @@
 {
-    "loginHowToPlay_information":"I N F O R M A T I O N"
+    "loginHowToPlay": {
+        "title": "I N F O R M A C I Ó N",
+        "message_body1": "El clasico juego de el Ahorcado, ahora multijugador con hasta ",
+        "message_body2": "4 jugadores.",
+        "message_body3": "Invita a tus Amigos",
+        "message_body4": " y compitan en los nuevos y divertidos modos de juego."
+    },
+    "loginForm": {
+        "join": "Unirse",
+        "create_room": "Crear Sala",
+        "placeholder": "Aqui tu nombre :)"
+    },
+    "floatingActionButton": {
+        "contact": "Contacto",
+        "about_us": "Acerca de Nosotros",
+        "credits": "Creditos"
+    },
+    "aboutModal": {
+        "title": "Contactanos:",
+        "message_body1": "Envianos tus comentarios a la siguiente dirección de correo:",
+        "message_body2": "hangman.thegame.contacto@gmail.com"
+    },
+    "creditsModal": {
+        "title": "Creditos:",
+        "icons_made": "Iconos diseñados por ",
+        "from": "de"
+    },
+    "usModal": {
+        "title": "Acerca de Nosotros:",
+        "message_body1": "Somos un grupo de amigos que aman pasarla bien, jugando y creando juegos multijugador en linea. Queremos que tu y tus amigos se diviertan con nuestros juegos y asi pasen buenos ratos. :P"
+    },
+    "players": {
+        "players": "JUGADORES"
+    },
+    "game_normal": {
+        "menu_board": {
+            "instruction": "Escribe una palabra:",
+            "word": "Palabra...",
+            "send": "Enviar!"
+        }
+    }
 }

@@ -4,19 +4,19 @@ import "./loginStyle.css";
 
 
 const LoginHowToPlay: React.FC<any> = () => {
-    const {lang} = useLanguage();
+    const { lang } = useLanguage();
 
     return (
         <div className="howtoplaydiv">
             <div className="gradient-wrapper">
                 <article className="message is-danger gradient-border" id="purple">
                     <div className="message-header">
-                        <p> {lang.loginHowToPlay_information} </p>
+                        <p> {lang.loginHowToPlay.title} </p>
                         {/*<button className="delete" aria-label="delete"></button>*/}
                     </div>
                     <div className="message-body">
-                        <em>El clasico juego de el Ahorcado, ahora multijugador con hasta <strong>4 jugadores</strong></em><br></br><br></br>
-                        <em><strong>Invita a tus Amigos</strong> y compitan en los nuevos y divertidos modos de juego.</em><br></br>                       
+                        <em>{lang.loginHowToPlay.message_body1} <strong>{lang.loginHowToPlay.message_body2}</strong></em><br></br><br></br>
+                        <em><strong>{lang.loginHowToPlay.message_body3}</strong> {lang.loginHowToPlay.message_body4}</em><br></br>
                     </div>
                 </article>
             </div>

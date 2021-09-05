@@ -1,5 +1,6 @@
 import React from "react";
 import "./Modals.css";
+import { useLanguage } from "../../../Context/LanguageProvider";
 
 interface AboutModalProps {
     show: boolean;
@@ -7,6 +8,7 @@ interface AboutModalProps {
 }
 
 const AboutModal: React.FC<AboutModalProps> = (props: AboutModalProps) => {
+    const { lang } = useLanguage();
     const isActive = props.show ? "is-active" : "";
 
     return (
@@ -15,12 +17,12 @@ const AboutModal: React.FC<AboutModalProps> = (props: AboutModalProps) => {
             <div className="modal-content">
                 <article className="message is-danger">
                     <div className="message-header">
-                        <p>Contactanos:</p>
+                        <p>{lang.aboutModal.title}</p>
                         <button className="delete" aria-label="delete" onClick={() => props.toggleShowAboutModal(false)}></button>
                     </div>
                     <div className="message-body message-letter">
-                        <em>Envianos tus comentarios a la siguiente dirección de correo:</em><br></br><br></br>
-                        <strong><em>hangman.thegame.contacto@gmail.com</em></strong><br></br><br></br>
+                        <em>{lang.aboutModal.message_body1}</em><br></br><br></br>
+                        <strong><em>{lang.aboutModal.message_body2}</em></strong><br></br><br></br>
                     </div>
                 </article>
             </div>
