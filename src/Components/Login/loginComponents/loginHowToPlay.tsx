@@ -1,15 +1,17 @@
 import React from "react";
+import { useLanguage } from "../../../Context/LanguageProvider";
 import "./loginStyle.css";
 
 
 const LoginHowToPlay: React.FC<any> = () => {
+    const {lang} = useLanguage();
 
     return (
         <div className="howtoplaydiv">
             <div className="gradient-wrapper">
                 <article className="message is-danger gradient-border" id="purple">
                     <div className="message-header">
-                        <p> I N F O R M A C I Ó N </p>
+                        <p> {lang.loginHowToPlay_information} </p>
                         {/*<button className="delete" aria-label="delete"></button>*/}
                     </div>
                     <div className="message-body">
