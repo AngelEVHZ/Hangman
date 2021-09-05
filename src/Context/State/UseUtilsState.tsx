@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TimesEnum } from "../../Constant/Times";
 import { AlertMsgProps, IddleProps } from "../../types/CommondTypes";
 
@@ -24,7 +24,7 @@ export interface UtilsContextInterface {
 export const UseUtilsState = (): UtilsContextInterface => {
     const isDev = process.env.REACT_APP_DEV === "DEV";
     const [showLoader, setShowLoader] = useState<boolean>(false);
-    const [alert, setAlert] = useState<AlertMsgProps>({ type: "", msg: "", show: false })
+    const [customAlert, setAlert] = useState<AlertMsgProps>({ type: "", msg: "", show: false })
     const [alertTimeOut, setAlertTimeOut] = useState<any>(null)
     const [iddleAction, setIddleAction] = useState<IddleProps>({ activate: false, path: "" });
     const [showHeader, setShowHeader] = useState<boolean>(false);
@@ -55,6 +55,19 @@ export const UseUtilsState = (): UtilsContextInterface => {
         setIddleAction({ activate: true, path: window.location.pathname });
     };
 
+    const preventReload = (e: any) => {
+        var confirmationMessage = "\o/";     
+        e.returnValue = confirmationMessage;           
+        return confirmationMessage; 
+      };
+
+    useEffect(() => {
+        window.addEventListener("beforeunload", preventReload);
+        return () => {
+          window.removeEventListener("beforeunload", preventReload);
+        };
+      }, []);
+
     return {
         handle: {
             setShowLoader,
@@ -69,7 +82,7 @@ export const UseUtilsState = (): UtilsContextInterface => {
         state: {
             showHeader,
             showLoader,
-            alert,
+            alert: customAlert,
             iddleAction,
         }
     };
