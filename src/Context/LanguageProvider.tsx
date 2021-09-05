@@ -4,7 +4,8 @@ import { LanguageContextInterface, UseLanguageState } from "./State/UseLanguageS
 
 
 const INITIAL_STATE: LanguageContextInterface = {
-    lang: {}
+    lang: {},
+    changeLanguage: () => {},
 }
 
 const LanguageContext = React.createContext<LanguageContextInterface>(INITIAL_STATE);
