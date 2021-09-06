@@ -62,6 +62,7 @@ export const UseUtilsState = (): UtilsContextInterface => {
       };
 
     useEffect(() => {
+        if (isDev) return;
         window.addEventListener("beforeunload", preventReload);
         return () => {
           window.removeEventListener("beforeunload", preventReload);

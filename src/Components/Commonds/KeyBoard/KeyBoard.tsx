@@ -18,7 +18,6 @@ const KeyBoard: React.FC<any> = (props: KeyBoardProps) => {
     const [vowels, setVowels] = useState<Letter[]>([]);
     const [consonants, setConsonants] = useState<Letter[]>([]);
 
-    console.log("is-mobile");
     useEffect(() => {
         const vowels: Letter[] = vowelsCatalog.map((value) => ({ value, pressed: false }));
         const consonants: Letter[] = consonantsCatalog.map((value) => ({ value, pressed: false }));
