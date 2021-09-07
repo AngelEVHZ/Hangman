@@ -42,7 +42,7 @@
     },
     "gameModeCatalog": {
         "normal": {
-            "title": "Normal",
+            "title": "Clasic",
             "description": "Write ... and guess the words"
         },
         "vs_reloj": {
@@ -66,5 +66,17 @@
         "play": "PLAY",
         "invite": "INVITE",
         "copy_url": "Copy the URL"
+    },
+    "useGameState": {
+        "waiting_for_host": "Waiting for host...",
+        "exit": "Leave!",
+        "next_round": "Next round!"
+    },
+    "useGameContraRelojState": {
+        "waiting_for_players": "Waiting For Players",
+        "exit": "Salir!"
+    },
+    "menuContraReloj": {
+        "im_ready": "I'm ready!"
     }
 }

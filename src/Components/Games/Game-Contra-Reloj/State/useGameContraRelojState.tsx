@@ -6,6 +6,7 @@ import { PlayerStatusEnum } from "../../../../Constant/PlayerStatusEnum";
 import { Routes } from "../../../../Constant/RoutesEnum";
 import { SocketActionEnum } from "../../../../Constant/SocketActionEnum";
 import { TimesEnum } from "../../../../Constant/Times";
+import { useLanguage } from "../../../../Context/LanguageProvider";
 import { useSettings } from "../../../../Context/SettingsProvider";
 import { useSocket } from "../../../../Context/SocketProvider";
 import { NotifyEndMatch, NotifyReady, NotifyWordList, WordPlayed } from "../../../../types/GameContraRelojTypes";
@@ -50,6 +51,7 @@ export const UseGameContraRelojState = (): GameContraRelojProps => {
     const history = useHistory();
     const settings = useSettings();
     const socket = useSocket();
+    const { lang } = useLanguage();
     useCommondLogic();
 
     const [showInputLetters, setShowInputLetters] = useState<boolean>(false);
@@ -254,8 +256,8 @@ export const UseGameContraRelojState = (): GameContraRelojProps => {
     const getButtonText = () => {
         if (!settings.state.playerSettings.host ||
             !gameLogic.handle.areAllPlayersReadyToEnd())
-            return "Waiting For Players";
-        return "Salir!";
+            return lang.useGameState.waiting_for_host;
+        return lang.useGameState.waiting_for_host;
     }
 
     const buttonGoDashboard = () => {

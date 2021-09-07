@@ -42,7 +42,7 @@
     },
     "gameModeCatalog": {
         "normal": {
-            "title": "Normal",
+            "title": "Clasico",
             "description": "Escribe... y adivina"
         },
         "vs_reloj": {
@@ -66,5 +66,17 @@
         "play": "JUGAR",
         "invite": "INVITAR",
         "copy_url": "Copia el URL:"
+    },
+    "useGameState": {
+        "waiting_for_host": "Esperando al anfitrion...",
+        "exit": "Salir!",
+        "next_round": "Siguiente ronda!"
+    },
+    "useGameContraRelojState": {
+        "waiting_for_players": "Esperando a jugadores",
+        "exit": "Salir!"
+    },
+    "menuContraReloj": {
+        "im_ready": "Estoy listo!"
     }
 }
