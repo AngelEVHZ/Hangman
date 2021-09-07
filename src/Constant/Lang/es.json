@@ -61,5 +61,10 @@
             "title": "Eliminacion",
             "description": ""
         }
+    },
+    "dashboard": {
+        "play": "JUGAR",
+        "invite": "INVITAR",
+        "copy_url": "Copia el URL:"
     }
 }

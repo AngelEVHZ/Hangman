@@ -1,65 +1,70 @@
 {
     "loginHowToPlay": {
-        "title": "I N F O R M A C I Ó N",
-        "message_body1": "El clasico juego de el Ahorcado, ahora multijugador con hasta ",
-        "message_body2": "4 jugadores.",
-        "message_body3": "Invita a tus Amigos",
-        "message_body4": " y compitan en los nuevos y divertidos modos de juego."
+        "title": "I N F O R M A T I O N",
+        "message_body1": "The classic Hangman game, now multiplayer with up to ",
+        "message_body2": "4 players.",
+        "message_body3": "Invite your Friends",
+        "message_body4": " and compete in fun new game modes."
     },
     "loginForm": {
-        "join": "Unirse",
-        "create_room": "Crear Sala",
-        "placeholder": "Aqui tu nombre :)"
+        "join": "Join",
+        "create_room": "Create Room",
+        "placeholder": "Here your name :)"
     },
     "floatingActionButton": {
-        "contact": "Contacto",
-        "about_us": "Acerca de Nosotros",
-        "credits": "Creditos"
+        "contact": "Contact",
+        "about_us": "About us",
+        "credits": "Credits"
     },
     "aboutModal": {
-        "title": "Contactanos:",
-        "message_body1": "Envianos tus comentarios a la siguiente dirección de correo:",
+        "title": "Contact us:",
+        "message_body1": "Send us your comments to the following email address:",
         "message_body2": "hangman.thegame.contacto@gmail.com"
     },
     "creditsModal": {
-        "title": "Creditos:",
-        "icons_made": "Iconos diseñados por ",
-        "from": "de"
+        "title": "Credits:",
+        "icons_made": "Icons designed by ",
+        "from": "from"
     },
     "usModal": {
-        "title": "Acerca de Nosotros:",
-        "message_body1": "Somos un grupo de amigos que aman pasarla bien, jugando y creando juegos multijugador en linea. Queremos que tu y tus amigos se diviertan con nuestros juegos y asi pasen buenos ratos. :P"
+        "title": "About us:",
+        "message_body1": "We are a group of friends who love to have fun, playing and creating multiplayer games online. We want you and your friends to have fun with our games and have a good time. :P"
     },
     "players": {
-        "players": "JUGADORES"
+        "players": "PLAYERS"
     },
     "gameNormal": {
         "menu_board": {
-            "instruction": "Escribe una palabra:",
-            "word": "Palabra...",
-            "send": "Enviar!"
+            "instruction": "Write a word:",
+            "word": "Word...",
+            "send": "Send!"
         }
     },
     "gameModeCatalog": {
         "normal": {
             "title": "Normal",
-            "description": "Escribe... y adivina"
+            "description": "Write ... and guess the words"
         },
         "vs_reloj": {
-            "title": "Contra Reloj",
-            "description": "¡Adivina más palabras que los demas, antes de que se acabe el tiempo!"
+            "title": "Game against time",
+            "description": "¡Guess more words than the others, before time runs out!"
         },
         "puntuation": {
-            "title": "Puntuation",
+            "title": "Punctuation",
             "description": ""
         },
         "severo": {
-            "title": "Severo",
+            "title": "Severe",
             "description": ""
         },
         "elimination": {
             "title": "Elimination",
             "description": ""
         }
+    },
+    "dashboard": {
+        "play": "PLAY",
+        "invite": "INVITE",
+        "copy_url": "Copy the URL"
     }
 }

@@ -6,9 +6,11 @@ import GameMode from "./dashboardComponents/gameMode";
 import Players from "../Commonds/Players/Players";
 
 import AdSense from "react-adsense";
+import { useLanguage } from "../../Context/LanguageProvider";
 
 const Dashboard: React.FC<any> = () => {
     const { handle, state } = UseDashboardState();
+    const { lang } = useLanguage();
 
     return (
         <div className="content m-5">
@@ -32,19 +34,19 @@ const Dashboard: React.FC<any> = () => {
                         <div className="column is-half-mobile is-4">
                             <button className="button is-large is-fullwidth is-primary btn-play"
                                 onClick={handle.startGame}
-                                disabled={!state.gameSelected || !state.host || state.submited}>PLAY</button>
+                                disabled={!state.gameSelected || !state.host || state.submited}>{lang.dashboard.play}</button>
 
                         </div>
                         <div className="column is-half-mobile is-4">
                             <button className="button is-large is-fullwidth is-primary  btn-invite"
-                                onClick={handle.copyInvitation}>INVITE</button>
+                                onClick={handle.copyInvitation}>{lang.dashboard.invite}</button>
                         </div>
                     </div>
                     {state.showUrl.show &&
                         <div className="columns is-centered">
                             <div className="column ">
                                 <div className="notification is-warning is-light">
-                                    <p className="subtitle">Copy the url:</p>
+                                    <p className="subtitle">{lang.dashboard.copy_url}</p>
                                     <p className="subtitle ">{state.showUrl.url}</p>
                                 </div>
                             </div>
