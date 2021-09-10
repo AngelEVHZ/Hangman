@@ -1,6 +1,8 @@
+import { shuffle } from "lodash";
 import { useState } from "react";
 import { PlayerStatusEnum } from "../../../../Constant/PlayerStatusEnum";
 import { StorageEnum } from "../../../../Constant/StorageEnum";
+import { randomShuffle } from "../../../../Constant/UtilsConstants";
 import { WordsCatalog } from "../../../../Constant/WordsCatalog";
 import { useSettings } from "../../../../Context/SettingsProvider";
 import { GameContraRelojPlayer, NotifyEndMatch, WordPlayed } from "../../../../types/GameContraRelojTypes";
@@ -17,12 +19,12 @@ export interface GameContraRelojLogic {
         getPlayerScore: (playerId: string) => GameContraRelojPlayer;
         getPlayerStatus: (playerId: string) => PlayerStatusEnum;
         scoreTableHeaders: () => string[];
-        scoreTableRows: () => {items: any[]}[];
+        scoreTableRows: () => { items: any[] }[];
         areAllPlayersReadyToEnd: () => boolean;
         setPlayerScoreFinish: (playerId: string, finish: boolean) => void;
         setIsGameStarted: (value: boolean) => void;
     },
-    state:{
+    state: {
         isGameStarted: boolean;
     }
 }
@@ -61,21 +63,23 @@ export const useGameContraRelojLogic = (): GameContraRelojLogic => {
 
 
     const generateWordList = () => {
-        const numberOfWords = 60;
         const wordsCatalogSize = WordsCatalog.length;
+        const numberOfWords = wordsCatalogSize < 60 ? wordsCatalogSize : 60;
         const jumps = Math.floor(wordsCatalogSize / numberOfWords);
         let from = 0;
         let to = jumps - 1;
-        let wordList = "";
+        let indexArray = [];
         for (let i = 0; i < numberOfWords; i++) {
             const wordIndex = settings.handle.getRandomNumber(to, from);
-            let coma = (i + 1) < numberOfWords ? "," : "";
-            wordList += `${wordIndex}${coma}`;
+            indexArray.push(wordIndex);
             from += jumps;
             to += jumps;
         }
+        const indexArrayRandom = randomShuffle(indexArray);
+        const wordList = indexArrayRandom.join(",");
         return wordList;
     }
+
 
     const setWordList = (wordList: string) => {
         const contraRelojMatch = { ...settings.state.contraRelojMatch };
@@ -144,7 +148,7 @@ export const useGameContraRelojLogic = (): GameContraRelojLogic => {
         settings.handle.setContraRelojMatch(match);
     }
 
-    const  getPlayerStatus = (playerId: string):PlayerStatusEnum =>  {
+    const getPlayerStatus = (playerId: string): PlayerStatusEnum => {
         const contraRelojMatch = { ...settings.state.contraRelojMatch };
         if (!contraRelojMatch.score[playerId]) return PlayerStatusEnum.WAITING;
         const playerScore = contraRelojMatch.score[playerId];
@@ -158,33 +162,33 @@ export const useGameContraRelojLogic = (): GameContraRelojLogic => {
     const scoreTableHeaders = () => {
         let headers: string[] = ["Word"];
         const players = [...settings.state.matchPlayers];
-        players.forEach( (player) => {
+        players.forEach((player) => {
             headers.push(player.nickName);
         });
-        return headers; 
+        return headers;
     }
 
     const scoreTableRows = () => {
-        let rows:any[] = [];
+        let rows: any[] = [];
         const contraRelojMatch = { ...settings.state.contraRelojMatch };
         const score = contraRelojMatch.score;
         const players = [...settings.state.matchPlayers];
         let maxWords = 0;
         const playersZipList: any[] = [];
-        players.forEach( (player) => {
+        players.forEach((player) => {
             playersZipList.push(score[player.playerId].wordsPlayedZip.split(","));
             const playerToltalWords = score[player.playerId].failWords + score[player.playerId].successWords;
             if (maxWords < playerToltalWords) maxWords = playerToltalWords;
         });
-        for (let i = 0; i< maxWords; i++) {
-            let row: { items: any[]} = { items:[]};
+        for (let i = 0; i < maxWords; i++) {
+            let row: { items: any[] } = { items: [] };
             const wordId = getWordListElement(i);
             const word = settings.handle.getWordById(wordId);
             row.items.push(word.toUpperCase());
-            players.forEach( (player, index) => {
+            players.forEach((player, index) => {
                 let msj = "";
                 if (playersZipList[index][i]) {
-                    msj = playersZipList[index][i] == "1" ? "OK": "X";
+                    msj = playersZipList[index][i] == "1" ? "OK" : "X";
                 }
                 row.items.push(msj);
             });
@@ -210,7 +214,7 @@ export const useGameContraRelojLogic = (): GameContraRelojLogic => {
             getPlayerStatus,
             setIsGameStarted,
         },
-        state:{
+        state: {
             isGameStarted,
         }
     };

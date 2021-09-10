@@ -74,8 +74,10 @@ export const UseDashboardState = (): DashBoardProps => {
     }, [socket.state.message]);
 
     const initMatch = (rounds: number, gameKind: string) => {
+        utils.handle.setShowLoader(true);
         settings.handle.setGameKind(gameKind);
         setTimeout(() => {
+            utils.handle.setShowLoader(false);
             settings.handle.initMatch(rounds, gameKind);
             history.push(Routes.GAME_NAVIGATION);
         }, TimesEnum.START_GAME);

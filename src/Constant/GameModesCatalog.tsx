@@ -15,37 +15,37 @@ export enum GAME_KIND {
 export const GAME_CATALOG: GameCardProps[] = [
     {
         id: GAME_KIND.NORMAL,
-        title: "Normal",
-        description: "ADIVINA LA PALABRA DE TU ADVERSARIO",
+        title: "gameModeCatalog.normal.title",
+        description: "gameModeCatalog.normal.description",
         available: true,
         icon: (<p><FontAwesomeIcon className="icon" icon={faQuestion} /></p>)
     },
     {
         id: GAME_KIND.CONTRA_RELOJ,
         available: true,
-        title: "Contra Reloj",
-        description: "¡ADIVINA LO MAS QUE PUEDAS, PUES SE ACABA EL TIEMPO!",
+        title: "gameModeCatalog.vs_reloj.title",
+        description: "gameModeCatalog.vs_reloj.description",
         icon: (<p><FontAwesomeIcon className="icon" icon={faStopwatch} /></p>)
     },
     {
         id: GAME_KIND.PUNTUATION,
         available: false,
-        title: "Puntuacion",
-        description: "",
+        title: "gameModeCatalog.puntuation.title",
+        description: "gameModeCatalog.puntuation.description",
         icon: (<p><FontAwesomeIcon className="icon" icon={faGift} /></p>)
     },
     {
         id: GAME_KIND.SEVERO,
         available: false,
-        title: "Severo",
-        description: "",
+        title: "gameModeCatalog.severo.title",
+        description: "gameModeCatalog.severo.description",
         icon: (<p><FontAwesomeIcon className="icon" icon={faGift} /></p>)
     },
     {
         id: GAME_KIND.ELIMINATION,
         available: false,
-        title: "Eliminacion",
-        description: "",
+        title: "gameModeCatalog.elimination.title",
+        description: "gameModeCatalog.elimination.description",
         icon: (<p><FontAwesomeIcon className="icon" icon={faGift} /></p>)
     },
 ]

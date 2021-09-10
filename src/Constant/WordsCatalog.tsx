@@ -1115,4 +1115,5 @@ export const WordsCatalog =
         "precisar",
         "significar",
         "parecer",
-        "distinguir"];
+        "distinguir"
+    ];

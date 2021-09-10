@@ -1,0 +1,82 @@
+{
+    "loginHowToPlay": {
+        "title": "I N F O R M A T I O N",
+        "message_body1": "The classic Hangman game, now multiplayer with up to ",
+        "message_body2": "4 players.",
+        "message_body3": "Invite your Friends",
+        "message_body4": " and compete in fun new game modes."
+    },
+    "loginForm": {
+        "join": "Join",
+        "create_room": "Create Room",
+        "placeholder": "Here your name :)"
+    },
+    "floatingActionButton": {
+        "contact": "Contact",
+        "about_us": "About us",
+        "credits": "Credits"
+    },
+    "aboutModal": {
+        "title": "Contact us:",
+        "message_body1": "Send us your comments to the following email address:",
+        "message_body2": "hangman.thegame.contacto@gmail.com"
+    },
+    "creditsModal": {
+        "title": "Credits:",
+        "icons_made": "Icons designed by ",
+        "from": "from"
+    },
+    "usModal": {
+        "title": "About us:",
+        "message_body1": "We are a group of friends who love to have fun, playing and creating multiplayer games online. We want you and your friends to have fun with our games and have a good time. :P"
+    },
+    "players": {
+        "players": "PLAYERS"
+    },
+    "gameNormal": {
+        "menu_board": {
+            "instruction": "Write a word:",
+            "word": "Word...",
+            "send": "Send!"
+        }
+    },
+    "gameModeCatalog": {
+        "normal": {
+            "title": "Clasic",
+            "description": "Write ... and guess the words"
+        },
+        "vs_reloj": {
+            "title": "Game against time",
+            "description": "¡Guess more words than the others, before time runs out!"
+        },
+        "puntuation": {
+            "title": "Punctuation",
+            "description": ""
+        },
+        "severo": {
+            "title": "Severe",
+            "description": ""
+        },
+        "elimination": {
+            "title": "Elimination",
+            "description": ""
+        }
+    },
+    "dashboard": {
+        "play": "PLAY",
+        "invite": "INVITE",
+        "copy_url": "Copy the URL"
+    },
+    "useGameState": {
+        "waiting_for_host": "Waiting for host...",
+        "exit": "Leave!",
+        "next_round": "Next round!"
+    },
+    "useGameContraRelojState": {
+        "waiting_for_players": "Waiting For Players",
+        "exit": "Salir!"
+    },
+    "menuContraReloj": {
+        "im_ready": "I'm ready!"
+    }
+}

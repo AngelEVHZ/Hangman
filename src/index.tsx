@@ -11,10 +11,11 @@ import AlertMsg from './Components/Commonds/Alert/AlertMsg';
 import "./index.css";
 import Header from './Components/Commonds/Header/Header';
 import { UtilsProvider } from './Context/UtilsProvider';
-
+import { LanguageProvider } from './Context/LanguageProvider';
 
 ReactDOM.render(
   <React.StrictMode>
+    <LanguageProvider>
       <SettingsProvider>
         <UtilsProvider>
           <SocketProvider>
@@ -25,6 +26,7 @@ ReactDOM.render(
           </SocketProvider>
         </UtilsProvider>
       </SettingsProvider>
+    </LanguageProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

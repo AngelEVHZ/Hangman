@@ -1,5 +1,6 @@
 import React from "react";
 import "./Modals.css";
+import { useLanguage } from "../../../Context/LanguageProvider";
 
 interface UsModalProps {
     show: boolean;
@@ -7,6 +8,7 @@ interface UsModalProps {
 }
 
 const UsModal: React.FC<UsModalProps> = (props: UsModalProps) => {
+    const { lang } = useLanguage();
     const isActive = props.show ? "is-active" : "";
 
     return (
@@ -15,13 +17,11 @@ const UsModal: React.FC<UsModalProps> = (props: UsModalProps) => {
             <div className="modal-content">
                 <article className="message is-danger">
                     <div className="message-header">
-                        <p>Acerca de Nosotros:</p>
+                        <p>{lang.usModal.title}</p>
                         <button className="delete" aria-label="delete" onClick={() => props.toggleShowUsModal(false)}></button>
                     </div>
                     <div className="message-body message-letter">
-                        <em>Somos un grupo de amigos que aman pasarla bien, jugando y creando juegos multijugador en linea. Queremos 
-                            que tu y tus amigos se diviertan con nuestros juegos y asi pasen buenos ratos. :P
-                        </em><br></br>
+                        <em>{lang.usModal.message_body1}</em><br></br>
                     </div>
                 </article>
             </div>

@@ -1,5 +1,6 @@
 
 import React from "react";
+import { useLanguage } from "../../../../Context/LanguageProvider";
 import Timer from "../../../Commonds/Timer/Timer";
 import "./GameStyle.css";
 interface MenuBoardProps {
@@ -14,6 +15,7 @@ interface MenuBoardProps {
 }
 
 const MenuContraReloj: React.FC<any> = (props: MenuBoardProps) => {
+    const { lang } = useLanguage();
     return (
         <>
             <div className="card">
@@ -23,7 +25,7 @@ const MenuContraReloj: React.FC<any> = (props: MenuBoardProps) => {
                             <div className="column is-four-fifths">
                                 <div className="field">
 
-                                    <label className="label"><h3 className="text-center">Escribe la mayor cantidad de palabras...</h3></label>
+                                    <label className="label"><h3 className="text-center">{lang.gameModeCatalog.vs_reloj.description}</h3></label>
                                 </div>
                             </div>
                         </div>
@@ -36,7 +38,7 @@ const MenuContraReloj: React.FC<any> = (props: MenuBoardProps) => {
                     <div className="card-footer-item">
                         <button className={`${props.isReadyToStart ? "btn-full-disable" : "btn-full-size"}`}
                         onClick={props.handle.imReadyToStart}
-                        >I'm Ready!</button>
+                        >{lang.menuContraReloj.im_ready}</button>
                     </div>
                 </footer>
             </div>

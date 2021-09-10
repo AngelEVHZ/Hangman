@@ -1,0 +1,82 @@
+{
+    "loginHowToPlay": {
+        "title": "I N F O R M A C I Ó N",
+        "message_body1": "El clasico juego de el Ahorcado, ahora multijugador con hasta ",
+        "message_body2": "4 jugadores.",
+        "message_body3": "Invita a tus Amigos",
+        "message_body4": " y compitan en los nuevos y divertidos modos de juego."
+    },
+    "loginForm": {
+        "join": "Unirse",
+        "create_room": "Crear Sala",
+        "placeholder": "Aqui tu nombre :)"
+    },
+    "floatingActionButton": {
+        "contact": "Contacto",
+        "about_us": "Acerca de Nosotros",
+        "credits": "Creditos"
+    },
+    "aboutModal": {
+        "title": "Contactanos:",
+        "message_body1": "Envianos tus comentarios a la siguiente dirección de correo:",
+        "message_body2": "hangman.thegame.contacto@gmail.com"
+    },
+    "creditsModal": {
+        "title": "Creditos:",
+        "icons_made": "Iconos diseñados por ",
+        "from": "de"
+    },
+    "usModal": {
+        "title": "Acerca de Nosotros:",
+        "message_body1": "Somos un grupo de amigos que aman pasarla bien, jugando y creando juegos multijugador en linea. Queremos que tu y tus amigos se diviertan con nuestros juegos y asi pasen buenos ratos. :P"
+    },
+    "players": {
+        "players": "JUGADORES"
+    },
+    "gameNormal": {
+        "menu_board": {
+            "instruction": "Escribe una palabra:",
+            "word": "Palabra...",
+            "send": "Enviar!"
+        }
+    },
+    "gameModeCatalog": {
+        "normal": {
+            "title": "Clasico",
+            "description": "Escribe... y adivina"
+        },
+        "vs_reloj": {
+            "title": "Contra Reloj",
+            "description": "¡Adivina más palabras que los demas, antes de que se acabe el tiempo!"
+        },
+        "puntuation": {
+            "title": "Por puntos",
+            "description": ""
+        },
+        "severo": {
+            "title": "Severo",
+            "description": ""
+        },
+        "elimination": {
+            "title": "Eliminacion",
+            "description": ""
+        }
+    },
+    "dashboard": {
+        "play": "JUGAR",
+        "invite": "INVITAR",
+        "copy_url": "Copia el URL:"
+    },
+    "useGameState": {
+        "waiting_for_host": "Esperando al anfitrion...",
+        "exit": "Salir!",
+        "next_round": "Siguiente ronda!"
+    },
+    "useGameContraRelojState": {
+        "waiting_for_players": "Esperando a jugadores",
+        "exit": "Salir!"
+    },
+    "menuContraReloj": {
+        "im_ready": "Estoy listo!"
+    }
+}

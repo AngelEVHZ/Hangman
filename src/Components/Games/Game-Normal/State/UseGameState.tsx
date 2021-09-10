@@ -18,6 +18,7 @@ import { PlayerStatusEnum } from "../../../../Constant/PlayerStatusEnum";
 import { GameMatch } from "../../../../types/GameNormalTypes";
 import { useCommondLogic } from "../../Commond-Logic/useCommondLogic";
 import { ScoreTableProps } from "../../../Commonds/ScoreTable/ScoreTable";
+import { useLanguage } from "../../../../Context/LanguageProvider";
 export interface GameProps {
     handle: {
         startGame: () => void;
@@ -59,6 +60,7 @@ export const UseGameState = (): GameProps => {
     const socket: SocketContextInterface = useSocket();
     const settings: SettingsContextInterface = useSettings();
     const gameLogic: GameLogic = useGameLogic();
+    const { lang } = useLanguage();
     useCommondLogic();
 
     //GAME LOGIC VARS
@@ -339,8 +341,8 @@ export const UseGameState = (): GameProps => {
 
     const getButtonText = () => {
         return !settings.state.playerSettings.host ?
-            "Waiting for host..." : isFinishGame() ?
-                "Salir!" : "Next Round!";
+        lang.useGameState.waiting_for_host : isFinishGame() ?
+        lang.useGameState.exit : lang.useGameState.next_round;
     }
 
 

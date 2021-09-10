@@ -3,6 +3,7 @@ import './playersStyle.css';
 import { UserSession } from "../../../types/UserSession";
 import PlayerItem from "./PlayerItem";
 import { PlayerStatusEnum } from "../../../Constant/PlayerStatusEnum";
+import { useLanguage } from "../../../Context/LanguageProvider";
 
 interface PlayerProps {
     players: UserSession[];
@@ -12,6 +13,7 @@ interface PlayerProps {
 }
 const Players: React.FC<PlayerProps> = (props: PlayerProps) => {
     const { players } = props;
+    const { lang } = useLanguage();
 
     return (
         <div>
@@ -21,7 +23,7 @@ const Players: React.FC<PlayerProps> = (props: PlayerProps) => {
                         <div className="card card-player shadow">
                             <header className="card-header is-hidden-mobile">
                                 <p className="card-header-title">
-                                    PLAYERS
+                                    {lang.players.players}
                                 </p>
                             </header>
                             <div className="card-content pad-mobile">

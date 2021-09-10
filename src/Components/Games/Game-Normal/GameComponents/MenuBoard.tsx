@@ -2,6 +2,7 @@
 import React from "react";
 import Timer from "../../../Commonds/Timer/Timer";
 import "./GameStyle.css";
+import { useLanguage } from "../../../../Context/LanguageProvider";
 interface MenuBoardProps {
     handle: {
         startGame: () => void;
@@ -16,6 +17,7 @@ interface MenuBoardProps {
 }
 
 const MenuBoard: React.FC<any> = (props: MenuBoardProps) => {
+    const { lang } = useLanguage();
     return (
         <>
             <div className="card">
@@ -24,12 +26,12 @@ const MenuBoard: React.FC<any> = (props: MenuBoardProps) => {
                         <div className="columns is-centered">
                             <div className="column is-four-fifths">
                                 <div className="field">
-                                    <label className="label"><h3 className="text-center">Escribe una palabra:</h3></label>
+                                    <label className="label"><h3 className="text-center">{lang.gameNormal.menu_board.instruction}</h3></label>
                                     <div className="control">
                                         <input
                                             className="input is-medium is-fullwidth"
                                             type="text"
-                                            placeholder="Palabra..."
+                                            placeholder={lang.gameNormal.menu_board.word}
                                             onChange={props.handle.changeUserWord}
                                             value={props.userWord}></input>
                                     </div>
@@ -45,7 +47,7 @@ const MenuBoard: React.FC<any> = (props: MenuBoardProps) => {
                     <div className="card-footer-item">
                         <button className={`${props.isReady ? "btn-full-disable" : "btn-full-size"}`}
                             onClick={props.handle.startGame}
-                            disabled={props.isReady}>Enviar!</button>
+                            disabled={props.isReady}>{lang.gameNormal.menu_board.send}</button>
                     </div>
                 </footer>
             </div>
