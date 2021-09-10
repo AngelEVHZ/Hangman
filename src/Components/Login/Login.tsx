@@ -9,8 +9,6 @@ import LoginHowToPlay from "./loginComponents/loginHowToPlay";
 import { UseLoginState } from "./State/UseLoginState";
 import "./Login.css";
 
-import AdSense from 'react-adsense';
-
 const Login: React.FC<any> = () => {
    const { handle, state } = UseLoginState();
    return (
@@ -28,14 +26,6 @@ const Login: React.FC<any> = () => {
          </div>
          <div className="columns mr-0">
             <div className="colum is-12">
-               <AdSense.Google
-                  client='ca-pub-5609202792405393'
-                  slot='5894344681'
-                  style={{ display: 'block' }}
-                  format='auto'
-                  responsive='true'
-                  layoutKey='-gw-1+2a-9x+5c'
-               />
             </div>
          </div>
 
