@@ -4,5 +4,8 @@ export enum PlayerStatusEnum {
     WAITING = "WAITING",
     READY = "READY",
     SUCCESS = "SUCCESS",
-    FAIL = "FAIL"
+    FAIL = "FAIL",
+    ON_LOG_IN = "ON_LOG_IN",
+    NOT_IN_SESSION = "NOT_IN_SESSION",
+    IN_GAME = "IN_GAME"
 }

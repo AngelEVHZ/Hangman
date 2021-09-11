@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PlayerSettings, UserSession, HostSettings } from "../../types/UserSession";
 import { defaultTo, get, round } from "lodash";
 import { WordsCatalog } from "../../Constant/WordsCatalog";
@@ -7,9 +7,11 @@ import { StorageEnum } from "../../Constant/StorageEnum";
 import { GameMatch, GameScore, PlayerScore } from "../../types/GameNormalTypes";
 import { GAME_KIND } from "../../Constant/GameModesCatalog";
 import { GameContraRelojMatch, GameContraRelojPlayer } from "../../types/GameContraRelojTypes";
+import { PlayerStatusEnum } from "../../Constant/PlayerStatusEnum";
 
 export interface SettingsContextInterface {
     handle: {
+        updatePlayerStatus: (status: PlayerStatusEnum) => void;
         initMatch: (rounds: number, gameKind: string) => void;
         finishMatch: () => void;
         saveUsers: (saveUsers: UserSession[], updateHost?: boolean) => void;
@@ -30,6 +32,7 @@ export interface SettingsContextInterface {
         getRandomNumber: (max: number, min: number) => number;
     },
     state: {
+        playerStatus: PlayerStatusEnum;
         playerSettings: PlayerSettings;
         players: UserSession[];
         currentMatch: GameMatch;
@@ -43,6 +46,7 @@ export interface SettingsContextInterface {
 
 const prefix = "hangman-";
 export const UseSettingsState = (): SettingsContextInterface => {
+    const [playerStatus, setPlayerStatus] = useState<PlayerStatusEnum>(PlayerStatusEnum.NOT_IN_SESSION);
     const [players, setPlayers] = useState<UserSession[]>([]);
     const [playerSettings, setPlayerSettings] = useState<PlayerSettings>({
         playerId: "",
@@ -57,7 +61,6 @@ export const UseSettingsState = (): SettingsContextInterface => {
     const [matchPlayers, setMatchPlayers] = useState<UserSession[]>([]);
     const [isPlaying, setIsPlaying] = useState(false);
     const [gameKindSelected, setGameKind] = useState("");
-
 
     const finishMatch = () => {
         setIsPlaying(false);
@@ -245,9 +248,14 @@ export const UseSettingsState = (): SettingsContextInterface => {
         return WordsCatalog[wordIndex] || WordsCatalog[0];
     }
 
+    const updatePlayerStatus = (status: PlayerStatusEnum) => {
+        setPlayerStatus(status);
+    }
+
 
     return {
         handle: {
+            updatePlayerStatus,
             initMatch,
             finishMatch,
             saveItem,
@@ -268,6 +276,7 @@ export const UseSettingsState = (): SettingsContextInterface => {
             getRandomNumber
         },
         state: {
+            playerStatus,
             currentMatch: currentMatch,
             matchPlayers,
             players,

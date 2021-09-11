@@ -15,6 +15,8 @@ import { GameCardProps } from "../dashboardComponents/gameCard";
 import { useUtils } from "../../../Context/UtilsProvider";
 import { UtilsContextInterface } from "../../../Context/State/UseUtilsState";
 import { TimesEnum } from "../../../Constant/Times";
+import { PlayerStatusEnum } from "../../../Constant/PlayerStatusEnum";
+import { AlertTypeEnum } from "../../../types/CommondTypes";
 
 
 export interface DashBoardProps {
@@ -43,6 +45,7 @@ export const UseDashboardState = (): DashBoardProps => {
     const [showUrl, setShowUrl] = useState<{ show: boolean, url: string }>({ show: false, url: "" });
 
     useEffect(() => {
+        settings.handle.updatePlayerStatus(PlayerStatusEnum.ON_DASHBOARD);
         utils.handle.setShowHeader(false);
         settings.handle.setGameKind("");
         if (!socket.conected) {
@@ -94,7 +97,7 @@ export const UseDashboardState = (): DashBoardProps => {
         const url = window.location.origin + "/?game-id=" + settings.state.playerSettings.gameId;
         try {
             await window.navigator.clipboard.writeText(url);
-            utils.handle.showAlert({ show: true, type: "is-warning", msg: "Invitacion copiada!" });
+            utils.handle.showAlert({ show: true, type: AlertTypeEnum.INFO, msg: "Invitacion copiada!" });
         } catch (error) {
             setShowUrl({ show: true, url });
         }

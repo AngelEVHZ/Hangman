@@ -1,11 +1,13 @@
 
 import React, { useContext } from "react";
+import { PlayerStatusEnum } from "../Constant/PlayerStatusEnum";
 import { SettingsContextInterface, UseSettingsState } from "./State/UseSettingsState";
 
 
 
 const INITIAL_STATE: SettingsContextInterface = {
     handle: {
+        updatePlayerStatus: () => {},
         initMatch: () => { },
         finishMatch: () => { },
         saveUsers: () => { },
@@ -26,6 +28,7 @@ const INITIAL_STATE: SettingsContextInterface = {
         getRandomNumber: () => { return 0 },
     },
     state: {
+        playerStatus: PlayerStatusEnum.NOT_IN_SESSION,
         matchPlayers: [],
         playerSettings: {
             playerId: "",

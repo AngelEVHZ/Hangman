@@ -1,7 +1,13 @@
 export interface AlertMsgProps {
-    type: string;
+    type: AlertTypeEnum;
     msg: string;
     show: boolean;
+}
+
+export enum AlertTypeEnum {
+    INFO = "is-warning",
+    ERROR = "is-danger",
+    NONE= "",
 }
 
 export interface IddleProps {
