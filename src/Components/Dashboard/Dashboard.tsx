@@ -1,7 +1,7 @@
 import React from "react";
 import { UseDashboardState } from "./State/UseDashboardState";
 import './dashboardComponents/gameStyle.css';
-
+import FloatingActionButtonMenu from "../Commonds/FloatingActionButtonMenu/FloatingActionButtonMenu"
 import GameMode from "./dashboardComponents/gameMode";
 import Players from "../Commonds/Players/Players";
 import { useLanguage } from "../../Context/LanguageProvider";
@@ -28,7 +28,7 @@ const Dashboard: React.FC<any> = () => {
                         <br></br>
                     </div>
                     <br></br>
-                    <div className="columns is-mobile is-centered">
+                    <div className="columns is-mobile is-centered center">
                         <div className="column is-half-mobile is-4">
                             <button className="button is-large is-fullwidth is-primary btn-play"
                                 onClick={handle.startGame}
@@ -55,6 +55,7 @@ const Dashboard: React.FC<any> = () => {
                    
                 </div>
             </div>
+            <FloatingActionButtonMenu />
         </div>
     );
 };

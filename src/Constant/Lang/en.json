@@ -74,7 +74,7 @@
     },
     "useGameContraRelojState": {
         "waiting_for_players": "Waiting For Players",
-        "exit": "Salir!"
+        "exit": "Exit!"
     },
     "menuContraReloj": {
         "im_ready": "I'm ready!"

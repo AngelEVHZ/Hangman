@@ -9,7 +9,7 @@
 .fab-icon-holder {
 	width: 50px;
 	height: 50px;
-	border-radius: 100%;
+	border-radius: 100%!important;
 	background: var(--tertiary-color);
 
 	box-shadow: 0 6px 20px rgba(0,0,0,0.2);
@@ -20,6 +20,29 @@
 }
 
 .fab-icon-holder i {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	height: 100%;
+	font-size: 25px;
+	color: #ffffff;
+}
+
+.fab-icon-holder2 {
+	width: 50px;
+	height: 50px;
+	border-radius: 20%!important;
+	background: var(--tertiary-color);
+
+	box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+
+.fab-icon-holder2:hover{
+	opacity: 0.8;
+}
+
+.fab-icon-holder2 i {
 	display: flex;
 	align-items: center;
 	justify-content: center;
