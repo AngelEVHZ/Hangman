@@ -2,7 +2,9 @@ import { get } from "lodash";
 import { useEffect } from "react";
 import { useState } from "react";
 import { NotifyActionEnum, NotifyGameActionEnum } from "../../Constant/NotifyActionEnum";
+import { PlayerStatusEnum } from "../../Constant/PlayerStatusEnum";
 import { SocketActionEnum } from "../../Constant/SocketActionEnum";
+import { AlertTypeEnum } from "../../types/CommondTypes";
 import { RandomWords } from "../../types/GameTypes";
 import { NotifyResponse } from "../../types/NotifyResponse";
 import { CreateSessionRequest, FinishRound, GenericNotify, NextRound, NotifyAll, PlayerWord, SetRandomWords, SocketAction, StartGame } from "../../types/SocketAction";
@@ -43,8 +45,6 @@ export const UseSocketState = (): SocketContextInterface => {
     const settings: SettingsContextInterface = useSettings();
     const utils: UtilsContextInterface = useUtils();
     const isDev = process.env.REACT_APP_DEV === "DEV";
-
-
     const connect = () => {
         try {
             const url = isDev ? "" : process.env.REACT_APP_SOCKET;
@@ -53,7 +53,7 @@ export const UseSocketState = (): SocketContextInterface => {
             webSocket.onerror = (event: Event) => onError(event);
             webSocket.onmessage = (event: MessageEvent) => onMessage(event);
             webSocket.onclose = (event: CloseEvent) => onClose(event);
-        } catch (error) {
+        } catch (error: any) {
             utils.handle.log("ERROR", error);
             if (isDev) {
                 setConected(true);
@@ -74,6 +74,16 @@ export const UseSocketState = (): SocketContextInterface => {
         setConected(false);
         setState({ message: null });
     };
+
+    const showCloseErrors = () => {
+        console.log("STATUS",settings.state.playerStatus);
+        switch (settings.state.playerStatus) {
+            case PlayerStatusEnum.ON_LOG_IN:
+                utils.handle.showAlert({ show: true, type: AlertTypeEnum.ERROR, msg: `Ha ocurrido un error, Inténtalo de nuevo más tarde.` });
+                break;
+        }
+    }
+
     const onError = (event: Event) => {
         utils.handle.log("ON ERROR", event);
         closeSocket();
@@ -86,22 +96,28 @@ export const UseSocketState = (): SocketContextInterface => {
     };
 
     useEffect(() => {
+        if (conected) return;
+        showCloseErrors();
+
+    }, [conected]);
+
+    useEffect(() => {
         if (!state.message) return;
         utils.handle.log("ACTION RECIVED", state.message);
         const message = get(state, "message", {}) as NotifyResponse<any>;
         switch (message.action) {
             case NotifyActionEnum.USER_DISCONNECTED:
                 const userDiconected = message.data as UserDisconected;
-                utils.handle.showAlert({ show: true, type: "is-danger", msg: `${userDiconected.nickName} disconnected` });
+                utils.handle.showAlert({ show: true, type: AlertTypeEnum.ERROR, msg: `${userDiconected.nickName} disconnected` });
                 updateUser(userDiconected.conectedList);
                 break;
             case NotifyActionEnum.HOST_DISCONNECTED:
                 const hostDiconected = message.data as UserDisconected;
-                utils.handle.showAlert({ show: true, type: "is-danger", msg: `HOST has disconected` });
+                utils.handle.showAlert({ show: true, type: AlertTypeEnum.ERROR, msg: `HOST has disconected` });
                 updateUser(hostDiconected.conectedList, true);
                 break;
             case NotifyActionEnum.USER_JOIN:
-                utils.handle.showAlert({ show: true, type: "is-info", msg: "User Connected" });
+                utils.handle.showAlert({ show: true, type: AlertTypeEnum.ERROR, msg: "User Connected" });
                 updateUser(message.data);
                 break;
         }

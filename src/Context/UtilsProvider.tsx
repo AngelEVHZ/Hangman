@@ -2,13 +2,14 @@
 import React, { useContext } from "react";
 import IdleTimer from "react-idle-timer";
 import { TimesEnum } from "../Constant/Times";
-import { AlertMsgProps, IddleProps } from "../types/CommondTypes";
+import { AlertMsgProps, AlertTypeEnum, IddleProps } from "../types/CommondTypes";
 import { UseUtilsState, UtilsContextInterface } from "./State/UseUtilsState";
 
 
 
 const INITIAL_STATE: UtilsContextInterface = {
     handle: {
+        closeAlert:() => {},
         setShowLoader: () => { },
         showAlert: (alert: AlertMsgProps) => { },
         onAction: () => { },
@@ -21,7 +22,7 @@ const INITIAL_STATE: UtilsContextInterface = {
     state: {
         showHeader: false,
         showLoader: false,
-        alert: { show: false, msg: "", type: "" },
+        alert: { show: false, msg: "", type: AlertTypeEnum.NONE },
         iddleAction: { activate: false, path: "" },
     }
 }

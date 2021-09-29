@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { TimesEnum } from "../../Constant/Times";
-import { AlertMsgProps, IddleProps } from "../../types/CommondTypes";
+import { AlertMsgProps, AlertTypeEnum, IddleProps } from "../../types/CommondTypes";
 
 export interface UtilsContextInterface {
     handle: {
+        closeAlert:() => void;
         setShowLoader: (value: boolean) => void;
         showAlert: (alert: AlertMsgProps) => void;
         onAction: () => void;
@@ -24,7 +25,7 @@ export interface UtilsContextInterface {
 export const UseUtilsState = (): UtilsContextInterface => {
     const isDev = process.env.REACT_APP_DEV === "DEV";
     const [showLoader, setShowLoader] = useState<boolean>(false);
-    const [customAlert, setAlert] = useState<AlertMsgProps>({ type: "", msg: "", show: false })
+    const [customAlert, setAlert] = useState<AlertMsgProps>({ type: AlertTypeEnum.NONE, msg: "", show: false })
     const [alertTimeOut, setAlertTimeOut] = useState<any>(null)
     const [iddleAction, setIddleAction] = useState<IddleProps>({ activate: false, path: "" });
     const [showHeader, setShowHeader] = useState<boolean>(false);
@@ -33,13 +34,16 @@ export const UseUtilsState = (): UtilsContextInterface => {
         if (alertTimeOut) clearTimeout(alertTimeOut);
         setAlert(alert);
         const time = setTimeout(() => {
-            setAlert({ show: false, msg: "", type: "" });
+            setAlert({ show: false, msg: "", type: AlertTypeEnum.NONE });
         }, TimesEnum.ALERT);
         setAlertTimeOut(time);
     }
+    const closeAlert = () => {
+        setAlert({ show: false, msg: "", type: AlertTypeEnum.NONE });
+    }
 
     const log = (tag: string, obj?: object) => {
-        if (isDev) console.log(tag, obj);
+        if (isDev || true) console.log(tag, obj);
     }
     const resetIddle = () => {
         setIddleAction({ activate: false, path: "" });
@@ -71,6 +75,7 @@ export const UseUtilsState = (): UtilsContextInterface => {
 
     return {
         handle: {
+            closeAlert,
             setShowLoader,
             showAlert,
             onAction,

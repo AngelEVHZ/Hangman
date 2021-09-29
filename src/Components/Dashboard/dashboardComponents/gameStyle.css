@@ -7,6 +7,13 @@
 
     .is-centered{
         text-align: center!important;
+        display: flex!important;
+        flex-direction: column!important;
+        align-items: center!important;
+    }
+
+    .columns.is-mobile>.column.is-4 {
+        width: 100%!important;
     }
 }
 

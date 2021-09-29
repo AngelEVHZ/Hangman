@@ -5,17 +5,22 @@ const AlertMsg: React.FC<any> = () => {
     const utils = useUtils();
     const { alert } = utils.state;
 
+    const close = () => {
+        utils.handle.closeAlert();
+    }
+
     return (
         <>
             {alert.show &&
                 <div className="fade-in-down-top">
-                    <article className={`message ${alert.type}`}>
-                        <div className="message-body">
-                            <strong>{alert.msg}</strong>
-                        </div>
-                    </article>
+                    <div className={`notification ${alert.type}`}>
+                        <button className="delete" onClick={close}></button>
+                        <strong>{alert.msg}</strong>
+                    </div>
                 </div>
             }
+
+
         </>
     );
 };

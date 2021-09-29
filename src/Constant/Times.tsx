@@ -6,7 +6,7 @@ export enum TimesEnum {
     SCORES_PAGE = 15, //seconds
     IDDLE = 120 * 1000, //miliseconds,
     START_GAME = 2 * 1000,
-    ALERT = 1.5 * 1000,
+    ALERT = 2.5 * 1000,
 
     NEXT_WORD = 1000, //miliseconds
     ON_FAIL_WORD = 2000,//miliseconds

@@ -12,6 +12,7 @@ import { SettingsContextInterface } from "../../../Context/State/UseSettingsStat
 import { useUtils } from "../../../Context/UtilsProvider";
 import { UtilsContextInterface } from "../../../Context/State/UseUtilsState";
 import { MAXIMUM_NICKNAME_WORDS } from "../../../Constant/UtilsConstants";
+import { PlayerStatusEnum } from "../../../Constant/PlayerStatusEnum";
 
 export interface UserProps {
     handle: {
@@ -55,6 +56,16 @@ export const UseLoginState = (): UserProps => {
     const [showUsModal, toggleShowUsModal] = useState<boolean>(false);
     const [showCreditsModal, toggleShowCreditsModal] = useState<boolean>(false);
 
+    useEffect(() => {
+        settings.handle.updatePlayerStatus(PlayerStatusEnum.NOT_IN_SESSION);
+        utils.handle.setShowHeader(true);
+        if (settings.handle.existSession() || socket.conected) {
+            socket.actions.closeSocket();
+            settings.handle.deleteStorage();
+        };
+        setLoaded(true);
+    }, []);
+
     const changeNickName = (
         event: React.ChangeEvent<HTMLInputElement>,
     ) => {
@@ -70,18 +81,11 @@ export const UseLoginState = (): UserProps => {
 
     const joinGame = () => {
         if (!validateNickeName()) return;
+
+        settings.handle.updatePlayerStatus(PlayerStatusEnum.ON_LOG_IN);
         utils.handle.setShowLoader(true);
         socket.actions.connect();
     }
-
-    useEffect(() => {
-        utils.handle.setShowHeader(true);
-        if (settings.handle.existSession() || socket.conected) {
-            socket.actions.closeSocket();
-            settings.handle.deleteStorage();
-        };
-        setLoaded(true);
-    }, []);
 
     useEffect(() => {
         if (!loaded) return;
