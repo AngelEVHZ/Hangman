@@ -18,10 +18,18 @@ const Dashboard: React.FC<any> = () => {
                 </div>
                 <div className="column is-6">
                     <div className="on-mobile">
-                        <GameMode
+                    <article className="message is-danger" id="purple">
+                    <div className="message-header is-size-3">
+                        <p> Selecciona un modo de juego </p>
+                        {/*<button className="delete" aria-label="delete"></button>*/}
+                    </div>
+                    <div className="message-body">
+                    <GameMode
                             catalog={state.gameCatalog}
                             selectGame={handle.selectGame}
                             gameSelected={state.gameSelected}></GameMode>
+                    </div>
+                    </article>
                     </div>
                     <div className="is-hidden-mobile">
                         <br></br>
@@ -52,7 +60,7 @@ const Dashboard: React.FC<any> = () => {
                     }
                 </div>
                 <div className="column is-3">
-                   
+
                 </div>
             </div>
             <FloatingActionButtonMenu />

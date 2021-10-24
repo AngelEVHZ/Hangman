@@ -78,7 +78,7 @@ export const UseUtilsState = (): UtilsContextInterface => {
     }
 
     const log = (tag: string, obj?: object) => {
-        if (isDev || true) console.log(tag, obj);
+        if (isDev) console.log(tag, obj);
     }
     const resetIddle = () => {
         setIddleAction({ activate: false, path: "" });
@@ -100,13 +100,13 @@ export const UseUtilsState = (): UtilsContextInterface => {
         return confirmationMessage; 
       };
 
-    useEffect(() => {
-        if (isDev) return;
-        window.addEventListener("beforeunload", preventReload);
-        return () => {
-          window.removeEventListener("beforeunload", preventReload);
-        };
-      }, []);
+    // useEffect(() => {
+    //     if (isDev) return;
+    //     window.addEventListener("beforeunload", preventReload);
+    //     return () => {
+    //       window.removeEventListener("beforeunload", preventReload);
+    //     };
+    //   }, []);
 
     return {
         handle: {
