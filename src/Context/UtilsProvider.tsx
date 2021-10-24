@@ -18,6 +18,7 @@ const INITIAL_STATE: UtilsContextInterface = {
         resetIddle: () => { },
         log: (tag: string, obj?: object) => {},
         setShowHeader: (value: boolean) => {},
+        playAudio: () => {},
     },
     state: {
         showHeader: false,

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
+import { AudiosEnum } from "../../Constant/AudiosEnum";
 import { TimesEnum } from "../../Constant/Times";
 import { AlertMsgProps, AlertTypeEnum, IddleProps } from "../../types/CommondTypes";
-
 export interface UtilsContextInterface {
     handle: {
         closeAlert:() => void;
@@ -13,6 +13,7 @@ export interface UtilsContextInterface {
         resetIddle: () => void;
         log: (tag: string, obj?: object) => void;
         setShowHeader: (value: boolean) => void;
+        playAudio: (audioType: AudiosEnum) => void;
     },
     state: {
         showLoader: boolean;
@@ -29,6 +30,40 @@ export const UseUtilsState = (): UtilsContextInterface => {
     const [alertTimeOut, setAlertTimeOut] = useState<any>(null)
     const [iddleAction, setIddleAction] = useState<IddleProps>({ activate: false, path: "" });
     const [showHeader, setShowHeader] = useState<boolean>(false);
+    const [audios, setAudios] = useState<any[]>([]);
+    const [isAudioOn, setIsAudioOn] = useState(true);
+
+    useEffect(() => {
+        const audios = [];
+        audios.push (new Audio("https://hangman-assets.s3.amazonaws.com/success.wav"));    
+        setAudios(audios);
+    }, []);
+
+
+    const playAudio = (audioType: AudiosEnum) => {
+        if (!isAudioOn) return;
+        let playSound = false;
+        let audioToPlay: any;
+
+        try {
+            switch(audioType) {
+                case AudiosEnum.SUCCESS:
+                    playSound = true;
+                    audioToPlay = audios[AudiosEnum.SUCCESS];
+                    break;
+    
+            }
+
+            if (playSound) {
+                audioToPlay.pause();
+                audioToPlay.currentTime = 0;
+                audioToPlay.play();
+            }
+        } catch (error) {
+            
+        }
+      
+    }
 
     const showAlert = (alert: AlertMsgProps) => {
         if (alertTimeOut) clearTimeout(alertTimeOut);
@@ -84,6 +119,7 @@ export const UseUtilsState = (): UtilsContextInterface => {
             resetIddle,
             log,
             setShowHeader,
+            playAudio
         },
         state: {
             showHeader,

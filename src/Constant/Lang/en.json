@@ -78,5 +78,8 @@
     },
     "menuContraReloj": {
         "im_ready": "I'm ready!"
+    },
+    "gameBoard":{
+        "header_title":"Guess the word!"
     }
 }
