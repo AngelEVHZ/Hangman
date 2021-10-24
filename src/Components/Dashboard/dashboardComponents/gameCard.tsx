@@ -25,7 +25,7 @@ const GameCard: React.FC<any> = (props: GameCardLocalProps) => {
     const [onHover, setOnHover] = useState(false);
     const colorClass = onHover ? "game-card-hover" : selected ? "game-card-selected" : "";
     return (
-        <div className="is-centered">
+        <div className="center">
             {item.available &&
                 <div className={`card gameCard ${colorClass}`}
                     onMouseEnter={() => setOnHover(true)}

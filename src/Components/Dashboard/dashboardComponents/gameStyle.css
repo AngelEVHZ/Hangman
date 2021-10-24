@@ -16,7 +16,7 @@
         margin: 15px auto 0px auto!important;
     }
 
-    .is-centered{
+    .center{
         text-align: center!important;
         display: flex!important;
         flex-direction: column!important;

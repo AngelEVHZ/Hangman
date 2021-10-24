@@ -2,11 +2,11 @@ import React from "react";
 import "../FloatingActionButton/FloatingActionButtonStyle.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog } from "@fortawesome/free-solid-svg-icons";
-import { useLanguage } from "../../../Context/LanguageProvider";
+//import { useLanguage } from "../../../Context/LanguageProvider";
 
 
 const FloatingActionButtonMenu: React.FC<any> = () => {
-    const { lang } = useLanguage();
+    //const { lang } = useLanguage();
     return (
         <div className="fab-container">
             <div className="fab fab-icon-holder2">
