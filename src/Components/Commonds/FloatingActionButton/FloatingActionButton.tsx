@@ -1,7 +1,7 @@
 import React from "react";
 import "./FloatingActionButtonStyle.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faQuestionCircle, faIdCard, faInfoCircle, faPhotoVideo, faCopyright } from "@fortawesome/free-solid-svg-icons";
+import { faQuestionCircle, faIdCard, faInfoCircle, faCopyright } from "@fortawesome/free-solid-svg-icons";
 import { useLanguage } from "../../../Context/LanguageProvider";
 
 interface FloatingButtonProps {

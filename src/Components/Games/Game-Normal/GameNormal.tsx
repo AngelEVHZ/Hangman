@@ -46,7 +46,7 @@ const GameNormal: React.FC<any> = () => {
 
                     </div>
                     <div className="column is-3">
-                        PUBLICIDAD
+                        
                     </div>
                 </div>
             </div>

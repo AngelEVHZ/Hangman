@@ -9,8 +9,10 @@ import LoginHowToPlay from "./loginComponents/loginHowToPlay";
 import { UseLoginState } from "./State/UseLoginState";
 import "./Login.css";
 
+
 const Login: React.FC<any> = () => {
    const { handle, state } = UseLoginState();
+
    return (
       <div>
          <div className="columns is-centered mt-6 mr-0">
@@ -26,6 +28,7 @@ const Login: React.FC<any> = () => {
          </div>
          <div className="columns mr-0">
             <div className="colum is-12">
+            
             </div>
          </div>
 

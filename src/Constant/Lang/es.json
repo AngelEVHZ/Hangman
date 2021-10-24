@@ -78,5 +78,8 @@
     },
     "menuContraReloj": {
         "im_ready": "Estoy listo!"
+    },
+    "gameBoard":{
+        "header_title":"¡Adivina la palabra!"
     }
 }

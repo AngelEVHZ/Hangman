@@ -1,5 +1,6 @@
 
 import React from "react";
+import { useLanguage } from "../../../Context/LanguageProvider";
 import Hangman from "../Hangman/Hangman";
 import KeyBoard from "../KeyBoard/KeyBoard";
 import LetterInputs from "../LetterInputs/LetterInputs";
@@ -22,16 +23,27 @@ interface GameBoardProps {
 }
 
 const GameBoard: React.FC<any> = (props: GameBoardProps) => {
-
+    const { lang } = useLanguage();
     return (
         <div className="card">
             <header className="card-header p-3 header-mobile">
-                <Timer
-                    time={props.timerTime}
-                    stop={props.timerStop}
-                    callBack={props.timerCallBack}
-                    responsiveOnMobile={true}
-                ></Timer>
+                <div className="columns">
+                    <div className="column">
+                        <Timer
+                            time={props.timerTime}
+                            stop={props.timerStop}
+                            callBack={props.timerCallBack}
+                            responsiveOnMobile={true}
+                        ></Timer>
+                    </div>
+
+
+                    <div className="column is-full is-centered">
+                        <label className="label has-text-centered"><h3 className=""> {lang.gameBoard.header_title}</h3></label>
+                      
+                    </div>
+
+                </div>
             </header>
             <div className="card-content pb-1 pt-4">
                 <div className="content">

@@ -1,6 +1,7 @@
 import { get } from "lodash";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { AudiosEnum } from "../../../../Constant/AudiosEnum";
 import { NotifyActionEnum, NotifyGameActionEnum } from "../../../../Constant/NotifyActionEnum";
 import { PlayerStatusEnum } from "../../../../Constant/PlayerStatusEnum";
 import { Routes } from "../../../../Constant/RoutesEnum";
@@ -9,6 +10,7 @@ import { TimesEnum } from "../../../../Constant/Times";
 import { useLanguage } from "../../../../Context/LanguageProvider";
 import { useSettings } from "../../../../Context/SettingsProvider";
 import { useSocket } from "../../../../Context/SocketProvider";
+import { useUtils } from "../../../../Context/UtilsProvider";
 import { NotifyEndMatch, NotifyReady, NotifyWordList, WordPlayed } from "../../../../types/GameContraRelojTypes";
 import { GenericNotify, NotifyAll, SocketAction } from "../../../../types/SocketAction";
 import { UserSession } from "../../../../types/UserSession";
@@ -51,6 +53,7 @@ export const UseGameContraRelojState = (): GameContraRelojProps => {
     const history = useHistory();
     const settings = useSettings();
     const socket = useSocket();
+    const utils = useUtils();
     const { lang } = useLanguage();
     useCommondLogic();
 
@@ -102,6 +105,10 @@ export const UseGameContraRelojState = (): GameContraRelojProps => {
 
     useEffect(() => {
         if (!wordGameOver && !wordCompleted) return;
+
+        // if (wordCompleted) utils.handle.playAudio(AudiosEnum.SUCCESS);
+        // else utils.handle.playAudio(AudiosEnum.SUCCESS);
+
         const duration = wordCompleted ? TimesEnum.NEXT_WORD : TimesEnum.ON_FAIL_WORD;
         setTimeout(() => {
             setShowInputLetters(false);
@@ -257,7 +264,7 @@ export const UseGameContraRelojState = (): GameContraRelojProps => {
         if (!settings.state.playerSettings.host ||
             !gameLogic.handle.areAllPlayersReadyToEnd())
             return lang.useGameState.waiting_for_host;
-        return lang.useGameState.waiting_for_host;
+        return lang.useGameState.exit;
     }
 
     const buttonGoDashboard = () => {

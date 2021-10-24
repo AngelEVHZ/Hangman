@@ -1,4 +1,4 @@
-import { shuffle } from "lodash";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { PlayerStatusEnum } from "../../../../Constant/PlayerStatusEnum";
 import { StorageEnum } from "../../../../Constant/StorageEnum";
@@ -6,6 +6,8 @@ import { randomShuffle } from "../../../../Constant/UtilsConstants";
 import { WordsCatalog } from "../../../../Constant/WordsCatalog";
 import { useSettings } from "../../../../Context/SettingsProvider";
 import { GameContraRelojPlayer, NotifyEndMatch, WordPlayed } from "../../../../types/GameContraRelojTypes";
+
+import { faCheckCircle, faTimesCircle} from "@fortawesome/free-solid-svg-icons";
 
 export interface GameContraRelojLogic {
     handle: {
@@ -186,9 +188,11 @@ export const useGameContraRelojLogic = (): GameContraRelojLogic => {
             const word = settings.handle.getWordById(wordId);
             row.items.push(word.toUpperCase());
             players.forEach((player, index) => {
-                let msj = "";
+                let msj: any = (<></>);
                 if (playersZipList[index][i]) {
-                    msj = playersZipList[index][i] == "1" ? "OK" : "X";
+                    msj = playersZipList[index][i] == "1" ? 
+                    (<FontAwesomeIcon className="icon m-0 icon-green" icon={faCheckCircle} />) : 
+                    (<FontAwesomeIcon className="icon m-0 icon-red" icon={faTimesCircle} />);
                 }
                 row.items.push(msj);
             });

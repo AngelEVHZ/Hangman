@@ -13,3 +13,20 @@
 
     bottom: 16px;
 }
+
+/* @media screen and (max-width: 835px){
+    .footer{
+        margin-top: 50px;
+    }
+} */
+@media screen and (max-width: 905px){
+    .footer{
+        margin-top: 50px;
+    }
+}
+
+@media only screen and (max-width: 1025px){
+    .footer{
+        margin-top: 50px;
+    }
+}

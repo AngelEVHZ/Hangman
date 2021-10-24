@@ -76,7 +76,6 @@ export const UseSocketState = (): SocketContextInterface => {
     };
 
     const showCloseErrors = () => {
-        console.log("STATUS",settings.state.playerStatus);
         switch (settings.state.playerStatus) {
             case PlayerStatusEnum.ON_LOG_IN:
                 utils.handle.showAlert({ show: true, type: AlertTypeEnum.ERROR, msg: `Ha ocurrido un error, Inténtalo de nuevo más tarde.` });

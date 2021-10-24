@@ -25,6 +25,13 @@
   --not-available-color: #c4c4c4;
 }
 
+.icon-green {
+  color: green !important;
+}
+.icon-red{
+  color:red !important;
+}
+
 
 body {
   margin: 0;
