@@ -1,5 +1,6 @@
 import { NotifyGameActionEnum } from "../Constant/NotifyActionEnum";
 import { SocketActionType } from "../Constant/SocketActionEnum";
+import { GamesConfiguration } from "./GamesConfiguration";
 import { RandomWords } from "./GameTypes";
 
 export interface SocketAction<T> {
@@ -38,9 +39,9 @@ export interface SetRandomWords {
 }
 
 export interface StartGame {
-    rounds: number;
     gameKind: string;
-    action: NotifyGameActionEnum,
+    action: NotifyGameActionEnum;
+    gamesConfiguration: GamesConfiguration;
 }
 
 export interface FinishRound {

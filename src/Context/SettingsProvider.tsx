@@ -1,6 +1,8 @@
 
 import React, { useContext } from "react";
+import { GAME_KIND } from "../Constant/GameModesCatalog";
 import { PlayerStatusEnum } from "../Constant/PlayerStatusEnum";
+import { Duration } from "../types/GamesConfiguration";
 import { SettingsContextInterface, UseSettingsState } from "./State/UseSettingsState";
 
 
@@ -26,6 +28,7 @@ const INITIAL_STATE: SettingsContextInterface = {
         setMatch: () => { },
         getWordById: () => { return "" },
         getRandomNumber: () => { return 0 },
+        updateGamesConfiguration: () => {},
     },
     state: {
         playerStatus: PlayerStatusEnum.NOT_IN_SESSION,
@@ -44,7 +47,16 @@ const INITIAL_STATE: SettingsContextInterface = {
         players: [],
         gameKindSelected: "",
         hostSettings: null,
-        contraRelojMatch: { score: {}, wordList: [] }
+        contraRelojMatch: { score: {}, wordList: [] },
+        gamesConfiguration:{
+            global: {
+                duration: Duration.NORMAL,
+                secret_author: true,
+            },
+            [GAME_KIND.NORMAL]: {
+                rounds: 1
+            }
+        }
     }
 }
 

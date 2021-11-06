@@ -19,6 +19,8 @@ import { GameMatch } from "../../../../types/GameNormalTypes";
 import { useCommondLogic } from "../../Commond-Logic/useCommondLogic";
 import { ScoreTableProps } from "../../../Commonds/ScoreTable/ScoreTable";
 import { useLanguage } from "../../../../Context/LanguageProvider";
+import { GET_TIME } from "../../../../types/GamesConfiguration";
+import { GAME_KIND } from "../../../../Constant/GameModesCatalog";
 export interface GameProps {
     handle: {
         startGame: () => void;
@@ -378,7 +380,7 @@ export const UseGameState = (): GameProps => {
             callBack: timerMenuCallback
         },
         timerGame: {
-            time: TimesEnum.PLAYING,
+            time: GET_TIME(GAME_KIND.NORMAL, settings.state.gamesConfiguration.global.duration),
             callBack: timerGameCallback
         },
         handle: {

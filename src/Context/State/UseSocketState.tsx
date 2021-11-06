@@ -5,6 +5,7 @@ import { NotifyActionEnum, NotifyGameActionEnum } from "../../Constant/NotifyAct
 import { PlayerStatusEnum } from "../../Constant/PlayerStatusEnum";
 import { SocketActionEnum } from "../../Constant/SocketActionEnum";
 import { AlertTypeEnum } from "../../types/CommondTypes";
+import { GamesConfiguration } from "../../types/GamesConfiguration";
 import { RandomWords } from "../../types/GameTypes";
 import { NotifyResponse } from "../../types/NotifyResponse";
 import { CreateSessionRequest, FinishRound, GenericNotify, NextRound, NotifyAll, PlayerWord, SetRandomWords, SocketAction, StartGame } from "../../types/SocketAction";
@@ -23,7 +24,7 @@ export interface SocketContextInterface {
         closeSocket: () => void;
         sendWord: (word: string, round: number) => void;
         sendRandomWord: (words: RandomWords, round: number) => void;
-        startGame: (rounds: number, gameKind: string) => void;
+        startGame: (gamesConfiguracion: GamesConfiguration, gameKind: string) => void;
         sendFinish: (completed: boolean, round: number, time: number) => void;
         sendShowScores: () => void;
         sendNextRound: (round: number) => void;
@@ -215,16 +216,17 @@ export const UseSocketState = (): SocketContextInterface => {
         }
         notify(data);
     }
-    const startGame = (rounds: number, gameKind: string) => {
+    const startGame = (gamesConfiguration: GamesConfiguration, gameKind: string) => {
+        const startGame: StartGame = {
+            gameKind,
+            action: NotifyGameActionEnum.START_GAME,
+            gamesConfiguration,
+        }
         const data: SocketAction<NotifyAll> = {
             action: SocketActionEnum.NOTIFY_ALL,
             data: {
                 gameId: settings.state.playerSettings.gameId,
-                notification: {
-                    rounds,
-                    gameKind,
-                    action: NotifyGameActionEnum.START_GAME
-                } as StartGame
+                notification: startGame
             }
         }
         notify(data);

@@ -100,6 +100,8 @@ export const UseUtilsState = (): UtilsContextInterface => {
         return confirmationMessage; 
       };
 
+    //PREVIENE RECARGAR LA PAGINA
+    
     // useEffect(() => {
     //     if (isDev) return;
     //     window.addEventListener("beforeunload", preventReload);

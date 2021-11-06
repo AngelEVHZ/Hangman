@@ -17,6 +17,7 @@ import { UtilsContextInterface } from "../../../Context/State/UseUtilsState";
 import { TimesEnum } from "../../../Constant/Times";
 import { PlayerStatusEnum } from "../../../Constant/PlayerStatusEnum";
 import { AlertTypeEnum } from "../../../types/CommondTypes";
+import { GamesConfiguration } from "../../../types/GamesConfiguration";
 
 
 export interface DashBoardProps {
@@ -27,11 +28,13 @@ export interface DashBoardProps {
         gameCatalog: GameCardProps[];
         gameSelected: string;
         showUrl: { show: boolean, url: string };
+        tabs: Array<boolean>;
     },
     handle: {
         startGame: () => void;
         copyInvitation: () => void;
         selectGame: (item: GameCardProps) => void;
+        changeTab: (id: number) => void;
     }
 }
 
@@ -41,6 +44,7 @@ export const UseDashboardState = (): DashBoardProps => {
     const socket: SocketContextInterface = useSocket();
     const settings: SettingsContextInterface = useSettings();
     const utils: UtilsContextInterface = useUtils();
+    const [tabs, setTabs] = useState<Array<boolean>>([true, false]);
     const [gameStart, setGameStart] = useState<boolean>(false);
     const [showUrl, setShowUrl] = useState<{ show: boolean, url: string }>({ show: false, url: "" });
 
@@ -70,18 +74,19 @@ export const UseDashboardState = (): DashBoardProps => {
             switch (action) {
                 case NotifyGameActionEnum.START_GAME:
                     const data = message.data as StartGame;
-                    initMatch(data.rounds, data.gameKind);
+                    initMatch(data.gamesConfiguration, data.gameKind);
                     break;
             }
         }
     }, [socket.state.message]);
 
-    const initMatch = (rounds: number, gameKind: string) => {
+    const initMatch = (gamesConfiguration: GamesConfiguration, gameKind: string) => {
         utils.handle.setShowLoader(true);
         settings.handle.setGameKind(gameKind);
+        settings.handle.updateGamesConfiguration(gamesConfiguration);
         setTimeout(() => {
             utils.handle.setShowLoader(false);
-            settings.handle.initMatch(rounds, gameKind);
+            settings.handle.initMatch(gamesConfiguration, gameKind);
             history.push(Routes.GAME_NAVIGATION);
         }, TimesEnum.START_GAME);
 
@@ -91,7 +96,7 @@ export const UseDashboardState = (): DashBoardProps => {
         if (gameStart || !settings.state.playerSettings.host) return;
         setGameStart(true);
         const gameKind = settings.state.gameKindSelected;
-        socket.actions.startGame(3, gameKind);
+        socket.actions.startGame(settings.state.gamesConfiguration, gameKind);
     }
     const copyInvitation = async () => {
         const url = window.location.origin + "/?game-id=" + settings.state.playerSettings.gameId;
@@ -104,6 +109,13 @@ export const UseDashboardState = (): DashBoardProps => {
 
     }
 
+    const changeTab = (id: number) => {
+        let localTabs = [...tabs];
+        for (let i = 0; i < localTabs.length; i++)
+            localTabs[i] = false;
+        localTabs[id] = true;
+        setTabs(localTabs);
+    }
     const selectGame = (item: GameCardProps) => {
         if (gameStart || !settings.state.playerSettings.host) return;
         settings.handle.setGameKind(item.id);
@@ -117,11 +129,13 @@ export const UseDashboardState = (): DashBoardProps => {
             gameCatalog: GAME_CATALOG,
             gameSelected: settings.state.gameKindSelected,
             showUrl,
+            tabs,
         },
         handle: {
             startGame,
             copyInvitation,
-            selectGame
+            selectGame,
+            changeTab,
         }
     };
 }

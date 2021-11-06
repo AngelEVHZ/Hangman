@@ -8,11 +8,12 @@ import { GameMatch, GameScore, PlayerScore } from "../../types/GameNormalTypes";
 import { GAME_KIND } from "../../Constant/GameModesCatalog";
 import { GameContraRelojMatch, GameContraRelojPlayer } from "../../types/GameContraRelojTypes";
 import { PlayerStatusEnum } from "../../Constant/PlayerStatusEnum";
+import { DEFAULT_DURATION, DEFAULT_ROUND, DEFAULT_SECRET_AUTHOR, GamesConfiguration } from "../../types/GamesConfiguration";
 
 export interface SettingsContextInterface {
     handle: {
         updatePlayerStatus: (status: PlayerStatusEnum) => void;
-        initMatch: (rounds: number, gameKind: string) => void;
+        initMatch: (GC: GamesConfiguration,gameKind: string) => void;
         finishMatch: () => void;
         saveUsers: (saveUsers: UserSession[], updateHost?: boolean) => void;
         getUsers: () => UserSession[];
@@ -30,6 +31,7 @@ export interface SettingsContextInterface {
         setContraRelojMatch: (match: GameContraRelojMatch) => void;
         getWordById: (wordIndex: number) => string;
         getRandomNumber: (max: number, min: number) => number;
+        updateGamesConfiguration: (newConfig: GamesConfiguration) => void;
     },
     state: {
         playerStatus: PlayerStatusEnum;
@@ -41,6 +43,7 @@ export interface SettingsContextInterface {
         gameKindSelected: string;
         hostSettings: HostSettings | null;
         matchPlayers: UserSession[];
+        gamesConfiguration: GamesConfiguration;
     }
 }
 
@@ -62,6 +65,16 @@ export const UseSettingsState = (): SettingsContextInterface => {
     const [isPlaying, setIsPlaying] = useState(false);
     const [gameKindSelected, setGameKind] = useState("");
 
+    const [gamesConfiguration, setGameConfiguration] = useState<GamesConfiguration>({
+        global:{
+            duration: DEFAULT_DURATION,
+            secret_author: DEFAULT_SECRET_AUTHOR,
+        },
+        [GAME_KIND.NORMAL]:{
+            rounds: DEFAULT_ROUND,
+        }
+    })
+
     const finishMatch = () => {
         setIsPlaying(false);
         const match = { score: [], rounds: 0 };
@@ -69,10 +82,10 @@ export const UseSettingsState = (): SettingsContextInterface => {
         saveItem(StorageEnum.GAME_MATCH, JSON.stringify({}));
     }
 
-    const initMatch = (rounds: number, gameKind: string) => {
+    const initMatch = (GC: GamesConfiguration, gameKind: string) => {
         switch(gameKind){
             case GAME_KIND.NORMAL:
-                initNormalGame(rounds);
+                initNormalGame(GC);
                 break;
             case GAME_KIND.CONTRA_RELOJ:
                 initContraRelojGame();
@@ -80,7 +93,8 @@ export const UseSettingsState = (): SettingsContextInterface => {
         }
     }
 
-    const initNormalGame = (rounds: number) => {
+    const initNormalGame = (GC: GamesConfiguration,) => {
+        const rounds = GC[GAME_KIND.NORMAL].rounds;
         const match: GameMatch = {
             score: [],
             rounds,
@@ -252,6 +266,9 @@ export const UseSettingsState = (): SettingsContextInterface => {
         setPlayerStatus(status);
     }
 
+    const updateGamesConfiguration = (newConfig: GamesConfiguration) => {
+        setGameConfiguration(newConfig);
+    }
 
     return {
         handle: {
@@ -273,7 +290,8 @@ export const UseSettingsState = (): SettingsContextInterface => {
             setMatch,
             setContraRelojMatch,
             getWordById,
-            getRandomNumber
+            getRandomNumber,
+            updateGamesConfiguration
         },
         state: {
             playerStatus,
@@ -284,7 +302,8 @@ export const UseSettingsState = (): SettingsContextInterface => {
             isPlaying,
             gameKindSelected,
             hostSettings,
-            contraRelojMatch
+            contraRelojMatch,
+            gamesConfiguration,
         }
     };
 }

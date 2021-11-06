@@ -211,6 +211,7 @@ export const useGameLogic = (): GameLogic => {
         for (let i = 0; i < rounds; i++)
             headers.push(`Round ${i + 1}`);
         headers.push("Final");
+        headers.push("");
         return headers;
     }
 
