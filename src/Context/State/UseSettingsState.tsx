@@ -1,19 +1,20 @@
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { PlayerSettings, UserSession, HostSettings } from "../../types/UserSession";
-import { defaultTo, get, round } from "lodash";
-import { WordsCatalog } from "../../Constant/WordsCatalog";
+import { defaultTo, get } from "lodash";
+import { CategoryEnum, WORDS_CATALOG } from "../../Constant/WordsCatalog";
 import { StorageEnum } from "../../Constant/StorageEnum";
 import { GameMatch, GameScore, PlayerScore } from "../../types/GameNormalTypes";
 import { GAME_KIND } from "../../Constant/GameModesCatalog";
 import { GameContraRelojMatch, GameContraRelojPlayer } from "../../types/GameContraRelojTypes";
 import { PlayerStatusEnum } from "../../Constant/PlayerStatusEnum";
-import { DEFAULT_DURATION, DEFAULT_ROUND, DEFAULT_SECRET_AUTHOR, GamesConfiguration } from "../../types/GamesConfiguration";
+import { DEFAULT_ATTEMP, DEFAULT_DURATION, DEFAULT_ROUND, DEFAULT_SECRET_AUTHOR, GamesConfiguration } from "../../types/GamesConfiguration";
+import { useLanguage } from "../LanguageProvider";
 
 export interface SettingsContextInterface {
     handle: {
         updatePlayerStatus: (status: PlayerStatusEnum) => void;
-        initMatch: (GC: GamesConfiguration,gameKind: string) => void;
+        initMatch: (GC: GamesConfiguration, gameKind: string) => void;
         finishMatch: () => void;
         saveUsers: (saveUsers: UserSession[], updateHost?: boolean) => void;
         getUsers: () => UserSession[];
@@ -32,6 +33,7 @@ export interface SettingsContextInterface {
         getWordById: (wordIndex: number) => string;
         getRandomNumber: (max: number, min: number) => number;
         updateGamesConfiguration: (newConfig: GamesConfiguration) => void;
+        getWordCatalogSize: () => number;
     },
     state: {
         playerStatus: PlayerStatusEnum;
@@ -49,6 +51,7 @@ export interface SettingsContextInterface {
 
 const prefix = "hangman-";
 export const UseSettingsState = (): SettingsContextInterface => {
+    const lang = useLanguage();
     const [playerStatus, setPlayerStatus] = useState<PlayerStatusEnum>(PlayerStatusEnum.NOT_IN_SESSION);
     const [players, setPlayers] = useState<UserSession[]>([]);
     const [playerSettings, setPlayerSettings] = useState<PlayerSettings>({
@@ -58,20 +61,24 @@ export const UseSettingsState = (): SettingsContextInterface => {
         host: false,
     });
     const [hostSettings, setHostSettings] = useState<HostSettings | null>(null);
-    const [currentMatch, setMatch] = useState<GameMatch>({ score: [], rounds: 0});
-    const [contraRelojMatch, setContraRelojMatch] = useState<GameContraRelojMatch>({ score: {}, wordList:[]});
+    const [currentMatch, setMatch] = useState<GameMatch>({ score: [], rounds: 0 });
+    const [contraRelojMatch, setContraRelojMatch] = useState<GameContraRelojMatch>({ score: {}, wordList: [] });
 
     const [matchPlayers, setMatchPlayers] = useState<UserSession[]>([]);
     const [isPlaying, setIsPlaying] = useState(false);
     const [gameKindSelected, setGameKind] = useState("");
 
     const [gamesConfiguration, setGameConfiguration] = useState<GamesConfiguration>({
-        global:{
+        global: {
             duration: DEFAULT_DURATION,
             secret_author: DEFAULT_SECRET_AUTHOR,
+            attempts: DEFAULT_ATTEMP,
         },
-        [GAME_KIND.NORMAL]:{
+        [GAME_KIND.NORMAL]: {
             rounds: DEFAULT_ROUND,
+        },
+        [GAME_KIND.CONTRA_RELOJ]: {
+            category: CategoryEnum.MISCELLANEOUS,
         }
     })
 
@@ -83,7 +90,7 @@ export const UseSettingsState = (): SettingsContextInterface => {
     }
 
     const initMatch = (GC: GamesConfiguration, gameKind: string) => {
-        switch(gameKind){
+        switch (gameKind) {
             case GAME_KIND.NORMAL:
                 initNormalGame(GC);
                 break;
@@ -252,14 +259,28 @@ export const UseSettingsState = (): SettingsContextInterface => {
         return Math.floor(Math.random() * (max - min)) + min;
     }
 
+    const getWordsCatalog = () => {
+        const languageId = lang.languageId;
+        const catalogSelected = gamesConfiguration[GAME_KIND.CONTRA_RELOJ].category;
+        const catalog = WORDS_CATALOG[languageId][catalogSelected];
+        return catalog || WORDS_CATALOG[languageId][CategoryEnum.MISCELLANEOUS];
+    }
+
+    const getWordCatalogSize = () => {
+        const wordsCatalog = getWordsCatalog();
+        return wordsCatalog.length;
+    }
+
     const getRandomWord = () => {
-        const size = WordsCatalog.length;
+        const wordsCatalog = getWordsCatalog();
+        const size = wordsCatalog.length;
         const wordIndex = getRandomNumber(size, 0);
-        return WordsCatalog[wordIndex] || WordsCatalog[0];
+        return wordsCatalog[wordIndex] || wordsCatalog[0];
     }
 
     const getWordById = (wordIndex: number) => {
-        return WordsCatalog[wordIndex] || WordsCatalog[0];
+        const wordsCatalog = getWordsCatalog();
+        return wordsCatalog[wordIndex] || wordsCatalog[0];
     }
 
     const updatePlayerStatus = (status: PlayerStatusEnum) => {
@@ -272,6 +293,7 @@ export const UseSettingsState = (): SettingsContextInterface => {
 
     return {
         handle: {
+            getWordCatalogSize,
             updatePlayerStatus,
             initMatch,
             finishMatch,

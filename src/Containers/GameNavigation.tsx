@@ -4,6 +4,7 @@ import { useSettings } from "../Context/SettingsProvider";
 import { GAME_KIND } from "../Constant/GameModesCatalog";
 import GameContraReloj from "../Components/Games/Game-Contra-Reloj/GameContraReloj";
 import { PlayerStatusEnum } from "../Constant/PlayerStatusEnum";
+import FloatingActionButtonMenu from "../Components/Commonds/FloatingActionButtonMenu/FloatingActionButtonMenu";
 
 const GameNavigation: React.FC<any> = () => {
     const settings = useSettings();
@@ -32,6 +33,7 @@ const GameNavigation: React.FC<any> = () => {
             {
                 renderGame()
             }
+            <FloatingActionButtonMenu />
         </>
     );
 };

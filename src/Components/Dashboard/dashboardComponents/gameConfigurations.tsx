@@ -1,8 +1,9 @@
 import { set } from "lodash";
 import React, { useState } from "react";
 import { GAME_KIND } from "../../../Constant/GameModesCatalog";
+import { CategoryEnum } from "../../../Constant/WordsCatalog";
 import { useSettings } from "../../../Context/SettingsProvider";
-import { Duration, DURATION_CATALOG, GamesConfiguration, ROUNDS } from "../../../types/GamesConfiguration";
+import { ATTEMPS, Duration, DURATION_CATALOG, GamesConfiguration, ROUNDS, WORDS_CATEGORY_CATALOG } from "../../../types/GamesConfiguration";
 import './gameStyle.css';
 
 interface GameConfigurationsProps {
@@ -13,10 +14,14 @@ const GameConfigurations: React.FC<any> = (props: GameConfigurationsProps) => {
     const settings = useSettings();
     const gamesConfiguracion = settings.state.gamesConfiguration;
     const host = settings.state.playerSettings.host;
-    const durationText= {
+    const durationText = {
         [Duration.FAST]: "Rapido",
         [Duration.NORMAL]: "Normal",
         [Duration.LOW]: "Lento",
+    };
+    const categoryText = {
+        [CategoryEnum.MISCELLANEOUS]: "Diverso",
+        [CategoryEnum.TEST]: "test",
     };
 
     const setValue = (path: string, value: any) => {
@@ -33,6 +38,12 @@ const GameConfigurations: React.FC<any> = (props: GameConfigurationsProps) => {
     }
     const onRoundChange = (event: any) => {
         setValue(`${GAME_KIND.NORMAL}.rounds`, Number(event.target.value));
+    }
+    const onAttempChange = (event: any) => {
+        setValue(`global.attempts`, Number(event.target.value));
+    }
+    const onCategoryChange = (event: any) => {
+        setValue(`${GAME_KIND.CONTRA_RELOJ}.category`, event.target.value);
     }
 
     return (
@@ -68,6 +79,17 @@ const GameConfigurations: React.FC<any> = (props: GameConfigurationsProps) => {
                                 </div>
                             </div>
                         </div>
+                        <div className="field">
+                            <label className="label">Intentos</label>
+                            <p className="help">Numero de intentos para acertar</p>
+                            <div className="control">
+                                <div className="select">
+                                    <select defaultValue={gamesConfiguracion.global.attempts} onChange={onAttempChange} disabled={!host}>
+                                        {ATTEMPS.map(value => (<option value={value} key={`attemp-${value}`}>{value}</option>))}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div className="columns">
@@ -84,6 +106,26 @@ const GameConfigurations: React.FC<any> = (props: GameConfigurationsProps) => {
                                 <div className="select">
                                     <select defaultValue={gamesConfiguracion[GAME_KIND.NORMAL].rounds} onChange={onRoundChange} disabled={!host}>
                                         {ROUNDS.map(round => (<option value={round} key={`round-${round}`}>{round}</option>))}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="columns">
+                    <div className="column is-4">
+                        <p className="subtitle ">
+                            Contra Reloj
+                        </p>
+                    </div>
+                    <div className="column is-8">
+                        <div className="field">
+                            <label className="label">Categoria</label>
+                            <p className="help">Categoria de palabras que podran aparecer en la partida</p>
+                            <div className="control">
+                                <div className="select">
+                                    <select defaultValue={gamesConfiguracion[GAME_KIND.CONTRA_RELOJ].category} onChange={onCategoryChange} disabled={!host}>
+                                        {WORDS_CATEGORY_CATALOG.map(value => (<option value={value} key={`category-${value}`}>{categoryText[value]}</option>))}
                                     </select>
                                 </div>
                             </div>

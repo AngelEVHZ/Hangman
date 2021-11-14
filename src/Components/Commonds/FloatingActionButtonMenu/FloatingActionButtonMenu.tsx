@@ -1,38 +1,32 @@
 import React from "react";
 import "../FloatingActionButton/FloatingActionButtonStyle.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCog } from "@fortawesome/free-solid-svg-icons";
+import { faCog, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import { useUtils } from "../../../Context/UtilsProvider";
 //import { useLanguage } from "../../../Context/LanguageProvider";
 
 
 const FloatingActionButtonMenu: React.FC<any> = () => {
     //const { lang } = useLanguage();
+    const utils = useUtils();
+    const logOut = () => {
+        utils.handle.logOut();
+    }
+
     return (
         <div className="fab-container">
             <div className="fab fab-icon-holder2">
                 <i className="far fa-question-circle"><FontAwesomeIcon className="icon m-0" icon={faCog} /></i>
             </div>
 
-            {/*<ul className="fab-options">
-                <li onClick={() => props.toggleShowAboutModal(true)}>
-                    <span className="fab-label">{lang.floatingActionButton.contact}</span>
-                    <div className="fab-icon-holder">
-                        <i className="fas fa-file-alt"><FontAwesomeIcon className="icon m-0" icon={faIdCard} /></i>
+            <ul className="fab-options">
+                <li>
+                    <span className="fab-label">Salir</span>
+                    <div className="fab-icon-holder"  onClick={logOut}>
+                        <i className="fas fa-file-alt"><FontAwesomeIcon className="icon m-0" icon={faSignOutAlt} /></i>
                     </div>
                 </li>
-                <li onClick={() => props.toggleShowUsModal(true)}>
-                    <span className="fab-label">{lang.floatingActionButton.about_us}</span>
-                    <div className="fab-icon-holder">
-                        <i className="fas fa-video"><FontAwesomeIcon className="icon m-0" icon={faInfoCircle} /></i>
-                    </div>
-                </li>
-                <li onClick={() => props.toggleShowCreditsModal(true)}>
-                    <span className="fab-label">{lang.floatingActionButton.credits}</span>
-                    <div className="fab-icon-holder">
-                        <i className="fas fa-comments"><FontAwesomeIcon className="icon m-0" icon={faCopyright} /></i>
-                    </div>
-                </li>
-            </ul>*/}
+            </ul>
         </div>
     );
 };

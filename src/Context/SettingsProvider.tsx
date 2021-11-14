@@ -2,6 +2,7 @@
 import React, { useContext } from "react";
 import { GAME_KIND } from "../Constant/GameModesCatalog";
 import { PlayerStatusEnum } from "../Constant/PlayerStatusEnum";
+import { CategoryEnum } from "../Constant/WordsCatalog";
 import { Duration } from "../types/GamesConfiguration";
 import { SettingsContextInterface, UseSettingsState } from "./State/UseSettingsState";
 
@@ -9,6 +10,7 @@ import { SettingsContextInterface, UseSettingsState } from "./State/UseSettingsS
 
 const INITIAL_STATE: SettingsContextInterface = {
     handle: {
+        getWordCatalogSize: () => {return 0},
         updatePlayerStatus: () => {},
         initMatch: () => { },
         finishMatch: () => { },
@@ -52,9 +54,13 @@ const INITIAL_STATE: SettingsContextInterface = {
             global: {
                 duration: Duration.NORMAL,
                 secret_author: true,
+                attempts: 1,
             },
             [GAME_KIND.NORMAL]: {
                 rounds: 1
+            },
+            [GAME_KIND.CONTRA_RELOJ]: {
+                category: CategoryEnum.MISCELLANEOUS
             }
         }
     }

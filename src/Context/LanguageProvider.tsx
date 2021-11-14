@@ -1,10 +1,12 @@
 
 import React, { useContext } from "react";
+import { LanguageIdEnum } from "../Constant/LanguageCatalog";
 import { LanguageContextInterface, UseLanguageState } from "./State/UseLanguageState";
 
 
 const INITIAL_STATE: LanguageContextInterface = {
     lang: {},
+    languageId: LanguageIdEnum.EN,
     changeLanguage: () => {},
 }
 

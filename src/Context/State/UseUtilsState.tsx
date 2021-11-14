@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { AudiosEnum } from "../../Constant/AudiosEnum";
 import { TimesEnum } from "../../Constant/Times";
 import { AlertMsgProps, AlertTypeEnum, IddleProps } from "../../types/CommondTypes";
+import { useSettings } from "../SettingsProvider";
 export interface UtilsContextInterface {
     handle: {
         closeAlert:() => void;
@@ -11,6 +12,7 @@ export interface UtilsContextInterface {
         onActive: () => void;
         onIdle: () => void;
         resetIddle: () => void;
+        logOut: () => void;
         log: (tag: string, obj?: object) => void;
         setShowHeader: (value: boolean) => void;
         playAudio: (audioType: AudiosEnum) => void;
@@ -32,6 +34,7 @@ export const UseUtilsState = (): UtilsContextInterface => {
     const [showHeader, setShowHeader] = useState<boolean>(false);
     const [audios, setAudios] = useState<any[]>([]);
     const [isAudioOn, setIsAudioOn] = useState(true);
+    const settings = useSettings();
 
     useEffect(() => {
         const audios = [];
@@ -63,6 +66,12 @@ export const UseUtilsState = (): UtilsContextInterface => {
             
         }
       
+    }
+
+    const logOut = () => {
+        settings.handle.deleteStorage();
+        resetIddle();
+        window.location.reload();
     }
 
     const showAlert = (alert: AlertMsgProps) => {
@@ -112,6 +121,7 @@ export const UseUtilsState = (): UtilsContextInterface => {
 
     return {
         handle: {
+            logOut,
             closeAlert,
             setShowLoader,
             showAlert,

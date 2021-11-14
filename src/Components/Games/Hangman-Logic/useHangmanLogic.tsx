@@ -1,5 +1,6 @@
 
 import { useEffect, useState } from "react";
+import { useSettings } from "../../../Context/SettingsProvider";
 
 export interface UseHangmanLogicProps {
     handle: {
@@ -25,10 +26,13 @@ export interface HangmanProps {
 
 
 export const useHangmanLogic = (props: HangmanProps): UseHangmanLogicProps => {
+    const settings = useSettings();
+    const attemps = settings.state.gamesConfiguration.global.attempts;
+
     const [originalLetters, setOriginalLetters] = useState([""]);
     const [wordLetters, setWordLetters] = useState([""]);
     const [userLetter, setUserLetter] = useState(new Array(wordLetters.length).fill(""));
-    const [errors, setErrors] = useState(new Array(6).fill(false));
+    const [errors, setErrors] = useState(new Array(attemps).fill(false));
     const [keyTypedList, setKeyTypedList] = useState<string[]>([]);
     const [keyDown, setKey] = useState({ key: "" });
     const [userWord, setUserWord] = useState("");
@@ -40,7 +44,7 @@ export const useHangmanLogic = (props: HangmanProps): UseHangmanLogicProps => {
         setUserLetter(new Array(wordNormalize.length).fill(" "));
         setOriginalLetters(Array.from(originalWord));
         setWordLetters(Array.from(wordNormalize));
-        setErrors(new Array(6).fill(false))
+        setErrors(new Array(attemps).fill(false))
         setKeyTypedList([]);
     }
 

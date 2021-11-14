@@ -61,8 +61,7 @@ export const UseDashboardState = (): DashBoardProps => {
     useEffect(() => {
         const iddleAction = utils.state.iddleAction;
         if (iddleAction.activate && iddleAction.path != Routes.LOGIN) {
-            utils.handle.resetIddle();
-            window.location.reload();
+            utils.handle.logOut();
         }
     }, [utils.state.iddleAction]);
 
