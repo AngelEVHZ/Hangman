@@ -3,11 +3,11 @@ import "../FloatingActionButton/FloatingActionButtonStyle.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { useUtils } from "../../../Context/UtilsProvider";
-//import { useLanguage } from "../../../Context/LanguageProvider";
+import { useLanguage } from "../../../Context/LanguageProvider";
 
 
 const FloatingActionButtonMenu: React.FC<any> = () => {
-    //const { lang } = useLanguage();
+    const { lang } = useLanguage();
     const utils = useUtils();
     const logOut = () => {
         utils.handle.logOut();
@@ -21,7 +21,7 @@ const FloatingActionButtonMenu: React.FC<any> = () => {
 
             <ul className="fab-options">
                 <li>
-                    <span className="fab-label">Salir</span>
+                    <span className="fab-label">{lang.floating_menu.exit}</span>
                     <div className="fab-icon-holder"  onClick={logOut}>
                         <i className="fas fa-file-alt"><FontAwesomeIcon className="icon m-0" icon={faSignOutAlt} /></i>
                     </div>

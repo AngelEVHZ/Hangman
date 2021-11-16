@@ -6,11 +6,12 @@ import GameMode from "./dashboardComponents/gameMode";
 import Players from "../Commonds/Players/Players";
 import { useLanguage } from "../../Context/LanguageProvider";
 import GameConfigurations from "./dashboardComponents/gameConfigurations";
+import { get } from "lodash";
 
 const Dashboard: React.FC<any> = () => {
     const { handle, state } = UseDashboardState();
     const { lang } = useLanguage();
-    const tabsLabel = ["Modos de juego", "Personalizar"];
+    const tabsLabel = ["dashboard.game_modes", "dashboard.customize_game"];
 
     return (
         <div className="content m-5">
@@ -23,7 +24,7 @@ const Dashboard: React.FC<any> = () => {
                         <ul>
                             {tabsLabel.map((tab, index) => (
                                 <li className={state.tabs[index] ? "is-active" : ""} onClick={() => handle.changeTab(index)}>
-                                    <a >{tab}</a>
+                                    <a >{get(lang, tab)}</a>
                                 </li>
                             ))
                             }

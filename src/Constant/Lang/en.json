@@ -65,7 +65,9 @@
     "dashboard": {
         "play": "PLAY",
         "invite": "INVITE",
-        "copy_url": "Copy the URL"
+        "copy_url": "Copy the URL",
+        "game_modes": "Game Modes",
+        "customize_game": "Customize"
     },
     "useGameState": {
         "waiting_for_host": "Waiting for host...",
@@ -79,7 +81,36 @@
     "menuContraReloj": {
         "im_ready": "I'm ready!"
     },
-    "gameBoard":{
-        "header_title":"Guess the word!"
+    "gameBoard": {
+        "header_title": "Guess the word!"
+    },
+    "gameConfigurations": {
+        "general": {
+            "title": "General",
+            "duration": "Duration",
+            "description": "Time to guess each word",
+            "low": "Slow",
+            "normal": "Normal",
+            "fast": "Fast",
+            "anonymous_mode": "Anonymous mode",
+            "description2": "Keep the authors of the words secret",
+            "yes": "Yes",
+            "no": "No",
+            "attempts": "Attempts",
+            "description3": "Number of attempts to hit"
+        },
+        "clasic": {
+            "title": "Clasic",
+            "rounds": "Rounds",
+            "description": "Number of rounds in classic mode"
+        },
+        "vs_reloj": {
+            "title": "Game against time",
+            "category": "Category",
+            "description": "Category of words that could appear in the game"
+        }
+    },
+    "floating_menu": {
+        "exit": "Exit"
     }
 }

@@ -2,22 +2,25 @@ import { set } from "lodash";
 import React, { useState } from "react";
 import { GAME_KIND } from "../../../Constant/GameModesCatalog";
 import { CategoryEnum } from "../../../Constant/WordsCatalog";
+import { useLanguage } from "../../../Context/LanguageProvider";
 import { useSettings } from "../../../Context/SettingsProvider";
 import { ATTEMPS, Duration, DURATION_CATALOG, GamesConfiguration, ROUNDS, WORDS_CATEGORY_CATALOG } from "../../../types/GamesConfiguration";
 import './gameStyle.css';
+import { get } from "lodash";
 
 interface GameConfigurationsProps {
 
 }
 
 const GameConfigurations: React.FC<any> = (props: GameConfigurationsProps) => {
+    const { lang } = useLanguage();
     const settings = useSettings();
     const gamesConfiguracion = settings.state.gamesConfiguration;
     const host = settings.state.playerSettings.host;
     const durationText = {
-        [Duration.FAST]: "Rapido",
-        [Duration.NORMAL]: "Normal",
-        [Duration.LOW]: "Lento",
+        [Duration.FAST]: "gameConfigurations.general.fast",
+        [Duration.NORMAL]: "gameConfigurations.general.normal",
+        [Duration.LOW]: "gameConfigurations.general.low",
     };
     const categoryText = {
         [CategoryEnum.MISCELLANEOUS]: "Diverso",
@@ -52,36 +55,36 @@ const GameConfigurations: React.FC<any> = (props: GameConfigurationsProps) => {
                 <div className="columns ">
                     <div className="column is-4">
                         <p className="subtitle ">
-                            General
+                            {lang.gameConfigurations.general.title}
                         </p>
                     </div>
                     <div className="column is-8">
                         <div className="field">
-                            <label className="label">Duración</label>
-                            <p className="help">Tiempo para poder adivinar cada palabra</p>
+                            <label className="label">{lang.gameConfigurations.general.duration}</label>
+                            <p className="help">{lang.gameConfigurations.general.description}</p>
                             <div className="control">
                                 <div className="select">
                                     <select defaultValue={gamesConfiguracion.global.duration} onChange={onDurationChange} disabled={!host}>
-                                        {DURATION_CATALOG.map(item => (<option value={item} key={item}>{durationText[item]}</option>))}
+                                        {DURATION_CATALOG.map(item => (<option value={item} key={item}>{get(lang, durationText[item])}</option>))}
                                     </select>
                                 </div>
                             </div>
                         </div>
                         <div className="field">
-                            <label className="label">Secretismo</label>
-                            <p className="help">Mantener en secreto los autores de las palabras</p>
+                            <label className="label">{lang.gameConfigurations.general.anonymous_mode}</label>
+                            <p className="help">{lang.gameConfigurations.general.description2}</p>
                             <div className="control">
                                 <div className="select">
                                     <select defaultValue={gamesConfiguracion.global.secret_author ? 1 : 0} onChange={onSecretAuthorChange} disabled={!host}>
-                                        <option value={1}>Yes</option>
-                                        <option value={0}>No</option>
+                                        <option value={1}>{lang.gameConfigurations.general.yes}</option>
+                                        <option value={0}>{lang.gameConfigurations.general.no}</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
                         <div className="field">
-                            <label className="label">Intentos</label>
-                            <p className="help">Numero de intentos para acertar</p>
+                            <label className="label">{lang.gameConfigurations.general.attempts}</label>
+                            <p className="help">{lang.gameConfigurations.general.description3}</p>
                             <div className="control">
                                 <div className="select">
                                     <select defaultValue={gamesConfiguracion.global.attempts} onChange={onAttempChange} disabled={!host}>
@@ -95,13 +98,13 @@ const GameConfigurations: React.FC<any> = (props: GameConfigurationsProps) => {
                 <div className="columns">
                     <div className="column is-4">
                         <p className="subtitle ">
-                            Clasico
+                            {lang.gameConfigurations.clasic.title}
                         </p>
                     </div>
                     <div className="column is-8">
                         <div className="field">
-                            <label className="label">Rondas</label>
-                            <p className="help">Numero de rondas en modo clasico</p>
+                            <label className="label">{lang.gameConfigurations.clasic.rounds}</label>
+                            <p className="help">{lang.gameConfigurations.clasic.description}</p>
                             <div className="control">
                                 <div className="select">
                                     <select defaultValue={gamesConfiguracion[GAME_KIND.NORMAL].rounds} onChange={onRoundChange} disabled={!host}>
@@ -115,13 +118,13 @@ const GameConfigurations: React.FC<any> = (props: GameConfigurationsProps) => {
                 <div className="columns">
                     <div className="column is-4">
                         <p className="subtitle ">
-                            Contra Reloj
+                            {lang.gameConfigurations.vs_reloj.title}
                         </p>
                     </div>
                     <div className="column is-8">
                         <div className="field">
-                            <label className="label">Categoria</label>
-                            <p className="help">Categoria de palabras que podran aparecer en la partida</p>
+                            <label className="label">{lang.gameConfigurations.vs_reloj.category}</label>
+                            <p className="help">{lang.gameConfigurations.vs_reloj.description}</p>
                             <div className="control">
                                 <div className="select">
                                     <select defaultValue={gamesConfiguracion[GAME_KIND.CONTRA_RELOJ].category} onChange={onCategoryChange} disabled={!host}>

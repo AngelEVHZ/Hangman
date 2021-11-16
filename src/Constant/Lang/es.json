@@ -65,7 +65,9 @@
     "dashboard": {
         "play": "JUGAR",
         "invite": "INVITAR",
-        "copy_url": "Copia el URL:"
+        "copy_url": "Copia el URL:",
+        "game_modes": "Modos de Juego",
+        "customize_game": "Personalizar"
     },
     "useGameState": {
         "waiting_for_host": "Esperando al anfitrion...",
@@ -79,7 +81,36 @@
     "menuContraReloj": {
         "im_ready": "Estoy listo!"
     },
-    "gameBoard":{
-        "header_title":"¡Adivina la palabra!"
+    "gameBoard": {
+        "header_title": "¡Adivina la palabra!"
+    },
+    "gameConfigurations": {
+        "general": {
+            "title": "General",
+            "duration": "Duración",
+            "description": "Tiempo para poder adivinar cada palabra",
+            "low": "Lento",
+            "normal": "Normal",
+            "fast": "Rapido",
+            "anonymous_mode": "Modo Anónimo",
+            "description2": "Mantener en secreto los autores de las palabras",
+            "yes": "Si",
+            "no": "No",
+            "attempts": "Intentos",
+            "description3": "Numero de intentos para acertar"
+        },
+        "clasic": {
+            "title": "Clasico",
+            "rounds": "Rondas",
+            "description": "Número de rondas en modo clásico"
+        },
+        "vs_reloj": {
+            "title": "Contra Reloj",
+            "category": "Categoría",
+            "description": "Categoría de palabras que podrían aparecer en la partida"
+        }
+    },
+    "floating_menu": {
+        "exit": "Salir"
     }
 }
