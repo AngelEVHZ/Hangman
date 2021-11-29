@@ -59,7 +59,7 @@ export const TIME_CATALOG = {
         [Duration.LOW]: 120,
     },
 }
-export const WORDS_CATEGORY_CATALOG = [CategoryEnum.MISCELLANEOUS, CategoryEnum.TEST];
+export const WORDS_CATEGORY_CATALOG = [CategoryEnum.MISCELLANEOUS, CategoryEnum.COUNTRIES, CategoryEnum.MOVIES];
 
 export const GET_TIME = (kind: GAME_KIND, duration: Duration): number => {
     return TIME_CATALOG[kind][duration] || 60;

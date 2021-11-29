@@ -1,18 +1,21 @@
 import { LanguageIdEnum } from "./LanguageCatalog";
-import { Misscelaneous, Test } from "./WordsCatalogs/es_catalog";
+import { Misscelaneous, Countries, Movies } from "./WordsCatalogs/es_catalog";
 
 export enum CategoryEnum {
     MISCELLANEOUS = "MISCELLANEOUS",
-    TEST = "TEST",
+    COUNTRIES = "CONTRIES",
+    MOVIES = "MOVIES"
 };
 
 export const WORDS_CATALOG = {
     [LanguageIdEnum.ES]: {
         [CategoryEnum.MISCELLANEOUS]: Misscelaneous,
-        [CategoryEnum.TEST]: Test,
+        [CategoryEnum.COUNTRIES]: Countries,
+        [CategoryEnum.MOVIES]: Movies,
     },
     [LanguageIdEnum.EN]: {
         [CategoryEnum.MISCELLANEOUS]: Misscelaneous,
-        [CategoryEnum.TEST]: Test,
+        [CategoryEnum.COUNTRIES]: Countries,
+        [CategoryEnum.MOVIES]: Movies,
     }
 }

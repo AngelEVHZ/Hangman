@@ -24,7 +24,8 @@ const GameConfigurations: React.FC<any> = (props: GameConfigurationsProps) => {
     };
     const categoryText = {
         [CategoryEnum.MISCELLANEOUS]: "Diverso",
-        [CategoryEnum.TEST]: "test",
+        [CategoryEnum.COUNTRIES]: "Países",
+        [CategoryEnum.MOVIES]: "Películas",
     };
 
     const setValue = (path: string, value: any) => {
@@ -75,7 +76,7 @@ const GameConfigurations: React.FC<any> = (props: GameConfigurationsProps) => {
                             <p className="help">{lang.gameConfigurations.general.description2}</p>
                             <div className="control">
                                 <div className="select">
-                                    <select defaultValue={gamesConfiguracion.global.secret_author ? 1 : 0} onChange={onSecretAuthorChange} disabled={!host}>
+                                    <select  defaultValue={gamesConfiguracion.global.secret_author ? 1 : 0} onChange={onSecretAuthorChange} disabled={!host || true}>
                                         <option value={1}>{lang.gameConfigurations.general.yes}</option>
                                         <option value={0}>{lang.gameConfigurations.general.no}</option>
                                     </select>
