@@ -3,7 +3,6 @@ import { useState } from "react";
 import { PlayerStatusEnum } from "../../../../Constant/PlayerStatusEnum";
 import { StorageEnum } from "../../../../Constant/StorageEnum";
 import { randomShuffle } from "../../../../Constant/UtilsConstants";
-import { WordsCatalog } from "../../../../Constant/WordsCatalog";
 import { useSettings } from "../../../../Context/SettingsProvider";
 import { GameContraRelojPlayer, NotifyEndMatch, WordPlayed } from "../../../../types/GameContraRelojTypes";
 
@@ -65,7 +64,7 @@ export const useGameContraRelojLogic = (): GameContraRelojLogic => {
 
 
     const generateWordList = () => {
-        const wordsCatalogSize = WordsCatalog.length;
+        const wordsCatalogSize = settings.handle.getWordCatalogSize();
         const numberOfWords = wordsCatalogSize < 60 ? wordsCatalogSize : 60;
         const jumps = Math.floor(wordsCatalogSize / numberOfWords);
         let from = 0;

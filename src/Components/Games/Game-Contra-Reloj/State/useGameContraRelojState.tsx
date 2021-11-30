@@ -2,6 +2,7 @@ import { get } from "lodash";
 import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { AudiosEnum } from "../../../../Constant/AudiosEnum";
+import { GAME_KIND } from "../../../../Constant/GameModesCatalog";
 import { NotifyActionEnum, NotifyGameActionEnum } from "../../../../Constant/NotifyActionEnum";
 import { PlayerStatusEnum } from "../../../../Constant/PlayerStatusEnum";
 import { Routes } from "../../../../Constant/RoutesEnum";
@@ -12,6 +13,7 @@ import { useSettings } from "../../../../Context/SettingsProvider";
 import { useSocket } from "../../../../Context/SocketProvider";
 import { useUtils } from "../../../../Context/UtilsProvider";
 import { NotifyEndMatch, NotifyReady, NotifyWordList, WordPlayed } from "../../../../types/GameContraRelojTypes";
+import { GET_TIME } from "../../../../types/GamesConfiguration";
 import { GenericNotify, NotifyAll, SocketAction } from "../../../../types/SocketAction";
 import { UserSession } from "../../../../types/UserSession";
 import { ScoreTableProps } from "../../../Commonds/ScoreTable/ScoreTable";
@@ -295,7 +297,7 @@ export const UseGameContraRelojState = (): GameContraRelojProps => {
         state: {
             isPlayerReadyToStart,
             timeMenu: TimesEnum.MENU,
-            gameTime: TimesEnum.CONTRA_RELOG,
+            gameTime: GET_TIME(GAME_KIND.CONTRA_RELOJ, settings.state.gamesConfiguration.global.duration),
             wordLetters: hangman.state.originalLetters,
             userLetter: hangman.state.userLetter,
             errors: hangman.state.errors,

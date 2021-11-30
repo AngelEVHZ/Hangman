@@ -19,6 +19,8 @@ import { GameMatch } from "../../../../types/GameNormalTypes";
 import { useCommondLogic } from "../../Commond-Logic/useCommondLogic";
 import { ScoreTableProps } from "../../../Commonds/ScoreTable/ScoreTable";
 import { useLanguage } from "../../../../Context/LanguageProvider";
+import { GET_TIME } from "../../../../types/GamesConfiguration";
+import { GAME_KIND } from "../../../../Constant/GameModesCatalog";
 export interface GameProps {
     handle: {
         startGame: () => void;
@@ -62,6 +64,7 @@ export const UseGameState = (): GameProps => {
     const gameLogic: GameLogic = useGameLogic();
     const { lang } = useLanguage();
     useCommondLogic();
+    const attemps = settings.state.gamesConfiguration.global.attempts;
 
     //GAME LOGIC VARS
     const [originalLetters, setOriginalLetters] = useState([""]);
@@ -69,7 +72,7 @@ export const UseGameState = (): GameProps => {
     const [userLetter, setUserLetter] = useState(new Array(wordLetters.length).fill(""));
 
     const [currentKey, setKey] = useState({ key: "" });
-    const [errors, setErrors] = useState(new Array(6).fill(false));
+    const [errors, setErrors] = useState(new Array(attemps).fill(false));
     const [gameOver, setGameover] = useState(false);
     const [completed, setCompleted] = useState(false);
     const [keyTypedList, setKeyTypedList] = useState<string[]>([]);
@@ -230,7 +233,7 @@ export const UseGameState = (): GameProps => {
         setRountStart(true);
         setGameover(false);
         setCompleted(false);
-        setErrors(new Array(6).fill(false))
+        setErrors(new Array(attemps).fill(false))
         setStartDate(new Date());
         setKeyTypedList([]);
         gameLogic.handle.setMatchRoundStarted(true);
@@ -378,7 +381,7 @@ export const UseGameState = (): GameProps => {
             callBack: timerMenuCallback
         },
         timerGame: {
-            time: TimesEnum.PLAYING,
+            time: GET_TIME(GAME_KIND.NORMAL, settings.state.gamesConfiguration.global.duration),
             callBack: timerGameCallback
         },
         handle: {

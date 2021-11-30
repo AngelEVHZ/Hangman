@@ -4,6 +4,7 @@ import { LanguageCatalog, LanguageIdEnum } from "../../Constant/LanguageCatalog"
 export interface LanguageContextInterface {
   lang: any;
   changeLanguage: (languageId: LanguageIdEnum) => void;
+  languageId: LanguageIdEnum;
 }
 const prefix = "hangman-";
 export const UseLanguageState = (): LanguageContextInterface => {
@@ -40,6 +41,7 @@ export const UseLanguageState = (): LanguageContextInterface => {
 
   return {
     changeLanguage,
-    lang: LanguageCatalog[languageId]
+    lang: LanguageCatalog[languageId],
+    languageId,
   }
 }

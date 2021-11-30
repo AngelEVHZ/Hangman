@@ -1,6 +1,4 @@
 export enum TimesEnum {
-    PLAYING = 60, //seconds
-    CONTRA_RELOG = 90, //seconds
 
     MENU = 30, //seconds
     SCORES_PAGE = 15, //seconds

@@ -9,6 +9,7 @@ import { UseUtilsState, UtilsContextInterface } from "./State/UseUtilsState";
 
 const INITIAL_STATE: UtilsContextInterface = {
     handle: {
+        logOut: () => {},
         closeAlert:() => {},
         setShowLoader: () => { },
         showAlert: (alert: AlertMsgProps) => { },
