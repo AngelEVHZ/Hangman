@@ -9,26 +9,26 @@
     "loginForm": {
         "join": "Unirse",
         "create_room": "Crear Sala",
-        "placeholder": "Aqui tu nombre :)"
+        "placeholder": "Aquí tu nombre :)"
     },
     "floatingActionButton": {
         "contact": "Contacto",
         "about_us": "Acerca de Nosotros",
-        "credits": "Creditos"
+        "credits": "Créditos"
     },
     "aboutModal": {
         "title": "Contactanos:",
-        "message_body1": "Envianos tus comentarios a la siguiente dirección de correo:",
+        "message_body1": "Envíanos tus comentarios a la siguiente dirección de correo:",
         "message_body2": "hangman.thegame.contacto@gmail.com"
     },
     "creditsModal": {
-        "title": "Creditos:",
+        "title": "Créditos:",
         "icons_made": "Iconos diseñados por ",
         "from": "de"
     },
     "usModal": {
         "title": "Acerca de Nosotros:",
-        "message_body1": "Somos un grupo de amigos que aman pasarla bien, jugando y creando juegos multijugador en linea. Queremos que tu y tus amigos se diviertan con nuestros juegos y asi pasen buenos ratos. :P"
+        "message_body1": "Somos un grupo de amigos que aman pasarla bien, jugando y creando juegos multijugador en línea. Queremos que tú y tus amigos se diviertan con nuestros juegos y así pasen buenos ratos. :P"
     },
     "players": {
         "players": "JUGADORES"
@@ -47,7 +47,7 @@
         },
         "vs_reloj": {
             "title": "Contra Reloj",
-            "description": "¡Adivina más palabras que los demas, antes de que se acabe el tiempo!"
+            "description": "¡Adivina más palabras que los demás, antes de que se acabe el tiempo!"
         },
         "puntuation": {
             "title": "Por puntos",
@@ -58,7 +58,7 @@
             "description": ""
         },
         "elimination": {
-            "title": "Eliminacion",
+            "title": "Eliminación",
             "description": ""
         }
     },
@@ -70,7 +70,7 @@
         "customize_game": "Personalizar"
     },
     "useGameState": {
-        "waiting_for_host": "Esperando al anfitrion...",
+        "waiting_for_host": "Esperando al anfitrión...",
         "exit": "Salir!",
         "next_round": "Siguiente ronda!"
     },
@@ -94,10 +94,10 @@
             "fast": "Rapido",
             "anonymous_mode": "Modo Anónimo",
             "description2": "Mantener en secreto los autores de las palabras",
-            "yes": "Si",
+            "yes": "Sí",
             "no": "No",
             "attempts": "Intentos",
-            "description3": "Numero de intentos para acertar"
+            "description3": "Número de intentos para acertar"
         },
         "clasic": {
             "title": "Clasico",

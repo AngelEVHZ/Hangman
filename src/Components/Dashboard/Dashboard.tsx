@@ -24,7 +24,7 @@ const Dashboard: React.FC<any> = () => {
                         <ul>
                             {tabsLabel.map((tab, index) => (
                                 <li className={state.tabs[index] ? "is-active" : ""} onClick={() => handle.changeTab(index)}>
-                                    <a >{get(lang, tab)}</a>
+                                    <a className= "style-title">{get(lang, tab)}</a>
                                 </li>
                             ))
                             }

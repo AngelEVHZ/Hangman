@@ -28,6 +28,14 @@
     }
 }
 
+/*.style-title{
+    color: var(--tertiary-color) !important;
+}*/
+
+.tabs li.is-active .style-title {
+    border-bottom-color: var(--tertiary-color) !important;
+    color: var(--tertiary-color) !important;
+}
 .gameCard{
     height: 150px;
     width: 250px;
